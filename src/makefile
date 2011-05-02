@@ -1,13 +1,13 @@
 # This is a makefile created by Christian Bunk
-# Last update 29.04.2011
+# Last update 02.05.2011
 
 # Define C Compiler
 CC = c++
 # Define standard flags
 CFLAGS = -Wall
 # Files to be compiled
-OBJECTS = main.o cmdline.o
-# Name of the Application 
+OBJECTS = main.o cmdline.o index.o
+# Name and Target of the Application 
 NAME = ../bin/project1
 
 project1: $(OBJECTS)
@@ -19,5 +19,11 @@ main.o: main.cpp
 cmdline.o: cmdline.cpp 
 		$(CC) -c $(CFLAGS) cmdline.cpp
 
+index.o: index.cpp
+		$(CC) -c $(CFLAGS) index.cpp
+
 clean:
-	rm $(OBJECTS)
+		rm $(OBJECTS)
+
+doc: 
+		doxygen

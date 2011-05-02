@@ -1,5 +1,3 @@
-#include <iostream>
-
 
 using namespace std;
 
@@ -11,12 +9,11 @@ using namespace std;
 CmdLine::CmdLine(int argc, char *argv[]) {
 	cout << "Konstruktor CmdLine" << endl;
 	
-	options = new vector<string>();
-	arguments = new vector<string>();
+	opt = new options;
+	arg = new arguments;
 
-	// if there are at least one parameter
+	// if there is at least one parameter
 	if (argc > 1) {
-		// puts all command line parameters in vector
 		for (int i = 1; i < argc; i++) {
 			// wenn der parameter eine option ist (also ein Bindestrich "-" enthält)
 			size_t found;
@@ -30,30 +27,27 @@ CmdLine::CmdLine(int argc, char *argv[]) {
 			
 			// insert options
 			if (found!=string::npos) {
-				options->push_back(string(argv[i]));
+				opt->push_back(string(argv[i]));
 			} else {
 				// insert arguments
-				arguments->push_back(string(argv[i]));
+				arg->push_back(string(argv[i]));
 			}
 		}
 	}
 }
 
-/**
- * Destruktor.
- * Free all member.
- */
+
 CmdLine::~CmdLine() {
 	cout << "Destruktor CmdLine" << endl;
-	delete options; // free vector
-	delete arguments;
+	delete opt;
+	delete arg;
 }
 
 void CmdLine::printOptions() {
 	cout << "Options:" << endl;
 	// Gib alle options im vector aus.
 	// nutze einen Iterator.
-	for (vector<string>::iterator it = options->begin(); it!=options->end(); ++it) {
+	for (vector<string>::iterator it = opt->begin(); it!=opt->end(); ++it) {
 	    cout << *it << endl;
 	}
 }
@@ -62,7 +56,15 @@ void CmdLine::printArguments() {
 	cout << "Arguments:" << endl;
 	// Gib alle options im vector aus.
 	// nutze einen Iterator.
-	for (vector<string>::iterator it = arguments->begin(); it!=arguments->end(); ++it) {
+	for (vector<string>::iterator it = arg->begin(); it!=arg->end(); ++it) {
 	    cout << *it << endl;
 	}
+}
+
+bool CmdLine::hasOptions() {	
+	return !opt->empty();
+}
+
+bool CmdLine::hasArguments() {
+	return !arg->empty();
 }
