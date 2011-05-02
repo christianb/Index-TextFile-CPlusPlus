@@ -1,0 +1,15 @@
+Belegarbeit: Parametric Programming
+
+eigene Klassen definieren
+Operatoren neu definieren (da die vom Compiler erzeugten zu falschem Verhalten führen können)
+
+Warnungen auf Terminal ausgaben: c++ Datei.cpp -Wall
+
+An Konventionen in der STL halten.
+Programme können (spät) zur Laufzeit abstürzen, wenn z.B. nicht genügend Speicher für ein Element zur Verfügung steht.
+
+Umgebungsvariablen sind Prozess bezogen.
+Umgebungsvariablen bestehen aus einem variablen Namen und Wert. Key = Value
+Der Typ einer Umgebungsvariablen ist String!
+
+Umgebungsvariablen auf der Shell anzeigen: > env
