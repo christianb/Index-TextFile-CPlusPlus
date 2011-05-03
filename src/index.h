@@ -18,7 +18,7 @@ private:
 	 * Read content from a given File.
 	 * Saves them into the member *_words;
 	 */	
-	void readFile(string *in_file);
+	void readFile(vector<string> *in_files);
 	
 	/**
 	 * Write content within *_words into a file.
@@ -34,7 +34,7 @@ public:
 	 * @param outputfile the destination file
 	 * @param inputfiles from these files the index will be created 
 	 */
-	void createIndex(string *outputfile, string *inputfile);
+	void createIndex(string *out_files, vector<string> *in_files);
 	
 };
 

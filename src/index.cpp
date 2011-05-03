@@ -14,20 +14,25 @@ Index::~Index() {
 	delete _words;
 }
 
-void Index::readFile(string *in_file) {
-	// read from inputfile
-	ifstream in(in_file->c_str());
-	istream_iterator<string> pos(in), end ;
+void Index::readFile(vector<string> *in_files) {
+	for (vector<string>::iterator it=in_files->begin() ; it != in_files->end() ; it++) // Hier wird ein Iterator verwendet.
+	{
+		// read from inputfile
+		ifstream in(it->c_str());
+		istream_iterator<string> pos(in), end ;
+
+		if (!in) {
+			cout << "Eingabedatei "<< *it << " nicht gefunden!" << endl;
+			continue;
+		};
+
+		// kopiere Wörter in vector wort
+		copy(pos, end, back_inserter(*_words)) ;
+
+		in.close() ; // Datei schließen
+	}
 	
-	if (!in) {
-		cout << "Eingabedatei "<< in_file->c_str() << " nicht gefunden!" << endl;
-		return;
-	};
 	
-	// kopiere Wörter in vector wort
-	copy(pos, end, back_inserter(*_words)) ;
-	
-	in.close() ; // Datei schließen
 }
 
 void Index::writeFile(string *out_file) {
@@ -43,7 +48,7 @@ void Index::writeFile(string *out_file) {
 	out.close();
 }
 
-void Index::createIndex(string *outputfile, string *inputfile) {
+void Index::createIndex(string *outputfile, vector<string> *inputfile) {
 	this->readFile(inputfile);
 	this->writeFile(outputfile);
 }
