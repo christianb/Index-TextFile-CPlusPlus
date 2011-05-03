@@ -11,8 +11,19 @@
 using namespace std;
 
 class Index {
-private:	
+private:
+	vector<string> *_words;
 	
+	/**
+	 * Read content from a given File.
+	 * Saves them into the member *_words;
+	 */	
+	void readFile(string *in_file);
+	
+	/**
+	 * Write content within *_words into a file.
+	 */
+	void writeFile(string *out_file);
 
 public:
 	Index();

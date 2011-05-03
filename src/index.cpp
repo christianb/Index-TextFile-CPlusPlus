@@ -6,46 +6,44 @@ using namespace std;
 
 Index::Index() {
 	cout << "Konstruktor Index" << endl;
+	_words = new vector<string>();
 }
 
 Index::~Index() {
 	cout << "Destruktor Index" << endl;
+	delete _words;
 }
 
-void Index::createIndex(string *outputfile, string *inputfile) {
-	cout << "create Index" << endl;
-	
-	vector<string>* wort = new vector<string>() ;
-	list<string>* wortlist = new list<string>() ;
-	
+void Index::readFile(string *in_file) {
 	// read from inputfile
-	ifstream in(inputfile->c_str());
+	ifstream in(in_file->c_str());
 	istream_iterator<string> pos(in), end ;
 	
 	if (!in) {
-		cout << "Eingabedatei nicht gefunden!" << endl;
+		cout << "Eingabedatei "<< in_file->c_str() << " nicht gefunden!" << endl;
 		return;
 	};
 	
 	// kopiere Wörter in vector wort
-	copy(pos, end, back_inserter(*wort)) ;
+	copy(pos, end, back_inserter(*_words)) ;
 	
 	in.close() ; // Datei schließen
-	
-	// kopiere in wortlist, eigentlich überflüssig...
-	copy(wort->begin(), wort->end(), back_inserter(*wortlist)) ;
-	
-	copy(wortlist->begin(), wortlist->end(), 
-		ostream_iterator<string>(cout, "\n")) ;
-		
+}
+
+void Index::writeFile(string *out_file) {
 	// kopiere wörter in output datei
-	ofstream out(outputfile->c_str()); 
+	ofstream out(out_file->c_str()); 
 	if (!out) { 
-		cerr << "Datei " << outputfile << " kann nicht geoeffnet werden." << endl; 
+		cerr << "Datei " << out_file << " kann nicht geoeffnet werden." << endl; 
 	} else {
-		copy(wortlist->begin(), wortlist->end(), 
+		copy(_words->begin(), _words->end(), 
 			ostream_iterator<string>(out, "\n")) ;
 	}
 	
 	out.close();
+}
+
+void Index::createIndex(string *outputfile, string *inputfile) {
+	this->readFile(inputfile);
+	this->writeFile(outputfile);
 }

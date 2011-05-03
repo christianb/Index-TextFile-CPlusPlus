@@ -12,5 +12,7 @@ int main (int argc, char *argv[]) {
 	string *in = new string("input.txt");
 	Index *index = new Index();
 	index->createIndex(out,in);
+	
+	delete index;
 	return EXIT_SUCCESS;
 }
