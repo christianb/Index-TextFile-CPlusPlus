@@ -2,3 +2,4 @@
 doc/html/
 doc/latex/
 bin/
+*.o
