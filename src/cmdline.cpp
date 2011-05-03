@@ -68,3 +68,11 @@ bool CmdLine::hasOptions() {
 bool CmdLine::hasArguments() {
 	return !arg->empty();
 }
+
+vector<string>* CmdLine::getOptions() {
+	return this->opt;
+}
+
+vector<string>* CmdLine::getArguments() {
+	return this->arg;
+}

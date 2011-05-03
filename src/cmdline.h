@@ -58,9 +58,9 @@ public:
 	 */
 	bool hasArguments();
 	
-	options getOptions() {
-		return *opt;
-	}
+	vector<string>* getOptions();
+	
+	vector<string>* getArguments();
 };
 
 #endif	/* _CMDLINE_H */
