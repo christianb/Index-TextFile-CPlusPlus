@@ -31,6 +31,6 @@ clean:
 		rm $(OBJECTS)
 
 doc: FORCE
-		cd $(SRC); doxygen
+		doxygen
 
 FORCE:
