@@ -6,7 +6,7 @@ CC = c++
 # Define standard flags
 CFLAGS = -Wall
 # Files to be compiled
-OBJECTS = $(SRC)main.o $(SRC)cmdline.o $(SRC)index.o
+OBJECTS = $(SRC)main.o $(SRC)cmdline.o $(SRC)index.o $(SRC)controller.o
 
 CD = cd
 
@@ -26,6 +26,9 @@ cmdline.o: $(SRC)cmdline.cpp
 
 index.o: $(SRC)index.cpp
 		$(CC) -c $(CFLAGS) src/index.cpp
+		
+controller.o: $(SRC)controller.cpp
+		$(CC) -c $(CFLAGS) src/controller.cpp
 
 clean:
 		rm $(OBJECTS)

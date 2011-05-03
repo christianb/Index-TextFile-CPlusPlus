@@ -1,3 +1,12 @@
+/** Class CmdLine
+ *
+ *  This class split the command line parameters into options and arguments.
+ *
+ *  author  Christian Bunk
+ *  date    3.5.2011
+ *  version 0.1
+ */
+
 #ifndef _CMDLINE_H
 #define _CMDLINE_H
 

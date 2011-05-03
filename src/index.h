@@ -1,3 +1,12 @@
+/** Class Index
+ *
+ *  This class creates an index of different input files.
+ *
+ *  author  Christian Bunk
+ *  date    3.5.2011
+ *  version 0.1
+ */
+
 #ifndef _INDEX_H
 #define _INDEX_H
 
