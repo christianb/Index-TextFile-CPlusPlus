@@ -70,9 +70,12 @@ bool CmdLine::hasArguments() {
 }
 
 vector<string>* CmdLine::getOptions() {
-	return this->opt;
+	return opt;
 }
 
 vector<string>* CmdLine::getArguments() {
-	return this->arg;
+	//vector<string> arguments;
+	//arguments.swap(*arg);
+	//return arguments;
+	return arg;
 }
