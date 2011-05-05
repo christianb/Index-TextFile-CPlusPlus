@@ -4,7 +4,7 @@ using namespace std;
 
 void Index::init() {
 	// create new map
-	_word_index = new map<word, map_files>();
+	_word_index = new map<word, map_files*>();
 	
 	_validCharacters = new set<char>();
 	
@@ -103,16 +103,46 @@ void Index::addToIndex(word w, file f, line l) {
 	cout << "call addToIndex, word: " << w << ", in file: " << f << ", at line: " << l << endl;
 	
 	// the word is in the map and we get an iterator to its position.
-	map<word, map_files>::iterator word_it = this->addWord(w);
+	map<word, map_files*>::iterator word_it = this->addWord(w);
 	
 	// now we can add the file to that word
-	map<file, list<line> >::iterator file_it = this->addFile(word_it, f);
+	map_files::iterator file_it = this->addFile(word_it, f);
 	
 	// now we can add the line to the given file iterator
 	this->addLine(file_it, l);	
+	
+	/*
+	// Test
+	cout << "Test: size: " << file_it->second.size() << endl;
+	//cout << *file_it->second.begin() << endl;
+	
+	for (map<string, map_files>::iterator word_it2=_word_index->begin(); word_it2 != _word_index->end(); word_it2++) {
+		// write each word, followed by a BLANK
+		cout << word_it2->first << " ";
+		map_files m_files = word_it2->second;
+		for (map_files::iterator file_it2 = m_files.begin(); file_it2 != m_files.end(); file_it2++) {
+			// write out the file followed by a BLANk and a (
+			cout << file_it2->first << " ( ";
+			//list<line> line_list = file_it->second;
+			list<line> l = file_it2->second;
+			cout << "es sind " << l.size() << " zeilen vorhanden!";
+			//cout << l;
+			
+			/*for (list<line>::iterator line_it = l_list.begin(); line_it != l_list.end(); line_it++) {
+				// write out line number followed by a BLANK 
+				cout << *line_it << " ";
+			}*/
+			// close with a )
+			/*cout << ")  ";
+		}
+		
+		cout << endl;
+		
+		//ostream.write(out, "ha"));
+	}*/
 }
 
-map<word, map_files>::iterator Index::addWord(word w) {
+map<word, map_files*>::iterator Index::addWord(word w) {
 /*	map<word, map_files>::iterator it = _word_index->find(w);
 	
 	// if the word is in map, so the iterator points not at the end
@@ -133,8 +163,8 @@ map<word, map_files>::iterator Index::addWord(word w) {
 		return _word_index->insert(pair<word, map_files>(w, *new map<file, list<line> >())).first;
 	}*/
 	
-		pair<map<word, map_files>::iterator,bool> ret;
-		ret = _word_index->insert(pair<word, map_files>(w, *new map<file, list<line> >()));
+		pair<map<word, map_files*>::iterator,bool> ret;
+		ret = _word_index->insert(pair<word, map_files*>(w, new map_files));
 		
 		if (ret.second == false) {
 			cout << ret.first->first << " is already in map!" << endl;
@@ -145,9 +175,9 @@ map<word, map_files>::iterator Index::addWord(word w) {
 		return ret.first;
 }
 
-map<file, list<line> >::iterator Index::addFile(map<word, map_files>::iterator word_it, file f) {
+map_files::iterator Index::addFile(map<word, map_files*>::iterator word_it, file f) {
 	// get the value (map_files) from iterator
-	map<file, list<line> > m_files = word_it->second; // TODO; hier wird keine map_file gespeichert !!!
+ 	map_files *m_files = word_it->second; // TODO; hier wird keine map_file gespeichert !!!
 	/* 
 	// Variante 1
 	// find file in map_files
@@ -167,29 +197,42 @@ map<file, list<line> >::iterator Index::addFile(map<word, map_files>::iterator w
 	}*/
 	
 	// Variante 2
-	pair<map<file,list<line> >::iterator,bool> ret;
-	ret = m_files.insert(pair<file, list<line> >(f, list<line>()));
+	pair<map<file,list<line>* >::iterator,bool> ret;
+	ret = m_files->insert(pair<file, list<line>* >(f, new list<line>()));
 	
 	if (ret.second == false) {
 		cout << "file: '" << f << "' is already in map for the word: " << word_it->first << " so no changes!" << endl;
 	} else {
 		cout << "insert file: '" << f << "' successfully in map for word: '" << word_it->first << endl;
-		word_it->second = m_files; // assign new map_files to word
+		//word_it->second = m_files; // assign new map_files to word
 	}
-	
-	map<file, list<line> >::iterator test = ret.first;
-	cout << "Test if file exist, f: " << test->first << endl;
 	
 	return ret.first;
 }
 
-void Index::addLine(map<file, list<line> >::iterator file_it, line l) {
-	cout << "add line: " << l << " to file: " << file_it->first << endl;
+void Index::addLine(map_files::iterator file_it, line l) {
+	cout << "call addLine(); try to map line: " << l << " to key: " << file_it->first << endl;
+	
+	file_it->second->push_back(l);
 	
 	// get the list with line numbers for this file
-	list<line> line_list = file_it->second;
+	/*
+	if (file_it->second.empty()) {
+		cout << "line list is empty" << endl;
+		
+		list<line> *line_list = new list<line>();
+		line_list->push_back(42);
+		line_list->push_back(32);
+		line_list->push_back(21);
+		cout << "size: " << line_list->size() << endl;
+		
+		cout << "file_it->second = *line_list" << endl;
+		file_it->second = *line_list;
+	} else {
+		cout << "line list contains "<< file_it->second.size() << " elements." << endl;
+		file_it->second.push_back(l);
+	}*/
 	
-	line_list.push_back(l);
 }
 
 /** FILE OPERATIONS **/
@@ -258,17 +301,27 @@ void Index::writeFile(string *out_file) {
 		cerr << "Datei " << out_file << " kann nicht geoeffnet werden." << endl; 
 	} else {
 		
-		for (map<string, map_files>::iterator word_it=_word_index->begin(); word_it != _word_index->end(); word_it++) {
+		for (map<string, map_files*>::iterator word_it=_word_index->begin(); word_it != _word_index->end(); word_it++) {
+			// write each word, followed by a BLANK
 			cout << word_it->first << " ";
-			map_files m_files = word_it->second;
-			for (map<file, list<line> >::iterator file_it = m_files.begin(); file_it != m_files.end(); file_it++) {
+			map_files *m_files = word_it->second;
+			for (map_files::iterator file_it = m_files->begin(); file_it != m_files->end(); file_it++) {
+				// write out the file followed by a BLANk and a (
 				cout << file_it->first << " ( ";
-				list<line> l_list;
-				for (list<line>::iterator line_it = l_list.begin(); line_it != l_list.end(); line_it++) {
+				//list<line> line_list = file_it->second;
+				list<line> *l_list = file_it->second;
+				//cout << "es sind " << l->size() << " zeilen vorhanden!";
+				//cout << l;
+				
+				for (list<line>::iterator line_it = l_list->begin(); line_it != l_list->end(); line_it++) {
+					// write out line number followed by a BLANK 
 					cout << *line_it << " ";
 				}
-				cout << ")" << endl;
+				// close with a )
+				cout << ")  ";
 			}
+			
+			cout << endl;
 			
 			//ostream.write(out, "ha"));
 		}

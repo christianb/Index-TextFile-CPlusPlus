@@ -25,7 +25,7 @@ using namespace std;
 typedef string word;
 typedef string file;
 typedef int line;
-typedef map<file, list<line> > map_files;
+typedef map<file, list<line>* > map_files; // stores a pointer to list's
 
 class Index {
 private:
@@ -33,7 +33,7 @@ private:
 	set<char> *_validCharacters;
 	
 	// this map stores for each word, another map
-	map<word, map_files> *_word_index;
+	map<word, map_files*> *_word_index; // stores a pointer to map_files
 	
 	void init();
 	
@@ -53,7 +53,7 @@ private:
 	 * If the word is in map already, then return the iterator with position of that word.
 	 * @return map<word, map_files>::iterator with the position of the word in map.
 	 */
-	map<word, map_files>::iterator addWord(word w);
+	map<word, map_files*>::iterator addWord(word w);
 	
 	/**
 	 * Add a file to a word and returns the iterator to the position of the file key
@@ -62,7 +62,7 @@ private:
 	 * @param it the iterator pointing to the word where the fill will be added.
 	 * @return map<file, list<line> >::iterator pointing to the file.
 	 */
-	map<file, list<line> >::iterator addFile(map<word, map_files>::iterator it, file f);
+	map_files::iterator addFile(map<word, map_files*>::iterator it, file f);
 	
 	/**
 	 * Adds a line to a given file (iterator).
@@ -70,7 +70,7 @@ private:
 	 * @param l
 	 * @return
 	 */
-	void addLine(map<file, list<line> >::iterator file_it, line l);
+	void addLine(map_files::iterator file_it, line l);
 	
 	/**
 	 * Exctract all words from a line.
