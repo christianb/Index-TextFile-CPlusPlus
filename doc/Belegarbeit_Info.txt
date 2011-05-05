@@ -13,3 +13,8 @@ Umgebungsvariablen bestehen aus einem variablen Namen und Wert. Key = Value
 Der Typ einer Umgebungsvariablen ist String!
 
 Umgebungsvariablen auf der Shell anzeigen: > env
+
+Zeichen einer Zeile auslesen:
+- Gehört ein Zeichen zu dem gültigen Zeichensatz, dann füge es dem aktuellen Wort hinzu.
+- Gehört ein Zeichen nicht zu dem Zeichensatz, dann beende das aktuelle Wort und füge es der Liste hinzu.
+- Mache weiter bis zum Ende der Zeile.

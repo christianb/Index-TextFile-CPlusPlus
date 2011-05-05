@@ -38,10 +38,14 @@ Controller::Controller(int argc, char *argv[]) {
 		in_files->push_back(string("input.txt"));
 		in_files->push_back(string("input3.txt"));
 		*/
-		Index *index = new Index();
-		index->createIndex(out,in_files);
+		Index *index = new Index(out,in_files);
 
 		delete index;
+	} else {
+		position = find(options->begin(), options->end(), "-p") ;
+		if (position != options->end()) {
+			cout << "Ausgabe der Indexliste am Terminal" << endl;
+		}
 	}
 
 }
