@@ -4,17 +4,20 @@ using namespace std;
 
 void Index::init() {
 	// create new map
-	_word_index = new map<word, map_files*>();
+	_word_index = new words();
 	
 	_validCharacters = new set<char>();
 	
 	char c[] = {'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z',
 	'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z',
+	'_','-',
 	'0','1','2','3','4','5','6','7','8','9',
-	'_','-'};
+	};
+	
+	_validFirstWordChar = new set<char>(c, c+26+26+2);
 	
 	//26+26+10+2
-	_validCharacters = new set<char>(c,c+26+26+10+2);	
+	_validCharacters = new set<char>(c,c+26+26+2+10);	
 }
 
 Index::Index(string *outputfile, vector<string> *inputfile) {
@@ -28,10 +31,11 @@ Index::Index(string *outputfile, vector<string> *inputfile) {
 Index::~Index() {
 	delete _word_index;
 	delete _validCharacters;
+	delete _validFirstWordChar;
 }
 
 // TODO : to be implemented
-bool Index::isWordValid(word *w) {
+bool Index::isWordValid(word *w) {	
 	for (string::iterator word_it=w->begin(); word_it != w->end(); word_it++) {
 		cout << *word_it << endl;
 	}
@@ -49,10 +53,6 @@ bool Index::isCharValid(char c) {
 }
 
 vector<string> Index::extractAllWordsFromLine(string line) {
-	cout << endl;
-	//cout << "call extractAllWordsFromLine() with param line: " << line << endl;
-	
-	//cout << "call extractAllWordsFromLine: " << line << endl;
 	vector<string> *words = new vector<string>(); 
 	
 	string *word = new string();
@@ -61,12 +61,10 @@ vector<string> Index::extractAllWordsFromLine(string line) {
     for (string::iterator char_it=line.begin(); char_it!=line.end(); char_it++) {
 		//cout << "call for each character in line, char: " << *char_it << endl;
 		
-		// if it is not a valid character
+		// if it is a valid character
 		if (this->isCharValid(*char_it)) {
 			word->push_back(*char_it);
 		} else {
-			//cout << "ungueltiges zeichen gefunden" << endl;
-			//cout << "extracted word: '" << *word << "'" << endl;
 			// copy word in vector
 			if (word->size()>0) {
 				words->push_back(*word);
@@ -88,7 +86,7 @@ vector<string> Index::extractAllWordsFromLine(string line) {
 
 /** INDEX OPERATIONS **/
 
-void Index::addToIndex(vector<string> words, file f, line l) {
+void Index::addToIndex(vector<string> words, file f, line_number l) {
 	for (vector<string>::iterator words_it=words.begin() ; words_it != words.end() ; words_it++) {
 		this->addToIndex(*words_it, f, l);
 	}
@@ -98,73 +96,23 @@ void Index::addToIndex(vector<string> words, file f, line l) {
  * Adds a word to the map.
  * If the word already exists, append values.
  */
-void Index::addToIndex(word w, file f, line l) {
+void Index::addToIndex(word w, file f, line_number l) {
 	cout << endl;
 	cout << "call addToIndex, word: " << w << ", in file: " << f << ", at line: " << l << endl;
 	
 	// the word is in the map and we get an iterator to its position.
-	map<word, map_files*>::iterator word_it = this->addWord(w);
+	words::iterator word_it = this->addWord(w);
 	
 	// now we can add the file to that word
-	map_files::iterator file_it = this->addFile(word_it, f);
+	files::iterator file_it = this->addFile(word_it, f);
 	
 	// now we can add the line to the given file iterator
 	this->addLine(file_it, l);	
-	
-	/*
-	// Test
-	cout << "Test: size: " << file_it->second.size() << endl;
-	//cout << *file_it->second.begin() << endl;
-	
-	for (map<string, map_files>::iterator word_it2=_word_index->begin(); word_it2 != _word_index->end(); word_it2++) {
-		// write each word, followed by a BLANK
-		cout << word_it2->first << " ";
-		map_files m_files = word_it2->second;
-		for (map_files::iterator file_it2 = m_files.begin(); file_it2 != m_files.end(); file_it2++) {
-			// write out the file followed by a BLANk and a (
-			cout << file_it2->first << " ( ";
-			//list<line> line_list = file_it->second;
-			list<line> l = file_it2->second;
-			cout << "es sind " << l.size() << " zeilen vorhanden!";
-			//cout << l;
-			
-			/*for (list<line>::iterator line_it = l_list.begin(); line_it != l_list.end(); line_it++) {
-				// write out line number followed by a BLANK 
-				cout << *line_it << " ";
-			}*/
-			// close with a )
-			/*cout << ")  ";
-		}
-		
-		cout << endl;
-		
-		//ostream.write(out, "ha"));
-	}*/
 }
 
-map<word, map_files*>::iterator Index::addWord(word w) {
-/*	map<word, map_files>::iterator it = _word_index->find(w);
-	
-	// if the word is in map, so the iterator points not at the end
-	if (it != _word_index->end()) {
-		// just return the iterator pointing to the word in map
-		cout << w << " is already in map!" << endl;
-		map_files m_file = it->second;
-		
-		map_files::iterator file_it = m_file.begin();
-		cout << file_it->first << endl;
-		
-		return it;
-	} else {		
-		cout << "insert '" << w << "' in map!" << endl;
-		
-		// if the word is not in the map, that means the iterator points to the end of the map
-		// we must insert the word and return the iterator to that position
-		return _word_index->insert(pair<word, map_files>(w, *new map<file, list<line> >())).first;
-	}*/
-	
-		pair<map<word, map_files*>::iterator,bool> ret;
-		ret = _word_index->insert(pair<word, map_files*>(w, new map_files));
+words::iterator Index::addWord(word w) {
+		pair<words::iterator,bool> ret;
+		ret = _word_index->insert(pair<word, files*>(w, new files()));
 		
 		if (ret.second == false) {
 			cout << ret.first->first << " is already in map!" << endl;
@@ -175,71 +123,29 @@ map<word, map_files*>::iterator Index::addWord(word w) {
 		return ret.first;
 }
 
-map_files::iterator Index::addFile(map<word, map_files*>::iterator word_it, file f) {
+files::iterator Index::addFile(words::iterator word_it, file f) {
 	// get the value (map_files) from iterator
- 	map_files *m_files = word_it->second; // TODO; hier wird keine map_file gespeichert !!!
-	/* 
-	// Variante 1
-	// find file in map_files
-	map<file, list<line> >::iterator file_it = m_files.find(f);
-	
-	// if its not at the end
-	if (file_it != m_files.end()) {
-		cout << "file: '" << f << "' is already in map for the word: " << word_it->first << endl;
-		return file_it;
-	} else {
-		cout << "add file: '" << f << "' to word: " << word_it->first << endl;
-		m_files.insert(pair<file, list<line> >(f, *new list<line>())).first;
-		
-		word_it->second = m_files;
-		
-		return m_files.find(f);
-	}*/
-	
-	// Variante 2
-	pair<map<file,list<line>* >::iterator,bool> ret;
-	ret = m_files->insert(pair<file, list<line>* >(f, new list<line>()));
+	files *m_files = word_it->second;
+
+	pair<files::iterator,bool> ret;
+	ret = m_files->insert(pair<file, line_numbers* >(f, new line_numbers()));
 	
 	if (ret.second == false) {
 		cout << "file: '" << f << "' is already in map for the word: " << word_it->first << " so no changes!" << endl;
 	} else {
 		cout << "insert file: '" << f << "' successfully in map for word: '" << word_it->first << endl;
-		//word_it->second = m_files; // assign new map_files to word
 	}
 	
 	return ret.first;
 }
 
-void Index::addLine(map_files::iterator file_it, line l) {
-	cout << "call addLine(); try to map line: " << l << " to key: " << file_it->first << endl;
-	
-	file_it->second->push_back(l);
-	
-	// get the list with line numbers for this file
-	/*
-	if (file_it->second.empty()) {
-		cout << "line list is empty" << endl;
-		
-		list<line> *line_list = new list<line>();
-		line_list->push_back(42);
-		line_list->push_back(32);
-		line_list->push_back(21);
-		cout << "size: " << line_list->size() << endl;
-		
-		cout << "file_it->second = *line_list" << endl;
-		file_it->second = *line_list;
-	} else {
-		cout << "line list contains "<< file_it->second.size() << " elements." << endl;
-		file_it->second.push_back(l);
-	}*/
-	
+void Index::addLine(files::iterator file_it, line_number l) {
+	file_it->second->insert(l);
 }
 
 /** FILE OPERATIONS **/
 
 void Index::readFile(vector<string> *in_files) {
-	cout << "call readFile()" << endl;
-	
 	// for each file
 	for (vector<string>::iterator files_it=in_files->begin() ; files_it != in_files->end() ; files_it++) // Hier wird ein Iterator verwendet.
 	{
@@ -247,12 +153,10 @@ void Index::readFile(vector<string> *in_files) {
 		vector<string> *lines = new vector<string>();
 		string line;
 		
-		cout << "read from inputfile: " << *files_it << endl;
 		// read from inputfile
 		ifstream in(files_it->c_str());
 		//istream_iterator<string> pos(in), end ;
 		
-		cout << "test if file exist" << endl;
 		// test if file exist
 		if (!in) {
 			cout << "Eingabedatei "<< *files_it << " nicht gefunden!" << endl;
@@ -285,7 +189,6 @@ void Index::readFile(vector<string> *in_files) {
 			
 			// now we can insert all the words, from current line, from current file in map
 			this->addToIndex(words, *files_it, ++line_number);
-			
 		}
 
 		in.close() ; // Datei schließen
@@ -295,34 +198,30 @@ void Index::readFile(vector<string> *in_files) {
 }
 
 void Index::writeFile(string *out_file) {
-	// kopiere wörter in output datei
 	ofstream out(out_file->c_str()); 
 	if (!out) { 
 		cerr << "Datei " << out_file << " kann nicht geoeffnet werden." << endl; 
 	} else {
 		
-		for (map<string, map_files*>::iterator word_it=_word_index->begin(); word_it != _word_index->end(); word_it++) {
+		for (words::iterator word_it=_word_index->begin(); word_it != _word_index->end(); word_it++) {
 			// write each word, followed by a BLANK
-			cout << word_it->first << " ";
-			map_files *m_files = word_it->second;
-			for (map_files::iterator file_it = m_files->begin(); file_it != m_files->end(); file_it++) {
-				// write out the file followed by a BLANk and a (
-				cout << file_it->first << " ( ";
-				//list<line> line_list = file_it->second;
-				list<line> *l_list = file_it->second;
-				//cout << "es sind " << l->size() << " zeilen vorhanden!";
-				//cout << l;
+			cout << word_it->first;
+			files *m_files = word_it->second;
+			
+			for (files::iterator file_it = m_files->begin(); file_it != m_files->end(); file_it++) {
+				// write out the filename followed by a BLANk and a (
+				cout << " " << file_it->first << " ( ";
+				line_numbers *l_list = file_it->second;
 				
-				for (list<line>::iterator line_it = l_list->begin(); line_it != l_list->end(); line_it++) {
+				for (line_numbers::iterator line_it = l_list->begin(); line_it != l_list->end(); line_it++) {
 					// write out line number followed by a BLANK 
 					cout << *line_it << " ";
 				}
 				// close with a )
-				cout << ")  ";
+				cout << ")";
 			}
 			
 			cout << endl;
-			
 			//ostream.write(out, "ha"));
 		}
 		
