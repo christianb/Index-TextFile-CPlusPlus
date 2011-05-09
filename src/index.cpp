@@ -7,18 +7,19 @@ void Index::init() {
 	_word_index = new words();
 }
 
-Index::Index(string *outputfile, vector<string> *inputfile) {
+Index::Index() {
 	this->init();
-	
-	//_word_index->insert(pair<word, map_files>("Hallo", *new map<file, list<line> >()));
-	this->readFile(inputfile);
-	this->writeFile(outputfile);
 }
 
 Index::~Index() {
 	delete _word_index;
 	/*delete _validCharacters;
 	delete _validFirstWordChar;*/
+}
+
+void Index::createIndex(file* out, vector<file>* in) {	
+	this->readFiles(in);
+	this->writeFile(out);
 }
 
 // TODO : to be implemented
@@ -145,22 +146,19 @@ void Index::addLine(files::iterator file_it, line_number l) {
 
 /** FILE OPERATIONS **/
 
-void Index::readFile(vector<string> *in_files) {
-	// for each file
-	for (vector<string>::iterator files_it=in_files->begin() ; files_it != in_files->end() ; files_it++) // Hier wird ein Iterator verwendet.
-	{
+void Index::readFile(file f) {
 		// this vectore stores each line in the file
 		vector<string> *lines = new vector<string>();
 		string line;
 		
 		// read from inputfile
-		ifstream in(files_it->c_str());
+		ifstream in(f.c_str());
 		//istream_iterator<string> pos(in), end ;
 		
 		// test if file exist
 		if (!in) {
-			cout << "Eingabedatei "<< *files_it << " nicht gefunden!" << endl;
-			continue;
+			cout << "Eingabedatei "<< f << " nicht gefunden!" << endl;
+			return;
 		};
 		
 		// read each line of file
@@ -188,17 +186,14 @@ void Index::readFile(vector<string> *in_files) {
 			vector<string> words = this->extractAllWordsFromLine(line);
 			
 			// now we can insert all the words, from current line, from current file in map
-			this->addToIndex(words, *files_it, ++line_number);
+			this->addToIndex(words, f, ++line_number);
 		}
 
 		in.close() ; // Datei schließen
-	}
-	
-	
 }
 
 void Index::writeFile(string *out_file) {
-	ofstream out(out_file->c_str()); 
+	/*ofstream out(out_file->c_str()); 
 	if (!out) { 
 		cerr << "Datei " << out_file << " kann nicht geoeffnet werden." << endl; 
 	} else {
@@ -225,10 +220,20 @@ void Index::writeFile(string *out_file) {
 			//ostream.write(out, "ha"));
 		}
 		
-		/*copy(_words->begin(), _words->end(), 
-			ostream_iterator<string>(out, "\n")) ;*/
+		copy(_words->begin(), _words->end(), 
+			ostream_iterator<string>(out, "\n")) ;
 	}
 	
-	out.close();
+	out.close();*/
 }
 
+void Index::readFiles(vector<file> *files) {
+	for (vector<file>::iterator f_it = files->begin(); f_it != files->end(); f_it++) {
+		this->readFile(*f_it);
+	}
+}
+
+void Index::print(file *f) {
+	// to be implement
+	return;
+}

@@ -18,3 +18,18 @@ Zeichen einer Zeile auslesen:
 - Gehört ein Zeichen zu dem gültigen Zeichensatz, dann füge es dem aktuellen Wort hinzu.
 - Gehört ein Zeichen nicht zu dem Zeichensatz, dann beende das aktuelle Wort und füge es der Liste hinzu.
 - Mache weiter bis zum Ende der Zeile.
+
+
+09.05.2011
+ToDo Liste:
+- Ausgabe des Index in Ausgabedatei
+
+Alle folgenden Anfragen lesen den Index aus einer Datei ein. Es gibt wird also kein inputfile übergeben.
+- Ausgabe des vollständigen Indexes zum einem Wort am Terminal
+- Ausgeben des vollständigen Indexes zu allen Wörtern mit dem Wortanfang am Terminal
+- Ausgabe der Indizes zu allen Wörtern, die in der Datei vorkommen
+
+- verhindern des Überschreibens der Ausgabedatei
+
+
+-- Erstellen von Dokumentation

@@ -22,7 +22,11 @@
 
 using namespace std;
 
-typedef string word; 						// a word is a string
+// TODO comment type defs
+typedef string word; 
+/**
+ * a file is a string.
+ */						// a word is a string
 typedef string file;						// a file is a string
 typedef int line_number; 					// a line number is an integer
 
@@ -41,10 +45,13 @@ private:
 	 * Read content from a given File.
 	 * First read lines, then seperate words from each line.
 	 */	
-	void readFile(vector<file> *in_files);
+	void readFiles(vector<file> *files);
+	
+	void readFile(file f);
 	
 	/**
-	 * Write content within *_words into a file.
+	 * To be implement!
+	 * Write index to file.
 	 */
 	void writeFile(file *out_file);
 	
@@ -95,13 +102,50 @@ private:
 
 public:
 	/**
-	 * Creates an Indexfile.
-	 * @param outputfile the destination file
-	 * @param inputfiles from these files the index will be created 
+	 * Create an object.
 	 */
-	Index(string *outputfile, vector<string> *inputfile);
+	Index();
 	
+	/**
+	 * Destroy the object.
+	 */
 	~Index();	
+	
+	/**
+	 * To be implement!
+	 * Print the given index file in shell.
+	 * @param index File with the index.
+	 */
+	void print(file *f);
+	
+	/**
+	 * To be implement!
+	 * Create a new Index.
+	 * @param out The outputfile to write the index in.
+	 * @param in_files Reads from these input files to create an index.
+	 */
+	void createIndex(file *out, vector<file> *in_files);
+	
+	/**
+	 * To be implement!
+	 * Prints the index for the given word in shell.
+	 * @param w The word the index is printed.
+	 */
+	void printIndexForWord(word *w);
+	
+	/**
+	 * To be implement!
+	 * Print all words which matches with the first characters the given string.
+	 * @param characters The letters the word must fit at the beginning.
+	 */
+	void printWordsMatchesCharacters(string *characters);
+	
+	/**
+	 * To be implement!
+	 * Print all words in given file in shell.
+	 * @param f Print all words occuring in the given file.
+	 */
+	void printIndexForFile(file *f);
 };
 
 #endif	/* _INDEX_H */
