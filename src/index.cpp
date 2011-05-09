@@ -147,6 +147,8 @@ void Index::addLine(files::iterator file_it, line_number l) {
 /** FILE OPERATIONS **/
 
 void Index::readFile(file f) {
+	cout << "read file : " << f << endl;
+	
 		// this vectore stores each line in the file
 		vector<string> *lines = new vector<string>();
 		string line;
@@ -193,38 +195,54 @@ void Index::readFile(file f) {
 }
 
 void Index::writeFile(string *out_file) {
-	/*ofstream out(out_file->c_str()); 
+	ofstream out(out_file->c_str()); 
 	if (!out) { 
 		cerr << "Datei " << out_file << " kann nicht geoeffnet werden." << endl; 
 	} else {
 		
 		for (words::iterator word_it=_word_index->begin(); word_it != _word_index->end(); word_it++) {
 			// write each word, followed by a BLANK
-			cout << word_it->first;
+			//cout << word_it->first;
+			string word = word_it->first;
+			out.write(word.data(), word.size());
+			out.write(" ", 1);
 			files *m_files = word_it->second;
 			
 			for (files::iterator file_it = m_files->begin(); file_it != m_files->end(); file_it++) {
+				/*if (file_it != m_files->begin()) {
+					cout << "file_it zeigt auf begin" << endl;
+					out.write(">>>", 3);
+				}*/
 				// write out the filename followed by a BLANk and a (
-				cout << " " << file_it->first << " ( ";
+				//cout << " " << file_it->first << " ( ";
+				string file =  file_it->first;
+				out.write(file.data(), file.size());
+				out.write(" ( ", 3);
+				//out.write("\n", 2);
 				line_numbers *l_list = file_it->second;
 				
 				for (line_numbers::iterator line_it = l_list->begin(); line_it != l_list->end(); line_it++) {
 					// write out line number followed by a BLANK 
-					cout << *line_it << " ";
+					// cout << *line_it << " ";
+					stringstream o;
+					o << *line_it;
+					string line = o.str();
+					out.write(line.data(), line.size());
+					out.write(" ", 1);
 				}
-				// close with a )
-				cout << ")";
+				out.write(") \n", 4);
+				
+				
 			}
 			
 			cout << endl;
 			//ostream.write(out, "ha"));
 		}
 		
-		copy(_words->begin(), _words->end(), 
-			ostream_iterator<string>(out, "\n")) ;
+		//copy(_words->begin(), _words->end(), ostream_iterator<string>(out, "\n")) ;
 	}
 	
-	out.close();*/
+	out.close();
 }
 
 void Index::readFiles(vector<file> *files) {
