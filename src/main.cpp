@@ -1,4 +1,5 @@
 #include <iostream>
+#include <cstdlib>
 #include "controller.h"
 
 int main (int argc, char *argv[]) {

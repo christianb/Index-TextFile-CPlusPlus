@@ -1,6 +1,7 @@
-#include "Controller.h"
+#include "controller.h"
 #include "cmdline.h"
 #include "index.h"
+#include <algorithm>
 
 Controller::Controller(int argc, char *argv[]) {
 	cout << "Konstruktor: Controller" << endl;
