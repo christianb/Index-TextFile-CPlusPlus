@@ -33,6 +33,10 @@ controller.o: $(SRC)controller.cpp
 clean:
 		rm $(OBJECTS)
 
+valgrind: 
+		valgrind --tool=memcheck --leak-check=yes --show-reachable=yes ./bin/project1 -i input.txt
+
+
 doc: FORCE
 		doxygen
 
