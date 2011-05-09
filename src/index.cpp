@@ -5,19 +5,6 @@ using namespace std;
 void Index::init() {
 	// create new map
 	_word_index = new words();
-	
-	_validCharacters = new set<char>();
-	
-	char c[] = {'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z',
-	'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z',
-	'_','-',
-	'0','1','2','3','4','5','6','7','8','9',
-	};
-	
-	_validFirstWordChar = new set<char>(c, c+26+26+2);
-	
-	//26+26+10+2
-	_validCharacters = new set<char>(c,c+26+26+2+10);	
 }
 
 Index::Index(string *outputfile, vector<string> *inputfile) {
@@ -30,8 +17,8 @@ Index::Index(string *outputfile, vector<string> *inputfile) {
 
 Index::~Index() {
 	delete _word_index;
-	delete _validCharacters;
-	delete _validFirstWordChar;
+	/*delete _validCharacters;
+	delete _validFirstWordChar;*/
 }
 
 // TODO : to be implemented
@@ -45,14 +32,27 @@ bool Index::isWordValid(word *w) {
 
 bool Index::isCharValid(char c) {
 	// if the character is part of the valid character set
-	if (_validCharacters->end() != _validCharacters->find(c)) {
+	/*if (_validCharacters->end() != _validCharacters->find(c)) {
+		return true;
+	}*/
+	
+	// alternative implementation
+	if ( this->isFirstCharValid(c) || (c >= '0' && c <= '9')) {
 		return true;
 	}
 	
 	return false;
 }
 
-vector<string> Index::extractAllWordsFromLine(string line) {
+bool Index::isFirstCharValid(char c) {
+	if ( (c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z') || c == '_' || c == '-') {
+		return true;
+	}
+	
+	return false;
+}
+
+vector<word> Index::extractAllWordsFromLine(string line) {
 	vector<string> *words = new vector<string>(); 
 	
 	string *word = new string();
@@ -97,8 +97,8 @@ void Index::addToIndex(vector<string> words, file f, line_number l) {
  * If the word already exists, append values.
  */
 void Index::addToIndex(word w, file f, line_number l) {
-	cout << endl;
-	cout << "call addToIndex, word: " << w << ", in file: " << f << ", at line: " << l << endl;
+	// cout << endl;
+ 	// cout << "call addToIndex, word: " << w << ", in file: " << f << ", at line: " << l << endl;	
 	
 	// the word is in the map and we get an iterator to its position.
 	words::iterator word_it = this->addWord(w);
@@ -113,12 +113,12 @@ void Index::addToIndex(word w, file f, line_number l) {
 words::iterator Index::addWord(word w) {
 		pair<words::iterator,bool> ret;
 		ret = _word_index->insert(pair<word, files*>(w, new files()));
-		
+		/*
 		if (ret.second == false) {
 			cout << ret.first->first << " is already in map!" << endl;
 		} else {
 			cout << "insert '" << ret.first->first << "' in map!" << endl;
-		}
+		}*/
 		
 		return ret.first;
 }
@@ -129,12 +129,12 @@ files::iterator Index::addFile(words::iterator word_it, file f) {
 
 	pair<files::iterator,bool> ret;
 	ret = m_files->insert(pair<file, line_numbers* >(f, new line_numbers()));
-	
+	/*
 	if (ret.second == false) {
 		cout << "file: '" << f << "' is already in map for the word: " << word_it->first << " so no changes!" << endl;
 	} else {
 		cout << "insert file: '" << f << "' successfully in map for word: '" << word_it->first << endl;
-	}
+	}*/
 	
 	return ret.first;
 }

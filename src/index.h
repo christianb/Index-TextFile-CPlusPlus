@@ -22,19 +22,16 @@
 
 using namespace std;
 
-typedef string word;
-typedef string file;
-typedef int line_number;
-typedef set<line_number> line_numbers; // stores all line numbers 
-typedef map<file, line_numbers* > files;
-typedef map<word, files*> words; // stores a pointer to list's
+typedef string word; 						// a word is a string
+typedef string file;						// a file is a string
+typedef int line_number; 					// a line number is an integer
+
+typedef set<line_number> line_numbers; 		// a set of line numbers
+typedef map<file, line_numbers* > files; 	// maps a file to a list of line_numbers
+typedef map<word, files*> words; 			// maps a word to a map of files
 
 class Index {
-private:
-	// includes all valid characters
-	set<char> *_validCharacters;
-	set<char> *_validFirstWordChar;
-	
+private:	
 	// this map stores for each word, another map
 	words *_word_index; // stores a pointer to map_files
 	
@@ -44,12 +41,12 @@ private:
 	 * Read content from a given File.
 	 * First read lines, then seperate words from each line.
 	 */	
-	void readFile(vector<string> *in_files);
+	void readFile(vector<file> *in_files);
 	
 	/**
 	 * Write content within *_words into a file.
 	 */
-	void writeFile(string *out_file);
+	void writeFile(file *out_file);
 	
 	/**
 	 * Add a new Word and return the iterator to that position.
@@ -79,7 +76,7 @@ private:
 	 * Exctract all words from a line.
 	 * Rules: each empty character will be ignored
 	 */
-	vector<string> extractAllWordsFromLine(string line);
+	vector<word> extractAllWordsFromLine(string line);
 	
 	/**
 	 * check if the word is valid
@@ -87,6 +84,8 @@ private:
 	bool isWordValid(word *w);
 	
 	bool isCharValid(char c);
+	
+	bool isFirstCharValid(char c);
 	
 	void addToIndex(word w, file f, line_number l);
 	

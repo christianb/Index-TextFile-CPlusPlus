@@ -16,7 +16,7 @@ NAME = bin/project1
 SRC = ./src/
 
 project1: $(OBJECTS)
-		mkdir bin/; $(CC) $(OBJECTS) -o $(NAME)  
+		mkdir -p bin/; $(CC) $(OBJECTS) -o $(NAME)  
 
 main.o: $(SRC)main.cpp
 		$(CC) -c $(CFLAGS) src/main.cpp
