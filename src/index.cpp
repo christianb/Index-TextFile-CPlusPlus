@@ -13,13 +13,77 @@ Index::Index() {
 
 Index::~Index() {
 	delete _word_index;
-	/*delete _validCharacters;
-	delete _validFirstWordChar;*/
 }
 
 void Index::createIndex(file* out, vector<file>* in) {	
 	this->readFiles(in);
 	this->writeFile(out);
+}
+
+void Index::readFiles(vector<file> *files) {
+	for (vector<file>::iterator f_it = files->begin(); f_it != files->end(); f_it++) {
+		this->readFile(*f_it);
+	}
+}
+
+void Index::readFile(file f) {
+	// this vectore stores each line in the file
+	vector<string> *lines = this->readAllLines(f);
+		
+	/** at this we have each line of this file in a vector 
+	 * now its time to read each character of that line **/
+		
+	int line_number = 0;
+	
+	// for each line in vector
+	for (vector<string>::iterator line_it=lines->begin() ; line_it != lines->end() ; line_it++) {
+		string line = *line_it;
+			
+		// extract all words from line
+		vector<string> words = this->extractAllWordsFromLine(line);
+			
+		// now we can insert all the words, from current line, from current file in map
+		this->addToIndex(words, f, ++line_number);
+	}
+	
+	delete lines;
+}
+
+void Index::writeFile(string *out_file) {
+	ofstream out(out_file->c_str()); 
+	if (!out) { 
+		cerr << "Datei " << out_file << " kann nicht geoeffnet werden." << endl; 
+	} else {
+		
+		for (words::iterator word_it=_word_index->begin(); word_it != _word_index->end(); word_it++) {
+			string word = word_it->first;
+			out.write(word.data(), word.size());
+			//
+			files *m_files = word_it->second;
+			
+			for (files::iterator file_it = m_files->begin(); file_it != m_files->end(); file_it++) {
+				string file =  file_it->first;
+				out.write(" ", 1);
+				out.write(file.data(), file.size());
+				out.write(" ( ", 3);
+				
+				line_numbers *l_list = file_it->second;
+				
+				for (line_numbers::iterator line_it = l_list->begin(); line_it != l_list->end(); line_it++) {
+					// write out line number followed by a BLANK 
+					// cout << *line_it << " ";
+					stringstream o;
+					o << *line_it;
+					string line = o.str();
+					out.write(line.data(), line.size());
+					out.write(" ", 1);
+				}
+				out.write(")\n", 3);
+			}
+		}
+	}
+	
+	out.close();
 }
 
 // TODO : to be implemented
@@ -84,7 +148,6 @@ vector<word> Index::extractAllWordsFromLine(string line) {
 }
 
 
-
 /** INDEX OPERATIONS **/
 
 void Index::addToIndex(vector<string> words, file f, line_number l) {
@@ -146,112 +209,41 @@ void Index::addLine(files::iterator file_it, line_number l) {
 
 /** FILE OPERATIONS **/
 
-void Index::readFile(file f) {
-	cout << "read file : " << f << endl;
-	
-		// this vectore stores each line in the file
-		vector<string> *lines = new vector<string>();
-		string line;
-		
-		// read from inputfile
-		ifstream in(f.c_str());
-		//istream_iterator<string> pos(in), end ;
-		
-		// test if file exist
-		if (!in) {
-			cout << "Eingabedatei "<< f << " nicht gefunden!" << endl;
-			return;
-		};
-		
-		// read each line of file
-		while (getline(in, line, '\n')) {
-			// put line at the end of vector.
-		    lines->push_back(line);
-		}
-		
-		// how many lines have been read
-		//cout << "Read " << lines->size() << " lines." << endl;
-		
-		/** at this we have each line of this file in a vector 
-		 * now its time to read each character of that line **/
-		
-		vector<string> *words = new vector<string>();
-		
-		//string *word = new string();
-		
-		int line_number = 0;
-		// for each line in vector
-		for (vector<string>::iterator line_it=lines->begin() ; line_it != lines->end() ; line_it++) {
-			string line = *line_it;
-			
-			// extract all words from line
-			vector<string> words = this->extractAllWordsFromLine(line);
-			
-			// now we can insert all the words, from current line, from current file in map
-			this->addToIndex(words, f, ++line_number);
-		}
-
-		in.close() ; // Datei schließen
-}
-
-void Index::writeFile(string *out_file) {
-	ofstream out(out_file->c_str()); 
-	if (!out) { 
-		cerr << "Datei " << out_file << " kann nicht geoeffnet werden." << endl; 
-	} else {
-		
-		for (words::iterator word_it=_word_index->begin(); word_it != _word_index->end(); word_it++) {
-			// write each word, followed by a BLANK
-			//cout << word_it->first;
-			string word = word_it->first;
-			out.write(word.data(), word.size());
-			out.write(" ", 1);
-			files *m_files = word_it->second;
-			
-			for (files::iterator file_it = m_files->begin(); file_it != m_files->end(); file_it++) {
-				/*if (file_it != m_files->begin()) {
-					cout << "file_it zeigt auf begin" << endl;
-					out.write(">>>", 3);
-				}*/
-				// write out the filename followed by a BLANk and a (
-				//cout << " " << file_it->first << " ( ";
-				string file =  file_it->first;
-				out.write(file.data(), file.size());
-				out.write(" ( ", 3);
-				//out.write("\n", 2);
-				line_numbers *l_list = file_it->second;
-				
-				for (line_numbers::iterator line_it = l_list->begin(); line_it != l_list->end(); line_it++) {
-					// write out line number followed by a BLANK 
-					// cout << *line_it << " ";
-					stringstream o;
-					o << *line_it;
-					string line = o.str();
-					out.write(line.data(), line.size());
-					out.write(" ", 1);
-				}
-				out.write(") \n", 4);
-				
-				
-			}
-			
-			cout << endl;
-			//ostream.write(out, "ha"));
-		}
-		
-		//copy(_words->begin(), _words->end(), ostream_iterator<string>(out, "\n")) ;
-	}
-	
-	out.close();
-}
-
-void Index::readFiles(vector<file> *files) {
-	for (vector<file>::iterator f_it = files->begin(); f_it != files->end(); f_it++) {
-		this->readFile(*f_it);
-	}
-}
-
 void Index::print(file *f) {
 	// to be implement
+	// parse the given (index) file.
 	return;
+}
+
+void Index::parseIndexFile(file *f) {
+	vector<string> *lines = this->readAllLines(*f);
+	
+	delete lines;
+}
+
+vector<string>* Index::readAllLines(file f) {
+	// read the given index file
+	// this vectore stores each line in the file
+	vector<string> *lines = new vector<string>();
+	string line;
+	
+	// read from inputfile
+	ifstream in(f.c_str());
+		
+	// test if file exist
+	if (!in) {
+		cout << "Eingabedatei "<< f << " nicht gefunden!" << endl;
+		in.close() ; // Datei schließen
+		return lines;
+	}
+	
+	// read each line of file
+	while (getline(in, line, '\n')) {
+		// put line at the end of vector.
+	    lines->push_back(line);
+	}
+	
+	in.close() ; // Datei schließen
+	
+	return lines;
 }

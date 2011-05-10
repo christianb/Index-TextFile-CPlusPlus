@@ -44,10 +44,16 @@ private:
 	
 	/**
 	 * Read content from a given File.
-	 * First read lines, then seperate words from each line.
+	 * 
 	 */	
 	void readFiles(vector<file> *files);
 	
+	/**
+	 * Read each line from file.
+	 * Then seperate words from each line. 
+	 * Insert word (with line number and filename) in index map.
+	 * @param file The file to be read.
+	 */
 	void readFile(file f);
 	
 	/**
@@ -99,7 +105,13 @@ private:
 	
 	void addToIndex(vector<string> words, file f, line_number l);
 	
+	void parseIndexFile(file *f);
 	
+	/**
+	 * Read all lines within a file.
+	 * @return vector<string>* All lines within the file.
+	 */
+	vector<string>* readAllLines(file f);
 
 public:
 	/**
@@ -120,7 +132,6 @@ public:
 	void print(file *f);
 	
 	/**
-	 * To be implement!
 	 * Create a new Index.
 	 * @param out The outputfile to write the index in.
 	 * @param in_files Reads from these input files to create an index.

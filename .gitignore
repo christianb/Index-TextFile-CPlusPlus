@@ -3,4 +3,4 @@ doc/html/
 doc/latex/
 bin/
 *.o
-output.txt
+*out*

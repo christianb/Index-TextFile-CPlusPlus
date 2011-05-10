@@ -28,6 +28,7 @@ Controller::Controller(int argc, char *argv[]) {
 	//  create new index
 	vector<string>::iterator position = find(options->begin(), options->end(), "-i") ;
 	if (position != options->end()) {
+		// create the index, read the input files and write the index in the output file
 		index->createIndex(out,in_files);
 	}
 		
