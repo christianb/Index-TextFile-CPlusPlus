@@ -30,6 +30,17 @@ Alle folgenden Anfragen lesen den Index aus einer Datei ein. Es gibt wird also k
 - Ausgabe der Indizes zu allen Wörtern, die in der Datei vorkommen
 
 - verhindern des Überschreibens der Ausgabedatei
-
-
 -- Erstellen von Dokumentation
+
+10.05.2011
+Wenn ich auf einer map die Methode erase() aufrufe, werden dann auch alle values deallociert?
+Geht das auch in tiefere Datenstrukturen rein? Ja tut es!
+
+Umgang mit Pointern:
+Wenn ein Pointer in eine Methode gegeben wird, so muss sich die Methode nicht um diesen Pointer kümmern. Die aufrufende Methode muss, wenn sie den Pointer selbst allocciert hat, diesen mit einem delete auch wieder freigeben.
+
+Valgrind:
+c++ -Wall -g LexExample.cpp
+valgrind ./a.out
+valgrind --leak-check=full ./a.out
+

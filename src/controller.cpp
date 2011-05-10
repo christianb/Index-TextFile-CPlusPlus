@@ -31,7 +31,7 @@ Controller::Controller(int argc, char *argv[]) {
 		// create the index, read the input files and write the index in the output file
 		index->createIndex(out,in_files);
 	}
-		
+	
 	// print the entire index
 	position = find(options->begin(), options->end(), "-p") ;
 	if (position != options->end()) {
@@ -56,6 +56,9 @@ Controller::Controller(int argc, char *argv[]) {
 		//index->printIndexForFile(file *f);
 	}
 	
+	
+	delete in_files;
+	delete out;
 	delete index;
 	delete params;
 }
