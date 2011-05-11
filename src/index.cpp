@@ -12,6 +12,22 @@ Index::Index() {
 }
 
 Index::~Index() {
+	cout << "call Destrutkor Index" << endl;
+//	_word_index->erase(_word_index->begin(), _word_index->end());
+
+	for (words::iterator w_it = _word_index->begin(); w_it != _word_index->end(); w_it++) {
+		files *f_map = w_it->second;
+		
+		for (files::iterator f_it = f_map->begin(); f_it != f_map->end(); f_it++) {
+			line_numbers *l = f_it->second;
+			delete l; 
+		}
+		
+		cout << "delete key f_map for word : " << w_it->first << endl;
+		delete f_map;
+	}
+	
+	cout << "delete word_index map" << endl;
 	delete _word_index;
 }
 
@@ -118,7 +134,7 @@ bool Index::isFirstCharValid(char c) {
 }
 
 vector<word> Index::extractAllWordsFromLine(string line) {
-	vector<string> *words = new vector<string>(); 
+	vector<string> words; 
 	
 	string *word = new string();
 	
@@ -132,7 +148,7 @@ vector<word> Index::extractAllWordsFromLine(string line) {
 		} else {
 			// copy word in vector
 			if (word->size()>0) {
-				words->push_back(*word);
+				words.push_back(*word);
 				word->clear();
 			}
 			// clear word
@@ -141,10 +157,13 @@ vector<word> Index::extractAllWordsFromLine(string line) {
     }
 	
 	if (word->size()>0) {
-		words->push_back(*word);
+		words.push_back(*word);
 	}
-
-	return *words;
+	
+	delete word;
+	
+	return words;
+	
 }
 
 
@@ -175,14 +194,15 @@ void Index::addToIndex(word w, file f, line_number l) {
 }
 
 words::iterator Index::addWord(word w) {
+	cout << "call addWord: " << w << endl;
 		pair<words::iterator,bool> ret;
-		ret = _word_index->insert(pair<word, files*>(w, new files()));
-		/*
+		files *f = new files();
+		ret = _word_index->insert(pair<word, files*>(w, f));
+		
 		if (ret.second == false) {
 			cout << ret.first->first << " is already in map!" << endl;
-		} else {
-			cout << "insert '" << ret.first->first << "' in map!" << endl;
-		}*/
+			delete f;
+		}
 		
 		return ret.first;
 }
@@ -192,13 +212,13 @@ files::iterator Index::addFile(words::iterator word_it, file f) {
 	files *m_files = word_it->second;
 
 	pair<files::iterator,bool> ret;
-	ret = m_files->insert(pair<file, line_numbers* >(f, new line_numbers()));
-	/*
+	line_numbers *l = new line_numbers();
+	ret = m_files->insert(pair<file, line_numbers* >(f, l));
+	
 	if (ret.second == false) {
 		cout << "file: '" << f << "' is already in map for the word: " << word_it->first << " so no changes!" << endl;
-	} else {
-		cout << "insert file: '" << f << "' successfully in map for word: '" << word_it->first << endl;
-	}*/
+		delete l;
+	}
 	
 	return ret.first;
 }

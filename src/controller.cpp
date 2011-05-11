@@ -15,7 +15,7 @@ Controller::Controller(int argc, char *argv[]) {
 	
 	// input files
 	vector<string> *in_files = new vector<string>();
-	
+
 	// before we can delete the params instance, we must assign the arguments in
 	// another pointer to prevent segmentation fault!
 	in_files->assign(params->getArguments()->begin(), params->getArguments()->end());
@@ -24,6 +24,22 @@ Controller::Controller(int argc, char *argv[]) {
 	in_files->erase(in_files->begin());
 	
 	Index *index = new Index();
+
+	// prüfen wie viele options angegeben wurden und entsprechend Meldung ausgeben
+	if (options->size() > 1) {
+		// Fehlermeldung...
+		
+		// delete pointers
+		return;
+	}
+	
+	if (options->size() == 0) {
+		// Fehlermeldung
+		
+		return;
+	}
+	
+	// now we have only one option
 	
 	//  create new index
 	vector<string>::iterator position = find(options->begin(), options->end(), "-i") ;
@@ -31,7 +47,7 @@ Controller::Controller(int argc, char *argv[]) {
 		// create the index, read the input files and write the index in the output file
 		index->createIndex(out,in_files);
 	}
-	
+	/**
 	// print the entire index
 	position = find(options->begin(), options->end(), "-p") ;
 	if (position != options->end()) {
@@ -56,7 +72,9 @@ Controller::Controller(int argc, char *argv[]) {
 		//index->printIndexForFile(file *f);
 	}
 	
+	// TODO: auswerten eines Strings um ggf. falsche Parameter abzufangen!
 	
+	*/
 	delete in_files;
 	delete out;
 	delete index;
