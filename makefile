@@ -30,11 +30,11 @@ index.o: $(SRC)index.cpp
 controller.o: $(SRC)controller.cpp
 		$(CC) -c $(CFLAGS) src/controller.cpp
 
-clean:
-		rm $(OBJECTS)
+clean:	FORCE
+		rm -f $(OBJECTS)
 
 valgrind: clean compile
-		valgrind --tool=memcheck --leak-check=full ./$(NAME) -i out input.txt
+		valgrind --leak-check=full ./$(NAME) -i out input.txt
 
 
 doc: FORCE
