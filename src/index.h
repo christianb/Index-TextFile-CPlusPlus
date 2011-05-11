@@ -131,6 +131,8 @@ public:
 	 */
 	~Index();	
 	
+	void addToIndex(word w, map<file, set<line_number> >);
+	
 	/**
 	 * To be implement!
 	 * Print the given index file in shell.

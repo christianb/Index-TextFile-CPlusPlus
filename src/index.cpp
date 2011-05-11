@@ -164,7 +164,9 @@ vector<word> Index::extractAllWordsFromLine(string line) {
 }
 
 
-/** INDEX OPERATIONS **/
+void addToIndex(word w, map<file, set<line_number> >) {
+	// to be implemented.
+}
 
 void Index::addToIndex(vector<string> words, file f, line_number l) {
 	for (vector<string>::iterator words_it=words.begin() ; words_it != words.end() ; words_it++) {
@@ -222,8 +224,6 @@ files::iterator Index::addFile(words::iterator word_it, file f) {
 void Index::addLine(files::iterator file_it, line_number l) {
 	file_it->second->insert(l);
 }
-
-/** FILE OPERATIONS **/
 
 void Index::print(file *f) {
 	// to be implement
