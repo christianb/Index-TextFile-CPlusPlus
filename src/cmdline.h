@@ -58,12 +58,9 @@ public:
 	 */
 	bool hasArguments();
 	
-	vector<string>* getOptions();
+	vector<string> getOptions();
 	
-	// Instead we could return an Iterator, so we don't give the container back
-	// the caller must not know something about the container itself.
-	// He can use the iterator and is fine.
-	vector<string>* getArguments();
+	vector<string> getArguments();
 };
 
 #endif	/* _CMDLINE_H */

@@ -45,7 +45,7 @@ private:
 	 * Read content from a given File.
 	 * 
 	 */	
-	void readFiles(vector<file> *files);
+	void readFiles(vector<file> files);
 	
 	/**
 	 * Read each line from file.
@@ -59,7 +59,7 @@ private:
 	 * To be implement!
 	 * Write index to file.
 	 */
-	void writeFile(file *out_file);
+	void writeFile(file out_file);
 	
 	/**
 	 * Add a new Word and return the iterator to that position.
@@ -94,7 +94,7 @@ private:
 	/**
 	 * check if the word is valid (christian)
 	 */
-	bool isWordValid(word *w);
+	bool isWordValid(word w);
 	
 	bool isCharValid(char c);
 	
@@ -136,7 +136,7 @@ public:
 	 * @param out The outputfile to write the index in.
 	 * @param in_files Reads from these input files to create an index.
 	 */
-	void createIndex(file *out, vector<file> *in_files);
+	void createIndex(file out, vector<file> in_files);
 	
 	/**
 	 * To be implement! (christian)

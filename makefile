@@ -4,7 +4,7 @@
 # Define C Compiler
 CC = c++
 # Define standard flags
-CFLAGS = -Wall
+CFLAGS = -Wall -g
 # Files to be compiled
 OBJECTS = $(SRC)main.o $(SRC)cmdline.o $(SRC)index.o $(SRC)controller.o
 
@@ -16,7 +16,7 @@ NAME = bin/project1
 SRC = ./src/
 
 compile: $(OBJECTS)
-		mkdir -p bin/; $(CC) $(OBJECTS) -o $(NAME)  
+		mkdir -p bin/; $(CC) $(CFLAGS) $(OBJECTS) -o $(NAME)  
 
 main.o: $(SRC)main.cpp
 		$(CC) -c $(CFLAGS) src/main.cpp

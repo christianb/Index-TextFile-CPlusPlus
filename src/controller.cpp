@@ -4,36 +4,33 @@
 #include <algorithm>
 
 Controller::Controller(int argc, char *argv[]) {
-	cout << "Konstruktor: Controller" << endl;
 	
 	// read command line parameters
 	CmdLine *params = new CmdLine(argc, argv);
-	params->printOptions();
-	params->printArguments();
-	
-	vector<string> *options = params->getOptions();
-	
-	// input files
-	vector<string> *in_files = new vector<string>();
 
-	// before we can delete the params instance, we must assign the arguments in
-	// another pointer to prevent segmentation fault!
-	in_files->assign(params->getArguments()->begin(), params->getArguments()->end());
+	vector<string> options = params->getOptions();
+	vector<string> arguments = params->getArguments();
+	
+	// params is no longer needed
+	delete params;
 
-	string *out =  new string(*in_files->begin());
-	in_files->erase(in_files->begin());
+	// get the first argument param, this is our output file
+	string out = *arguments.begin();
+	
+	// delete the first argument, the others are the input files
+	arguments.erase(arguments.begin());
 	
 	Index *index = new Index();
 
 	// prüfen wie viele options angegeben wurden und entsprechend Meldung ausgeben
-	if (options->size() > 1) {
+	if (options.size() > 1) {
 		// Fehlermeldung...
 		
 		// delete pointers
 		return;
 	}
 	
-	if (options->size() == 0) {
+	if (options.size() == 0) {
 		// Fehlermeldung
 		
 		return;
@@ -42,10 +39,10 @@ Controller::Controller(int argc, char *argv[]) {
 	// now we have only one option
 	
 	//  create new index
-	vector<string>::iterator position = find(options->begin(), options->end(), "-i") ;
-	if (position != options->end()) {
+	vector<string>::iterator position = find(options.begin(), options.end(), "-i") ;
+	if (position != options.end()) {
 		// create the index, read the input files and write the index in the output file
-		index->createIndex(out,in_files);
+		index->createIndex(out, arguments);
 	}
 	/**
 	// print the entire index
@@ -75,10 +72,9 @@ Controller::Controller(int argc, char *argv[]) {
 	// TODO: auswerten eines Strings um ggf. falsche Parameter abzufangen!
 	
 	*/
-	delete in_files;
-	delete out;
+	//delete in_files;
 	delete index;
-	delete params;
+	
 }
 
 Controller::~Controller() {

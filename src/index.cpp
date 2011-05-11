@@ -26,13 +26,13 @@ Index::~Index() {
 	delete _word_index;
 }
 
-void Index::createIndex(file* out, vector<file>* in) {	
+void Index::createIndex(file out, vector<file> in) {	
 	this->readFiles(in);
 	this->writeFile(out);
 }
 
-void Index::readFiles(vector<file> *files) {
-	for (vector<file>::iterator f_it = files->begin(); f_it != files->end(); f_it++) {
+void Index::readFiles(vector<file> files) {
+	for (vector<file>::iterator f_it = files.begin(); f_it != files.end(); f_it++) {
 		this->readFile(*f_it);
 	}
 }
@@ -60,8 +60,8 @@ void Index::readFile(file f) {
 	delete lines;
 }
 
-void Index::writeFile(string *out_file) {
-	ofstream out(out_file->c_str()); 
+void Index::writeFile(string out_file) {
+	ofstream out(out_file.c_str()); 
 	if (!out) { 
 		cerr << "Datei " << out_file << " kann nicht geoeffnet werden." << endl; 
 	} else {
@@ -97,17 +97,27 @@ void Index::writeFile(string *out_file) {
 }
 
 // TODO : to be implement (christian)
-bool Index::isWordValid(word *w) {	
-	for (string::iterator word_it=w->begin(); word_it != w->end(); word_it++) {
-		cout << *word_it << endl;
+bool Index::isWordValid(word w) {	
+	int i = 0;
+	for (string::iterator word_it=w.begin(); word_it != w.end(); word_it++) {
+		if (i == 0) {
+			if (!this->isFirstCharValid(*word_it)) {
+				return false;
+			} 
+		} else {
+			if (!this->isCharValid(*word_it)) {
+					return false;
+			}
+		}
+		i++;
 	}
 	
-	return false;
+	return true;
 }
 
 bool Index::isCharValid(char c) {
 	// alternative implementation
-	if ( this->isFirstCharValid(c) || (c >= '0' && c <= '9'  || c == '-')) {
+	if ( this->isFirstCharValid(c) || (c >= '0' && c <= '9')  || c == '-') {
 		return true;
 	}
 	
@@ -141,7 +151,6 @@ vector<word> Index::extractAllWordsFromLine(string line) {
 				words.push_back(*word);
 				word->clear();
 			}
-			// clear word
 			continue;
 		}
     }
@@ -151,9 +160,7 @@ vector<word> Index::extractAllWordsFromLine(string line) {
 	}
 	
 	delete word;
-	
 	return words;
-	
 }
 
 
@@ -184,13 +191,12 @@ void Index::addToIndex(word w, file f, line_number l) {
 }
 
 words::iterator Index::addWord(word w) {
-	cout << "call addWord: " << w << endl;
 		pair<words::iterator,bool> ret;
 		files *f = new files();
 		ret = _word_index->insert(pair<word, files*>(w, f));
 		
 		if (ret.second == false) {
-			cout << ret.first->first << " is already in map!" << endl;
+			//cout << ret.first->first << " is already in map!" << endl;
 			delete f;
 		}
 		
@@ -206,7 +212,7 @@ files::iterator Index::addFile(words::iterator word_it, file f) {
 	ret = m_files->insert(pair<file, line_numbers* >(f, l));
 	
 	if (ret.second == false) {
-		cout << "file: '" << f << "' is already in map for the word: " << word_it->first << " so no changes!" << endl;
+		//cout << "file: '" << f << "' is already in map for the word: " << word_it->first << " so no changes!" << endl;
 		delete l;
 	}
 	
