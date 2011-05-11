@@ -5,18 +5,28 @@
 CC = c++
 # Define standard flags
 CFLAGS = -Wall -g
+
 # Files to be compiled
-OBJECTS = $(SRC)/main.o $(SRC)/cmdline.o $(SRC)/index.o $(SRC)/controller.o $(SRC)/indexparser.o 
+OBJECTS = $(SRC)/main.o \
+$(SRC)/cmdline.o \
+$(SRC)/index.o \
+$(SRC)/controller.o \
+$(SRC)/indexparser.o \
 
-CD = cd
+# program name 
+NAME = index
 
-# Name and Target of the Application 
-NAME = bin/project1
+# bin directory
+BIN = ./bin
 
-SRC = src
+# source directory
+SRC = ./src
+
+# target (merge with bin and name)
+TARGET = $(BIN)/$(NAME)
 
 compile: $(OBJECTS)
-		mkdir -p bin/; $(CC) $(CFLAGS) $(OBJECTS) -o $(NAME)  
+		mkdir -p $(BIN); $(CC) $(CFLAGS) $(OBJECTS) -o $(TARGET) 
 
 main.o: $(SRC)/main.cpp
 		$(CC) -c $(CFLAGS) $(SRC)/main.cpp
@@ -30,17 +40,17 @@ index.o: $(SRC)/index.cpp
 controller.o: $(SRC)/controller.cpp
 		$(CC) -c $(CFLAGS) $(SRC)/controller.cpp
 
-indexparser.o: $(SRC)indexparser.cpp
-		$(CC) -c $(CFLAGS) src/indexparser.cpp
+indexparser.o: $(SRC)/indexparser.cpp
+		$(CC) -c $(CFLAGS) $(SRC)/indexparser.cpp
 
 clean:	FORCE
 		rm -f $(OBJECTS)
 
 valgrind: clean compile
-		valgrind --leak-check=full ./$(NAME)
+		valgrind --leak-check=full $(TARGET)
 
 exec: clean compile
-	./$(NAME) -p out.txt input3.txt input.txt
+	$(TARGET) -p out.txt input3.txt input.txt
 	
 
 doc: FORCE
