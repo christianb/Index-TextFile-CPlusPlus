@@ -15,7 +15,7 @@ NAME = bin/project1
 
 SRC = ./src/
 
-project1: $(OBJECTS)
+compile: $(OBJECTS)
 		mkdir -p bin/; $(CC) $(OBJECTS) -o $(NAME)  
 
 main.o: $(SRC)main.cpp
@@ -33,8 +33,8 @@ controller.o: $(SRC)controller.cpp
 clean:
 		rm $(OBJECTS)
 
-valgrind: 
-		valgrind --tool=memcheck --leak-check=yes --show-reachable=yes ./bin/project1 -i input.txt
+valgrind: clean compile
+		valgrind --tool=memcheck --leak-check=full ./$(NAME) -i out input.txt
 
 
 doc: FORCE
