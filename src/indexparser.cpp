@@ -4,17 +4,19 @@ using namespace std;
 
 
 
-IndexParser::IndexParser() {
+IndexParser::IndexParser(Index *i) {
 	testword = new string();
 	cout<< "IndexParser Konstruktor\n";
 	this->printIndex();
 	this-> readIndexFile("HALLO\n");
-
+	this->index = i;
 }
 
 IndexParser::~IndexParser() {
 	delete testword;
 	cout<< "IndexParser Destruktor\n";
+	
+	delete index;
 }
 
 

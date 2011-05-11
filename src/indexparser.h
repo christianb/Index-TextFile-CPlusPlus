@@ -2,8 +2,8 @@
  *
  *  This class creates an index of different input files.
  *
- *  author  Christian Bunk
- *  date    3.5.2011
+ *  author  Alexander Miller
+ *  date    11.5.2011
  *  version 0.1
  */
 
@@ -12,6 +12,7 @@
 
 #include <string>
 #include <iostream>
+#include "index.h"
 
 using namespace std;
 
@@ -20,6 +21,8 @@ private:
 
 	string *testword;  // This variable is only for testing of class construct
 
+	Index *index; // this is our reference to the index instance
+	
 	/**
 	 * Read each line from given index file.
 	 * Parse word, file and index from each line. 
@@ -37,7 +40,7 @@ public:
 	/**
 	 * Create an object.
 	 */
-	IndexParser();
+	IndexParser(Index *index);
 	
 	/**
 	 * Destroy the object.
