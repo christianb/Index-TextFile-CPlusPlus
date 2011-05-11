@@ -12,9 +12,6 @@ Index::Index() {
 }
 
 Index::~Index() {
-	cout << "call Destrutkor Index" << endl;
-//	_word_index->erase(_word_index->begin(), _word_index->end());
-
 	for (words::iterator w_it = _word_index->begin(); w_it != _word_index->end(); w_it++) {
 		files *f_map = w_it->second;
 		
@@ -23,11 +20,9 @@ Index::~Index() {
 			delete l; 
 		}
 		
-		cout << "delete key f_map for word : " << w_it->first << endl;
 		delete f_map;
 	}
 	
-	cout << "delete word_index map" << endl;
 	delete _word_index;
 }
 

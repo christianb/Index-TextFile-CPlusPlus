@@ -34,8 +34,11 @@ clean:	FORCE
 		rm -f $(OBJECTS)
 
 valgrind: clean compile
-		valgrind --leak-check=full ./$(NAME) -i out input.txt
+		valgrind --leak-check=full ./$(NAME) -i output.txt input.txt
 
+exec: clean compile
+	./$(NAME) -i output.txt input.txt
+	
 
 doc: FORCE
 		doxygen
