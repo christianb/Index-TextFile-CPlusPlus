@@ -82,7 +82,6 @@ void Index::writeFile(string *out_file) {
 				
 				for (line_numbers::iterator line_it = l_list->begin(); line_it != l_list->end(); line_it++) {
 					// write out line number followed by a BLANK 
-					// cout << *line_it << " ";
 					stringstream o;
 					o << *line_it;
 					string line = o.str();
@@ -93,11 +92,11 @@ void Index::writeFile(string *out_file) {
 			}
 		}
 	}
-	
+
 	out.close();
 }
 
-// TODO : to be implemented
+// TODO : to be implement (christian)
 bool Index::isWordValid(word *w) {	
 	for (string::iterator word_it=w->begin(); word_it != w->end(); word_it++) {
 		cout << *word_it << endl;
@@ -107,21 +106,17 @@ bool Index::isWordValid(word *w) {
 }
 
 bool Index::isCharValid(char c) {
-	// if the character is part of the valid character set
-	/*if (_validCharacters->end() != _validCharacters->find(c)) {
-		return true;
-	}*/
-	
 	// alternative implementation
-	if ( this->isFirstCharValid(c) || (c >= '0' && c <= '9')) {
+	if ( this->isFirstCharValid(c) || (c >= '0' && c <= '9'  || c == '-')) {
 		return true;
 	}
 	
 	return false;
 }
 
+// check the first character
 bool Index::isFirstCharValid(char c) {
-	if ( (c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z') || c == '_' || c == '-') {
+	if ( (c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z') || c == '_') {
 		return true;
 	}
 	
@@ -230,10 +225,8 @@ void Index::print(file *f) {
 	return;
 }
 
-void Index::parseIndexFile(file *f) {
-	vector<string> *lines = this->readAllLines(*f);
-	
-	delete lines;
+// alexander
+words* Index::parseIndexFile(file *f) {
 }
 
 vector<string>* Index::readAllLines(file f) {

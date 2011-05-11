@@ -18,7 +18,6 @@
 #include <string>
 #include <map>
 #include <set>
-#include <regex.h>
 #include <sstream>
 
 using namespace std;
@@ -93,7 +92,7 @@ private:
 	vector<word> extractAllWordsFromLine(string line);
 	
 	/**
-	 * check if the word is valid
+	 * check if the word is valid (christian)
 	 */
 	bool isWordValid(word *w);
 	
@@ -105,7 +104,8 @@ private:
 	
 	void addToIndex(vector<string> words, file f, line_number l);
 	
-	void parseIndexFile(file *f);
+	// To be implement (alexander)
+	words* parseIndexFile(file *f);
 	
 	/**
 	 * Read all lines within a file.
@@ -139,21 +139,21 @@ public:
 	void createIndex(file *out, vector<file> *in_files);
 	
 	/**
-	 * To be implement!
+	 * To be implement! (christian)
 	 * Prints the index for the given word in shell.
 	 * @param w The word the index is printed.
 	 */
 	void printIndexForWord(word *w);
 	
 	/**
-	 * To be implement!
+	 * To be implement! (christan)
 	 * Print all words which matches with the first characters the given string.
 	 * @param characters The letters the word must fit at the beginning.
 	 */
 	void printWordsMatchesCharacters(string *characters);
 	
 	/**
-	 * To be implement!
+	 * To be implement! (christian)
 	 * Print all words in given file in shell.
 	 * @param f Print all words occuring in the given file.
 	 */
