@@ -261,3 +261,32 @@ vector<string>* Index::readAllLines(file f) {
 	
 	return lines;
 }
+
+void Index::printIndexForFile(file f) {
+	cout << "printIndexForFile : " << f << endl;
+	
+	cout << _word_index->size() << " elements in map!" << endl;
+	
+	for (words::iterator w_it = _word_index->begin(); w_it != _word_index->end(); w_it++) {
+		word w = w_it->first;
+		files *f_map = w_it->second;
+		files::iterator f_it = f_map->find(f);
+		if (f_it != f_map->end()) {
+			cout << w << " " << f << this->linesToString(f_it->second) << endl;
+		}
+	}
+}
+
+string Index::linesToString(line_numbers *l_set) {
+	string lines;
+	lines.append("( ");
+	for (line_numbers::iterator l_it = l_set->begin(); l_it != l_set->end(); l_it++) {
+		lines.append(" ");
+		ostringstream os;
+		os << *l_it;
+		lines.append(os.str());
+	}
+	lines.append(" )");
+	
+		return lines;
+}

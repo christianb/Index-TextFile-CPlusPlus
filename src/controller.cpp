@@ -14,12 +14,6 @@ Controller::Controller(int argc, char *argv[]) {
 	// params is no longer needed
 	delete params;
 
-	// get the first argument param, this is our output file
-	string out = *arguments.begin();
-	
-	// delete the first argument, the others are the input files
-	arguments.erase(arguments.begin());
-	
 	Index *index = new Index();
 
 	// prüfen wie viele options angegeben wurden und entsprechend Meldung ausgeben
@@ -27,30 +21,42 @@ Controller::Controller(int argc, char *argv[]) {
 		// Fehlermeldung...
 		
 		// delete pointers
+		delete index;
 		return;
 	}
-	
+
 	if (options.size() == 0) {
 		// Fehlermeldung
 		
+		delete index;
 		return;
 	}
 	
-	// now we have only one option
+	string out = *arguments.begin();
 	
 	//  create new index
 	vector<string>::iterator position = find(options.begin(), options.end(), "-i") ;
 	if (position != options.end()) {
+		// get the first argument param, this is our output file
+		
+		// delete the first argument, the others are the input files
+		arguments.erase(arguments.begin());
+		
 		// create the index, read the input files and write the index in the output file
 		index->createIndex(out, arguments);
+		
 	}
-	/**
+	
 	// print the entire index
-	position = find(options->begin(), options->end(), "-p") ;
-	if (position != options->end()) {
-		//index->print(out);
+	position = find(options.begin(), options.end(), "-p") ;
+	if (position != options.end()) {
+		arguments.erase(arguments.begin());
+		index->createIndex(out, arguments);		
+		
+		// TODO: how many arguments
+		index->printIndexForFile(*arguments.begin());
 	}
-
+	/*
 	// print index for the word
 	position = find(options->begin(), options->end(), "-q") ;
 	if (position != options->end()) {

@@ -6,38 +6,38 @@ CC = c++
 # Define standard flags
 CFLAGS = -Wall -g
 # Files to be compiled
-OBJECTS = $(SRC)main.o $(SRC)cmdline.o $(SRC)index.o $(SRC)controller.o
+OBJECTS = $(SRC)/main.o $(SRC)/cmdline.o $(SRC)/index.o $(SRC)/controller.o
 
 CD = cd
 
 # Name and Target of the Application 
 NAME = bin/project1
 
-SRC = ./src/
+SRC = src
 
 compile: $(OBJECTS)
 		mkdir -p bin/; $(CC) $(CFLAGS) $(OBJECTS) -o $(NAME)  
 
-main.o: $(SRC)main.cpp
-		$(CC) -c $(CFLAGS) src/main.cpp
+main.o: $(SRC)/main.cpp
+		$(CC) -c $(CFLAGS) $(SRC)/main.cpp
 
-cmdline.o: $(SRC)cmdline.cpp 
-		$(CC) -c $(CFLAGS) src/cmdline.cpp
+cmdline.o: $(SRC)/cmdline.cpp 
+		$(CC) -c $(CFLAGS) $(SRC)/cmdline.cpp
 
-index.o: $(SRC)index.cpp
-		$(CC) -c $(CFLAGS) src/index.cpp
+index.o: $(SRC)/index.cpp
+		$(CC) -c $(CFLAGS) $(SRC)/index.cpp
 		
-controller.o: $(SRC)controller.cpp
-		$(CC) -c $(CFLAGS) src/controller.cpp
+controller.o: $(SRC)/controller.cpp
+		$(CC) -c $(CFLAGS) $(SRC)/controller.cpp
 
 clean:	FORCE
 		rm -f $(OBJECTS)
 
 valgrind: clean compile
-		valgrind --leak-check=full ./$(NAME) -i output.txt input.txt
+		valgrind --leak-check=full ./$(NAME)
 
 exec: clean compile
-	./$(NAME) -i output.txt input.txt
+	./$(NAME) -p out.txt input3.txt input.txt
 	
 
 doc: FORCE

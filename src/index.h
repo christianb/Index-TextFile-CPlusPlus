@@ -112,6 +112,13 @@ private:
 	 * @return vector<string>* All lines within the file.
 	 */
 	vector<string>* readAllLines(file f);
+	
+	/**
+	 * Converts all line numbers from into a single string.
+	 * @param l_set The set with line numbers.
+	 * @return string The string with line numbers.
+	 */
+	string linesToString(line_numbers *l_set);
 
 public:
 	/**
@@ -153,11 +160,10 @@ public:
 	void printWordsMatchesCharacters(string *characters);
 	
 	/**
-	 * To be implement! (christian)
 	 * Print all words in given file in shell.
 	 * @param f Print all words occuring in the given file.
 	 */
-	void printIndexForFile(file *f);
+	void printIndexForFile(file f);
 };
 
 #endif	/* _INDEX_H */
