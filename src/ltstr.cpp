@@ -1,4 +1,4 @@
-#include "Ltstr.h"
+#include "ltstr.h"
 
 bool Ltstr::operator()(string s1, string s2)
 { 
