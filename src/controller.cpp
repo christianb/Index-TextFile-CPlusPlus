@@ -77,6 +77,7 @@ Controller::Controller(int argc, char *argv[]) {
 	position = find(options.begin(), options.end(), "-t") ;
 	if (position != options.end()) {
 		IndexParser *parser = new IndexParser(index);
+		parser->readIndexFile("output.txt");
 		//index->printIndexForFile(file *f);
 	}
 	

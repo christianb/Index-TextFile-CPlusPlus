@@ -24,14 +24,6 @@ private:
 	Index *index; // this is our reference to the index instance
 	
 	/**
-	 * Read each line from given index file.
-	 * Parse word, file and index from each line. 
-	 * Insert parsed data in index map.
-	 * @param index_file  index file to be read.
-	 */
-	void readIndexFile(string index_file);  
-
-	/**
 	 * Print Index parsed from given IndexFile.
 	 */
 	void printIndex();
@@ -46,6 +38,14 @@ public:
 	 * Destroy the object.
 	 */
 	~IndexParser();	
+
+	/**
+	 * Read each line from given index file.
+	 * Parse word, file and index from each line. 
+	 * Insert parsed data in index map.
+	 * @param index_file  index file to be read.
+	 */
+	void readIndexFile(string index_file);  
 };
 
 #endif	/* _INDEXPARSER_H */
