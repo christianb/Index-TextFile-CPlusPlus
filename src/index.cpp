@@ -68,15 +68,13 @@ void Index::writeFile(string out_file) {
 		
 		for (words::iterator word_it=_word_index->begin(); word_it != _word_index->end(); word_it++) {
 			string word = word_it->first;
-			out.write(word.data(), word.size());
+			out << word.data();
 			//
 			files *m_files = word_it->second;
 			
 			for (files::iterator file_it = m_files->begin(); file_it != m_files->end(); file_it++) {
 				string file =  file_it->first;
-				out.write(" ", 1);
-				out.write(file.data(), file.size());
-				out.write(" ( ", 3);
+				out << " " << file.data() << " ( ";
 				
 				line_numbers *l_list = file_it->second;
 				
@@ -85,10 +83,9 @@ void Index::writeFile(string out_file) {
 					stringstream o;
 					o << *line_it;
 					string line = o.str();
-					out.write(line.data(), line.size());
-					out.write(" ", 1);
+					out << line.data() << " ";
 				}
-				out.write(")\n", 3);
+				out << ")\n";
 			}
 		}
 	}
