@@ -178,12 +178,14 @@ public:
 	
 	/**
 	 * Prints the index for the given word.
+	 * Called with parameter -q
 	 * @param w The word the index is printed for.
 	 */
 	void printIndexForWord(word w);
 	
 	/**
 	 * Print all words which matches with the first characters the given string.
+	 * Called with parameter -s
 	 * @param characters The letters the word must fit at the beginning.
 	 */
 	void printWordsMatchesCharactersAtBeginning(string characters);
@@ -197,9 +199,17 @@ public:
 	
 	/**
 	 * Print all words in given file in shell.
+	 * Called with parameter -t
 	 * @param f Print all words occuring in the given file.
 	 */
 	void printIndexForFile(file f);
+	
+	/**
+	 * print the index for a given outputfile.
+	 * Called with parameter -p
+	 * TODO: update when parser is ready!
+	 */
+	void printIndexFromOutputFile(file outputfile);
 };
 
 #endif	/* _INDEX_H */

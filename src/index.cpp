@@ -259,19 +259,13 @@ vector<string>* Index::readAllLines(file f) {
 	return lines;
 }
 
-void Index::printIndexForFile(file f) {
-	cout << "printIndexForFile : " << f << endl;
+void Index::printIndexFromOutputFile(file f) {
+	cout << "printIndexFromOutputFile : " << f << endl;
 	
-	cout << _word_index->size() << " elements in map!" << endl;
-	
-	for (words::iterator w_it = _word_index->begin(); w_it != _word_index->end(); w_it++) {
-		word w = w_it->first;
-		files *f_map = w_it->second;
-		files::iterator f_it = f_map->find(f);
-		if (f_it != f_map->end()) {
-			cout << w << " " << f << this->linesToString(f_it->second) << endl;
-		}
-	}
+	// TODO: read from parser!
+	// indexParser->parseOutputfile(f);
+
+	cout << this->wordsToString();
 }
 
 string Index::linesToString(line_numbers *l_set) {
@@ -373,5 +367,18 @@ void Index::printWordsMatchesCharactersAnywhere(string chars) {
 		if (found!=string::npos) {
 			cout << this->wordToString(w_it->first, w_it->second);
 		}
+	}
+}
+
+void Index::printIndexForFile(file f) {
+	cout << "call printIndexForFile() with file: " << f << endl;
+	for (words::iterator w_it = _word_index->begin(); w_it != _word_index->end(); w_it++) {
+		word w = w_it->first;
+		files *f_map = w_it->second;
+		
+		files::iterator f_it = f_map->find(f);
+		if (f_it != f_map->end()) {
+				cout << w << " " << f << this->linesToString(f_it->second) << endl;
+			}
 	}
 }

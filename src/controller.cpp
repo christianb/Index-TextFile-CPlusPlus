@@ -54,7 +54,7 @@ Controller::Controller(int argc, char *argv[]) {
 		index->createIndex(out, arguments);	// just until the parser is ready	
 		
 		// TODO: how many arguments
-		index->printIndexForFile(*arguments.begin());
+		index->printIndexFromOutputFile(*arguments.begin());
 	}
 	
 	// print index for the word
@@ -74,16 +74,18 @@ Controller::Controller(int argc, char *argv[]) {
 		
 		index->printWordsMatchesCharactersAtBeginning("an");
 	}
-	/**
+	
 	// print index file
-	position = find(options->begin(), options->end(), "-t") ;
-	if (position != options->end()) {
-		//index->printIndexForFile(file *f);
+	position = find(options.begin(), options.end(), "-t") ;
+	if (position != options.end()) {
+		arguments.erase(arguments.begin());
+		index->createIndex(out, arguments); // just until the parser is ready
+		
+		index->printIndexForFile(*arguments.begin());
 	}
 	
 	// TODO: auswerten eines Strings um ggf. falsche Parameter abzufangen!
 	
-	*/
 	//delete in_files;
 	delete index;
 	

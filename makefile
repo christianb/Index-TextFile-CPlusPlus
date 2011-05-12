@@ -50,7 +50,7 @@ valgrind: clean compile
 		valgrind --leak-check=full $(TARGET)
 
 exec: clean compile
-	$(TARGET) -s out.txt input.txt input3.txt
+	$(TARGET) -t out.txt input.txt input3.txt
 	
 
 doc: FORCE
