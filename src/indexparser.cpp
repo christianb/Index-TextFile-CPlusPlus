@@ -13,7 +13,7 @@ IndexParser::IndexParser(Index *i) {
 
 IndexParser::~IndexParser() {
 	delete testword;
-	cout<< "IndexParser Destruktor\n";
+	cout<< "IndexParser Destruktor\n ";
 	
 	delete index;
 }
@@ -26,26 +26,29 @@ void IndexParser::printIndex() {
 
 
 void IndexParser::readIndexFile(string index_file) {
-	vector<string> *wort = new vector<string>() ;
-	ifstream in(index_file.data()) ; // Oeffnen der Eingabedatei
-	istream_iterator<string> pos(in), end ;
+	vector<string> *lines = new vector<string>();
+	ifstream in(index_file.data()) ; // Open given IndexFile
+	string line;
 		
-		if(pos == end)
-		{
-			cout << "Eingabedatei nicht gefunden!" << endl;
-			//return EXIT_FAILURE ;
-		} ;
-	
-	while(pos != end) // implizit einlesen
-	{
-		cout << *pos << endl;
-		wort->push_back(*pos) ;
-		++pos;
-    	} ;
+	// test if file exist
+	if (!in) {
+		cout << "Eingabedatei "<< index_file << " nicht gefunden!" << endl;
+		in.close() ; // Datei schließen
+	}
+	else{
+	// read each line of file
+	while (getline(in, line, '\n')) {
+		// put line at the end of vector.
+		lines->push_back(line);
+		cout << line << "\n";
+	}
+	}
 	in.close() ; // Datei schließen
 
-  //      index->addToIndex("Hallo", "TESTFILE", 3);
+
+
 //	void addToIndex(word w, map<file, set<line_number> >);
+	delete lines;
 }
 
 
