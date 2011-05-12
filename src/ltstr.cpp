@@ -1,4 +1,4 @@
-#include "Ltstr.h"
+#include "ltstr.h"
 
 bool Ltstr::operator()(string s1, string s2) { 	
 	bool s1_IsSmaller_s2; // flag if s1 is lexicografic smaller than s2
