@@ -20,6 +20,8 @@
 #include <set>
 #include <sstream>
 
+#include "Ltstr.h"
+
 using namespace std;
 
 // TODO comment type defs
@@ -32,7 +34,7 @@ typedef int line_number; 					// a line number is an integer
 
 typedef set<line_number> line_numbers; 		// a set of line numbers
 typedef map<file, line_numbers* > files; 	// maps a file to a list of line_numbers
-typedef map<word, files*> words; 			// maps a word to a map of files
+typedef map<word, files*, Ltstr> words; 			// maps a word to a map of files
 
 class Index {
 private:	
@@ -128,9 +130,12 @@ private:
 	 */
 	vector<string>* readAllLines(file f);
 	
+	
+	// At the following are the helper methods which convert defined content aof the index into a string.
+	
 	/**
 	 * Converts a set of line numbers into a string.
-	 * @param l_set The set with line numbers.
+	 * @param *l_set The set with line numbers.
 	 * @return string The string with line numbers.
 	 */
 	string linesToString(line_numbers *l_set);
@@ -144,7 +149,7 @@ private:
 	
 	/**
 	 * Converts a file map, into a string.
-	 * @param f_map
+	 * @param *f_map
 	 * @return string
 	 */
 	string filesToString(files *f_map);
@@ -152,16 +157,22 @@ private:
 	/**
 	 * Converts a file and its line numbers into a string.
 	 * @param f
-	 * @param l
+	 * @param *l
 	 * return string
 	 */
 	string fileToString(file f, line_numbers *l);
 	
 	/**
 	 * Get a string with the index of all words.
+	 * @return string
 	 */
 	string wordsToString();
 	
+	/**
+	 * Convert  the content for the given word into a string.
+	 * @param w
+	 * @param *f
+	 */
 	string wordToString(word w, files *f);
 
 public:
@@ -179,13 +190,6 @@ public:
 	 * This method insert a w
 	 */
 	void addToIndex(word w, file f, line_numbers lines);
-	
-	/**
-	 * To be implement!
-	 * Print the given index file in shell.
-	 * @param index File with the index.
-	 */
-	void print(file *f);
 	
 	/**
 	 * Create a new Index.

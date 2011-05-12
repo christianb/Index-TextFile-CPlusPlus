@@ -222,12 +222,6 @@ void Index::addLine(files::iterator file_it, line_number l) {
 	file_it->second->insert(l);
 }
 
-void Index::print(file *f) {
-	// to be implement
-	// parse the given (index) file.
-	return;
-}
-
 // alexander
 words* Index::parseIndexFile(file *f) {
 }
