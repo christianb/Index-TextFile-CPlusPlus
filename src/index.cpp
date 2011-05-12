@@ -348,15 +348,29 @@ void Index::printIndexForWord(string pWord) {
 }
 
 void Index::printWordsMatchesCharactersAtBeginning(string chars) {
-	cout << "call printWordMatchesCharacters() with chars: '" << chars << "'" << endl;
-	// find same uccurence
-	
+	cout << "call printWordMatchesCharactersAtBeginning() with chars: '" << chars << "'" << endl;
+
 	for (words::iterator w_it = _word_index->begin(); w_it != _word_index->end(); w_it++) {
 		string word = w_it->first;
 		size_t found;
 		found = word.find(chars);
 		
 		if (found == 0) {
+			cout << this->wordToString(w_it->first, w_it->second);
+		}
+	}
+}
+
+void Index::printWordsMatchesCharactersAnywhere(string chars) {
+	cout << "call printWordMatchesCharactersAnywhere() with chars: '" << chars << "'" << endl;
+	
+	for (words::iterator w_it = _word_index->begin(); w_it != _word_index->end(); w_it++) {
+		string word = w_it->first;
+		
+		size_t found;
+		found = word.find(chars);
+		
+		if (found!=string::npos) {
 			cout << this->wordToString(w_it->first, w_it->second);
 		}
 	}

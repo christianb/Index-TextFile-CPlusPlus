@@ -183,11 +183,17 @@ public:
 	void printIndexForWord(word w);
 	
 	/**
-	 * To be implement! (christan)
 	 * Print all words which matches with the first characters the given string.
 	 * @param characters The letters the word must fit at the beginning.
 	 */
 	void printWordsMatchesCharactersAtBeginning(string characters);
+	
+	/**
+	 * Print all words which matches the given string anywhere.
+	 * This is not a required method!
+	 * @param characters
+	 */
+	void printWordsMatchesCharactersAnywhere(string characters);
 	
 	/**
 	 * Print all words in given file in shell.
