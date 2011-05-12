@@ -114,11 +114,40 @@ private:
 	vector<string>* readAllLines(file f);
 	
 	/**
-	 * Converts all line numbers from into a single string.
+	 * Converts a set of line numbers into a string.
 	 * @param l_set The set with line numbers.
 	 * @return string The string with line numbers.
 	 */
 	string linesToString(line_numbers *l_set);
+	
+	/**
+	 * Convert a single line number into a string.
+	 * @param l
+	 * @return string
+	 */
+	string lineToString(line_number l);
+	
+	/**
+	 * Converts a file map, into a string.
+	 * @param f_map
+	 * @return string
+	 */
+	string filesToString(files *f_map);
+	
+	/**
+	 * Converts a file and its line numbers into a string.
+	 * @param f
+	 * @param l
+	 * return string
+	 */
+	string fileToString(file f, line_numbers *l);
+	
+	/**
+	 * Get a string with the index of all words.
+	 */
+	string wordsToString();
+	
+	string wordToString(word w, files *f);
 
 public:
 	/**
@@ -152,7 +181,7 @@ public:
 	 * Prints the index for the given word in shell.
 	 * @param w The word the index is printed.
 	 */
-	void printIndexForWord(word *w);
+	void printIndexForWord(word w);
 	
 	/**
 	 * To be implement! (christan)

@@ -279,14 +279,73 @@ void Index::printIndexForFile(file f) {
 
 string Index::linesToString(line_numbers *l_set) {
 	string lines;
-	lines.append("( ");
+	lines.append("(");
 	for (line_numbers::iterator l_it = l_set->begin(); l_it != l_set->end(); l_it++) {
 		lines.append(" ");
-		ostringstream os;
-		os << *l_it;
-		lines.append(os.str());
+		lines.append(this->lineToString(*l_it));
 	}
 	lines.append(" )");
 	
 		return lines;
+}
+
+string Index::lineToString(line_number l) {
+	string number;
+	ostringstream os;
+	os << l;
+	number.append(os.str());
+	
+	return number;
+}
+
+string Index::filesToString(files *f_map) {
+	string files;
+	for (files::iterator f_it = f_map->begin(); f_it != f_map->end(); f_it++) {
+		files.append(this->fileToString(f_it->first, f_it->second));
+	}
+	
+	return files;
+}
+
+string Index::fileToString(file f, line_numbers *l) {
+	string file;
+	file.append(f);
+	file.append(" ");
+	file.append(this->linesToString(l));
+	file.append("\n ");
+	return file;
+}
+
+string Index::wordsToString() {
+	string words;
+	for (words::iterator w_it = _word_index->begin(); w_it != _word_index->end(); w_it++) {
+		words.append(this->wordToString(w_it->first, w_it->second));
+	}
+	
+	return words;
+}
+
+string Index::wordToString(word w, files *f_map) {
+	string word;
+	word.append(w);
+	word.append(" ");
+	word.append(this->filesToString(f_map));
+	word.append("\n");
+	
+	return word;
+}
+
+// print the Index for one word.
+// TODO, can be used for other methods
+void Index::printIndexForWord(string pWord) {
+	cout << "Index for word " << endl;
+	// find given word	
+	words::iterator w_it = _word_index->find(pWord);
+	
+	// if word is in map
+	if (w_it != _word_index->end()) {
+		cout << this->wordToString(w_it->first, w_it->second);
+	} else {
+		cout << "The word: " << pWord << " is not an element of the index!" << endl;
+	}
 }

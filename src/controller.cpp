@@ -51,18 +51,21 @@ Controller::Controller(int argc, char *argv[]) {
 	position = find(options.begin(), options.end(), "-p") ;
 	if (position != options.end()) {
 		arguments.erase(arguments.begin());
-		index->createIndex(out, arguments);		
+		index->createIndex(out, arguments);	// just until the parser is ready	
 		
 		// TODO: how many arguments
 		index->printIndexForFile(*arguments.begin());
 	}
-	/*
-	// print index for the word
-	position = find(options->begin(), options->end(), "-q") ;
-	if (position != options->end()) {
-		//index->printIndexForWord(word *w);
-	}
 	
+	// print index for the word
+	position = find(options.begin(), options.end(), "-q") ;
+	if (position != options.end()) {
+		arguments.erase(arguments.begin());
+		index->createIndex(out, arguments); // just until the parser is ready
+		
+		index->printIndexForWord("das");
+	}
+	/**
 	// print index for words who matches characters
 	position = find(options->begin(), options->end(), "-s") ;
 	if (position != options->end()) {
