@@ -65,13 +65,16 @@ Controller::Controller(int argc, char *argv[]) {
 		
 		index->printIndexForWord("das");
 	}
-	/**
-	// print index for words who matches characters
-	position = find(options->begin(), options->end(), "-s") ;
-	if (position != options->end()) {
-		//index->printWordsMatchesCharacters(string *characters);
-	}
 	
+	// print index for words who matches characters
+	position = find(options.begin(), options.end(), "-s") ;
+	if (position != options.end()) {
+		arguments.erase(arguments.begin());
+		index->createIndex(out, arguments); // just until the parser is ready
+		
+		index->printWordsMatchesCharactersAtBeginning("an");
+	}
+	/**
 	// print index file
 	position = find(options->begin(), options->end(), "-t") ;
 	if (position != options->end()) {

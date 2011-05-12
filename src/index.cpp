@@ -284,9 +284,10 @@ string Index::linesToString(line_numbers *l_set) {
 		lines.append(" ");
 		lines.append(this->lineToString(*l_it));
 	}
+	
 	lines.append(" )");
 	
-		return lines;
+	return lines;
 }
 
 string Index::lineToString(line_number l) {
@@ -309,10 +310,11 @@ string Index::filesToString(files *f_map) {
 
 string Index::fileToString(file f, line_numbers *l) {
 	string file;
+	file.append(" ");
 	file.append(f);
 	file.append(" ");
 	file.append(this->linesToString(l));
-	file.append("\n ");
+	file.append("\n");
 	return file;
 }
 
@@ -328,9 +330,7 @@ string Index::wordsToString() {
 string Index::wordToString(word w, files *f_map) {
 	string word;
 	word.append(w);
-	word.append(" ");
 	word.append(this->filesToString(f_map));
-	word.append("\n");
 	
 	return word;
 }
@@ -347,5 +347,20 @@ void Index::printIndexForWord(string pWord) {
 		cout << this->wordToString(w_it->first, w_it->second);
 	} else {
 		cout << "The word: " << pWord << " is not an element of the index!" << endl;
+	}
+}
+
+void Index::printWordsMatchesCharactersAtBeginning(string chars) {
+	cout << "call printWordMatchesCharacters() with chars: '" << chars << "'" << endl;
+	// find same uccurence
+	
+	for (words::iterator w_it = _word_index->begin(); w_it != _word_index->end(); w_it++) {
+		string word = w_it->first;
+		size_t found;
+		found = word.find(chars);
+		
+		if (found == 0) {
+			cout << this->wordToString(w_it->first, w_it->second);
+		}
 	}
 }

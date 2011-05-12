@@ -177,9 +177,8 @@ public:
 	void createIndex(file out, vector<file> in_files);
 	
 	/**
-	 * To be implement! (christian)
-	 * Prints the index for the given word in shell.
-	 * @param w The word the index is printed.
+	 * Prints the index for the given word.
+	 * @param w The word the index is printed for.
 	 */
 	void printIndexForWord(word w);
 	
@@ -188,7 +187,7 @@ public:
 	 * Print all words which matches with the first characters the given string.
 	 * @param characters The letters the word must fit at the beginning.
 	 */
-	void printWordsMatchesCharacters(string *characters);
+	void printWordsMatchesCharactersAtBeginning(string characters);
 	
 	/**
 	 * Print all words in given file in shell.
