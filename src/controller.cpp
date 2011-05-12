@@ -1,6 +1,7 @@
 #include "controller.h"
 #include "cmdline.h"
 #include "index.h"
+#include "indexparser.h"
 #include <algorithm>
 
 Controller::Controller(int argc, char *argv[]) {
@@ -71,16 +72,17 @@ Controller::Controller(int argc, char *argv[]) {
 	if (position != options->end()) {
 		//index->printWordsMatchesCharacters(string *characters);
 	}
-	
+	*/
 	// print index file
-	position = find(options->begin(), options->end(), "-t") ;
-	if (position != options->end()) {
+	position = find(options.begin(), options.end(), "-t") ;
+	if (position != options.end()) {
+		IndexParser *parser = new IndexParser(index);
 		//index->printIndexForFile(file *f);
 	}
 	
 	// TODO: auswerten eines Strings um ggf. falsche Parameter abzufangen!
 	
-	*/
+	
 	//delete in_files;
 	delete index;
 	
