@@ -43,7 +43,7 @@ void IndexParser::readIndexFile(string index_file) {
 		cout << line << "\n";
 	}
 	}
-	in.close() ; // Datei schließen
+	in.close() ; // Close IndexFile
 
 
 
