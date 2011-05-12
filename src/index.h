@@ -100,9 +100,24 @@ private:
 	
 	bool isFirstCharValid(char c);
 	
+	/**
+	 * Add a word into the index, corresponding to a file and a line number.
+	 * This mehtod is used by addToIndex(vector<word>, file, line_number)
+	 * @param w
+	 * @param f
+	 * @param l
+	 */
 	void addToIndex(word w, file f, line_number l);
 	
-	void addToIndex(vector<string> words, file f, line_number l);
+	/**
+	 * Add a vector of words into the index, corresponding to a file and a line number.
+	 * Use the method addToIndex(word, file, line_number)
+	 * This method is used when the index is created.
+	 * @param words
+	 * @param f
+	 * @param l
+	 */
+	void addToIndex(vector<word> words, file f, line_number l);
 	
 	// To be implement (alexander)
 	words* parseIndexFile(file *f);
@@ -160,7 +175,10 @@ public:
 	 */
 	~Index();	
 	
-	void addToIndex(word w, map<file, set<line_number> >);
+	/**
+	 * This method insert a w
+	 */
+	void addToIndex(word w, file f, line_numbers lines);
 	
 	/**
 	 * To be implement!
