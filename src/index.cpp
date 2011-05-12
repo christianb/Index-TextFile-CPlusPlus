@@ -382,3 +382,9 @@ void Index::printIndexForFile(file f) {
 			}
 	}
 }
+
+void Index::addToIndex(word w, file f, line_numbers lines) {
+	for (line_numbers::iterator l_it = lines.begin(); l_it != lines.end(); l_it++) {
+		this->addToIndex(w, f, *l_it);
+	}
+}
