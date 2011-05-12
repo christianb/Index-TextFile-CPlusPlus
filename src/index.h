@@ -177,24 +177,39 @@ public:
 	void createIndex(file out, vector<file> in_files);
 	
 	/**
-	 * To be implement! (christian)
-	 * Prints the index for the given word in shell.
-	 * @param w The word the index is printed.
+	 * Prints the index for the given word.
+	 * Called with parameter -q
+	 * @param w The word the index is printed for.
 	 */
 	void printIndexForWord(word w);
 	
 	/**
-	 * To be implement! (christan)
 	 * Print all words which matches with the first characters the given string.
+	 * Called with parameter -s
 	 * @param characters The letters the word must fit at the beginning.
 	 */
-	void printWordsMatchesCharacters(string *characters);
+	void printWordsMatchesCharactersAtBeginning(string characters);
+	
+	/**
+	 * Print all words which matches the given string anywhere.
+	 * This is not a required method!
+	 * @param characters
+	 */
+	void printWordsMatchesCharactersAnywhere(string characters);
 	
 	/**
 	 * Print all words in given file in shell.
+	 * Called with parameter -t
 	 * @param f Print all words occuring in the given file.
 	 */
 	void printIndexForFile(file f);
+	
+	/**
+	 * print the index for a given outputfile.
+	 * Called with parameter -p
+	 * TODO: update when parser is ready!
+	 */
+	void printIndexFromOutputFile(file outputfile);
 };
 
 #endif	/* _INDEX_H */
