@@ -33,13 +33,12 @@ Controller::Controller(int argc, char *argv[]) {
 		return;
 	}
 	
+	// get the first argument param, this is our output file
 	string out = *arguments.begin();
 	
 	//  create new index
 	vector<string>::iterator position = find(options.begin(), options.end(), "-i") ;
 	if (position != options.end()) {
-		// get the first argument param, this is our output file
-		
 		// delete the first argument, the others are the input files
 		arguments.erase(arguments.begin());
 		

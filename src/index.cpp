@@ -27,17 +27,20 @@ Index::~Index() {
 }
 
 void Index::createIndex(file out, vector<file> in) {	
+	//cout << "call createIndex()" << endl;
 	this->readFiles(in);
 	this->writeFile(out);
 }
 
 void Index::readFiles(vector<file> files) {
+	//cout << "call readFiles()" << endl;
 	for (vector<file>::iterator f_it = files.begin(); f_it != files.end(); f_it++) {
 		this->readFile(*f_it);
 	}
 }
 
 void Index::readFile(file f) {
+	//cout << "call readFile(), file: " << f << endl;
 	// this vectore stores each line in the file
 	vector<string> *lines = this->readAllLines(f);
 		
@@ -65,29 +68,7 @@ void Index::writeFile(string out_file) {
 	if (!out) { 
 		cerr << "Datei " << out_file << " kann nicht geoeffnet werden." << endl; 
 	} else {
-		
-		for (words::iterator word_it=_word_index->begin(); word_it != _word_index->end(); word_it++) {
-			string word = word_it->first;
-			out << word.data();
-			//
-			files *m_files = word_it->second;
-			
-			for (files::iterator file_it = m_files->begin(); file_it != m_files->end(); file_it++) {
-				string file =  file_it->first;
-				out << " " << file.data() << " ( ";
-				
-				line_numbers *l_list = file_it->second;
-				
-				for (line_numbers::iterator line_it = l_list->begin(); line_it != l_list->end(); line_it++) {
-					// write out line number followed by a BLANK 
-					stringstream o;
-					o << *line_it;
-					string line = o.str();
-					out << line.data() << " ";
-				}
-				out << ")\n";
-			}
-		}
+		out << this->allToString();		
 	}
 
 	out.close();
@@ -166,6 +147,7 @@ void addToIndex(word w, map<file, set<line_number> >) {
 }
 
 void Index::addToIndex(vector<string> words, file f, line_number l) {
+	
 	for (vector<string>::iterator words_it=words.begin() ; words_it != words.end() ; words_it++) {
 		this->addToIndex(*words_it, f, l);
 	}
@@ -176,8 +158,7 @@ void Index::addToIndex(vector<string> words, file f, line_number l) {
  * If the word already exists, append values.
  */
 void Index::addToIndex(word w, file f, line_number l) {
-	// cout << endl;
- 	// cout << "call addToIndex, word: " << w << ", in file: " << f << ", at line: " << l << endl;	
+ 	//cout << "call addToIndex, word: " << w << ", in file: " << f << ", at line: " << l << endl;	
 	
 	// the word is in the map and we get an iterator to its position.
 	words::iterator word_it = this->addWord(w);
@@ -190,8 +171,18 @@ void Index::addToIndex(word w, file f, line_number l) {
 }
 
 words::iterator Index::addWord(word w) {
+		//cout << "try to add '" << w << "' to map" << endl;
 		pair<words::iterator,bool> ret;
 		files *f = new files();
+		
+		/*cout << "  find " << w << " in map -> ";
+		words::iterator w_it = _word_index->find(w);
+		if (w_it != _word_index->end()) {
+			cout << "true" << ", " << w_it->first << " is in map!" << endl;
+		} else {
+			cout << "false" << endl;
+		}*/
+		
 		ret = _word_index->insert(pair<word, files*>(w, f));
 		
 		if (ret.second == false) {
@@ -219,6 +210,7 @@ files::iterator Index::addFile(words::iterator word_it, file f) {
 }
 
 void Index::addLine(files::iterator file_it, line_number l) {
+	//cout << "add line number : " << l << " to file : " << file_it->first << endl;
 	file_it->second->insert(l);
 }
 
@@ -259,7 +251,7 @@ void Index::printIndexFromOutputFile(file f) {
 	// TODO: read from parser!
 	// indexParser->parseOutputfile(f);
 
-	cout << this->wordsToString();
+	cout << this->allToString();
 }
 
 string Index::linesToString(line_numbers *l_set) {
@@ -303,7 +295,7 @@ string Index::fileToString(file f, line_numbers *l) {
 	return file;
 }
 
-string Index::wordsToString() {
+string Index::allToString() {
 	string words;
 	for (words::iterator w_it = _word_index->begin(); w_it != _word_index->end(); w_it++) {
 		words.append(this->wordToString(w_it->first, w_it->second));

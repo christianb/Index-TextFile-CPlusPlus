@@ -166,7 +166,7 @@ private:
 	 * Get a string with the index of all words.
 	 * @return string
 	 */
-	string wordsToString();
+	string allToString();
 	
 	/**
 	 * Convert  the content for the given word into a string.
