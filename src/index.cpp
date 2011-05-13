@@ -315,7 +315,6 @@ string Index::wordToString(word w, files *f_map) {
 // print the Index for one word.
 // TODO, can be used for other methods
 void Index::printIndexForWord(string pWord) {
-	cout << "Index for word " << endl;
 	// find given word	
 	words::iterator w_it = _word_index->find(pWord);
 	
@@ -328,8 +327,6 @@ void Index::printIndexForWord(string pWord) {
 }
 
 void Index::printWordsMatchesCharactersAtBeginning(string chars) {
-	cout << "call printWordMatchesCharactersAtBeginning() with chars: '" << chars << "'" << endl;
-
 	for (words::iterator w_it = _word_index->begin(); w_it != _word_index->end(); w_it++) {
 		string word = w_it->first;
 		size_t found;
@@ -341,9 +338,7 @@ void Index::printWordsMatchesCharactersAtBeginning(string chars) {
 	}
 }
 
-void Index::printWordsMatchesCharactersAnywhere(string chars) {
-	cout << "call printWordMatchesCharactersAnywhere() with chars: '" << chars << "'" << endl;
-	
+void Index::printWordsMatchesCharactersAnywhere(string chars) {	
 	for (words::iterator w_it = _word_index->begin(); w_it != _word_index->end(); w_it++) {
 		string word = w_it->first;
 		
@@ -357,7 +352,6 @@ void Index::printWordsMatchesCharactersAnywhere(string chars) {
 }
 
 void Index::printIndexForFile(file f) {
-	cout << "call printIndexForFile() with file: " << f << endl;
 	for (words::iterator w_it = _word_index->begin(); w_it != _word_index->end(); w_it++) {
 		word w = w_it->first;
 		files *f_map = w_it->second;

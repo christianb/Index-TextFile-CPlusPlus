@@ -70,7 +70,7 @@ void IndexParser::ParseLine(string linie, bool flag_wort, bool flag_file, bool f
 	//HIER GIBT ES EIN PROBLEM
 	this->index->addToIndex(wort, file, *index_set);
 
-	// TEST FUNKTION ZUR AUSGABE AM TERMINAL
+/*	// TEST FUNKTION ZUR AUSGABE AM TERMINAL
 	cout << wort << " " << file << " ";
 	for (set<int>::iterator line_it = index_set->begin(); line_it != index_set->end(); line_it++) {
 		// write out line number followed by a BLANK 
@@ -80,7 +80,7 @@ void IndexParser::ParseLine(string linie, bool flag_wort, bool flag_file, bool f
 		cout << *line_it << " ";
 	}
 	cout << "\n";
-	// ENDE DER TESTFUNKTION
+	// ENDE DER TESTFUNKTION*/
 	delete index_set;
 }
 

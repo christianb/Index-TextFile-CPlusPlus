@@ -21,6 +21,7 @@ Controller::Controller(int argc, char *argv[]) {
 	// params is no longer needed
 	delete params;
 
+	
 	Index *index = new Index();
 
 	// prüfen wie viele options angegeben wurden und entsprechend Meldung ausgeben
@@ -39,58 +40,78 @@ Controller::Controller(int argc, char *argv[]) {
 		return;
 	}
 	
-	// get the first argument param, this is our output file
-	string out = *arguments.begin();
-	IndexParser *parser = new IndexParser(index);
-	
-	
+
+	IndexParser *parser = new IndexParser(index);	
+
 	//  create new index
 	map<string,string>::iterator position = options.find("i");
 	if (position != options.end()) {
-		// delete the first argument, the others are the input files
-		arguments.erase(arguments.begin());
+		// need at least two arguments (one the output file and at least one input file)
+		if (arguments.size() >= 2) {
+			string out = *arguments.begin();
+			
+			// delete the first argument, the others are the input files
+			arguments.erase(arguments.begin());
+
+			// create the index, read the input files and write the index in the output file
+			index->createIndex(out, arguments);
+		} else {
+			cout << "Error: not enough arguments. Need at least one output file and one input file i.e. -i out.txt in.txt" << endl;
+		}
 		
-		// create the index, read the input files and write the index in the output file
-		index->createIndex(out, arguments);
+		
 		
 	}
 	
 	// print the entire index
 	position = options.find("p");
 	if (position != options.end()) {
-		arguments.erase(arguments.begin());
-		index->createIndex(out, arguments);	// just until the parser is ready*/	
+		// need at least one argument (the output file to be read in for the parser)
+		if (!arguments.empty()) {
+			parser->readIndexFile(*arguments.begin());
 		
-		// TODO: how many arguments
-		index->printIndexFromOutputFile(*arguments.begin());
+			// TODO: how many arguments
+			index->printIndexFromOutputFile(*arguments.begin());
+		}
 	}
 	
 	// print index for the word
 	position = options.find("q");
 	if (position != options.end()) {
-		arguments.erase(arguments.begin());
-		index->createIndex(out, arguments); // just until the parser is ready
-		
-		index->printIndexForWord("das");
+		// need at least one argument (the output file to be read in for the parser)
+		if (!arguments.empty()) {
+			parser->readIndexFile(*arguments.begin());
+			
+			cout << "suche nach dem Wort: " << position->second << endl;
+			index->printIndexForWord(position->second);
+		} else {
+			cout << "Error: need output file as an argument i.e. -q=word out.txt" << endl;
+		}
 	}
 	
 	// print index for words who matches characters
 	position = options.find("s");
 	if (position != options.end()) {
-		arguments.erase(arguments.begin());
-		index->createIndex(out, arguments); // just until the parser is ready
-		
-		index->printWordsMatchesCharactersAtBeginning("an");
+		if (!arguments.empty()) {
+			parser->readIndexFile(*arguments.begin());
+			
+			cout << "suche nach dem Teilwort: " << position->second;
+			index->printWordsMatchesCharactersAtBeginning(position->second);
+		} else {
+			cout << "Error: need output file as an argument i.e. -s=word out.txt" << endl;
+		}
 	}
 	
 	// print index file
 	position = options.find("t");
 	if (position != options.end()) {
-		parser->readIndexFile("output.txt");
-		arguments.erase(arguments.begin());
-		index->createIndex(out, arguments); // just until the parser is ready
-		
-		index->printIndexForFile(*arguments.begin());
+		if (!arguments.empty()) {
+			parser->readIndexFile(*arguments.begin());
+			
+			index->printIndexForFile(position->second);
+		} else {
+			cout << "Error: need output file as an argument i.e. -t=word out.txt" << endl;
+		}
 	}
 	
 	delete parser;

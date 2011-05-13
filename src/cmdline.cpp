@@ -63,16 +63,21 @@ CmdLine::CmdLine(int argc, char *argv[]) {
 							if (value.empty()) {
 								cout << "Error: no emtpy values are allowed!" << endl;
 								return;
-							} else {
-								cout << "value: " << value << endl;
 							}
 							
 							string param = this->charToString(cur_opt);
-														
-							cout << "insert param: " << param << " with value: " << value << endl;
 							
-							// insert option and value in map
-							this->insertToOptions(param, value);
+							//if (i != (argc-1)) {
+							//	cout << "insert param: " << param << " with value: " << value << "i : " << i << " argc : " << argc << endl;
+
+								// insert option and value in map
+								this->insertToOptions(param, value);
+						/*	} else {
+								cout << "Error: No argument has been given!" << endl;
+								return;
+							}*/
+														
+							
 							
 						} else {
 							// we have an option which needs a value, but has not an equal sign at the right position
