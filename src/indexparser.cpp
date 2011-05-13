@@ -69,7 +69,7 @@ void IndexParser::ParseLine(string linie, bool flag_wort, bool flag_file, bool f
 	}
 	
 	//HIER GIBT ES EIN PROBLEM
-	index.AddToIndex(wort, file, index_set);
+	this->index->addToIndex(wort, file, *index_set);
 
 	// TEST FUNKTION ZUR AUSGABE AM TERMINAL
 	cout << wort << " " << file << " ";
