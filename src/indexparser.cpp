@@ -67,8 +67,10 @@ void IndexParser::ParseLine(string linie, bool flag_wort, bool flag_file, bool f
 		else if (flag_wort == false && flag_file == false && flag_index == false && character == " ")
 			flag_wort = true;	
 	}
+	
+	//HIER GIBT ES EIN PROBLEM
+	index.AddToIndex(wort, file, index_set);
 
-	//index->AddToIndex(wort, file, index_set);
 	// TEST FUNKTION ZUR AUSGABE AM TERMINAL
 	cout << wort << " " << file << " ";
 	for (set<int>::iterator line_it = index_set->begin(); line_it != index_set->end(); line_it++) {
@@ -79,6 +81,7 @@ void IndexParser::ParseLine(string linie, bool flag_wort, bool flag_file, bool f
 		cout << *line_it << " ";
 	}
 	cout << "\n";
+	// ENDE DER TESTFUNKTION
 	delete index_set;
 }
 
