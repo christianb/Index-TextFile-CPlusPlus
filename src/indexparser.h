@@ -13,24 +13,43 @@
 #include <string>
 #include <iostream>
 #include "index.h"
+#include <set>
+#include <stdio.h>
+#include <stdlib.h>
 
 using namespace std;
 
 class IndexParser {
 private:	
 
-	string *testword;  // This variable is only for testing of class construct
-
 	Index *index; // this is our reference to the index instance
 	
 	/**
-	 * Print Index parsed from given IndexFile.
+	 * Read IndexFile and store each line into vector<string>
+	 * @param *lines container to store all text lines
+	 * @param index_file IndexFile for parsing
 	 */
-	void printIndex();
+	void FileToLines(vector<string> *lines, string index_file);
+
+	/**
+	 * Parse given lines
+	 * @param *lines Lines for parsing
+	 */
+	void ParseAllLines(vector<string> *lines);
+
+	/**
+	 * Parse current line
+	 * @param linie Current line for parsing
+	 * @param flag_wort Variable give information about parsing progress --> true = Word determined 
+	 * @param flag_file Variable give information about parsing progress --> true = File determined 
+	 * @param flag_index Variable give information about parsing progress --> true = Index determined 
+	 */
+	void ParseLine(string linie, bool flag_wort, bool flag_file, bool flag_index);
 
 public:
 	/**
 	 * Create an object.
+	 * @param *index IndexFile for parsing 
 	 */
 	IndexParser(Index *index);
 	
