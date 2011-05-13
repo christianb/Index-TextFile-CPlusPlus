@@ -9,9 +9,15 @@ Controller::Controller(int argc, char *argv[]) {
 	// read command line parameters
 	CmdLine *params = new CmdLine(argc, argv);
 
-	vector<string> options = params->getOptions();
+	map<string, string> options = params->getOptions();
 	vector<string> arguments = params->getArguments();
 	
+/*	cout << "Options: " << endl;
+	params->printOptions();
+	
+	cout << endl << "Arguments: " << endl;
+	params->printArguments();
+*/
 	// params is no longer needed
 	delete params;
 
@@ -20,6 +26,7 @@ Controller::Controller(int argc, char *argv[]) {
 	// prüfen wie viele options angegeben wurden und entsprechend Meldung ausgeben
 	if (options.size() > 1) {
 		// Fehlermeldung...
+		cout << "Error: please type in just one option i.e. -i or -q=value" << endl;
 		
 		// delete pointers
 		delete index;
@@ -28,6 +35,8 @@ Controller::Controller(int argc, char *argv[]) {
 
 	if (options.size() == 0) {
 		// Fehlermeldung
+		cout << "Error: please type in one option" << endl;
+		// -help option
 		
 		delete index;
 		return;
@@ -37,7 +46,7 @@ Controller::Controller(int argc, char *argv[]) {
 	string out = *arguments.begin();
 	
 	//  create new index
-	vector<string>::iterator position = find(options.begin(), options.end(), "-i") ;
+	map<string,string>::iterator position = options.find("i");
 	if (position != options.end()) {
 		// delete the first argument, the others are the input files
 		arguments.erase(arguments.begin());
@@ -48,7 +57,7 @@ Controller::Controller(int argc, char *argv[]) {
 	}
 	
 	// print the entire index
-	position = find(options.begin(), options.end(), "-p") ;
+	position = options.find("p");
 	if (position != options.end()) {
 		arguments.erase(arguments.begin());
 		index->createIndex(out, arguments);	// just until the parser is ready	
@@ -58,8 +67,9 @@ Controller::Controller(int argc, char *argv[]) {
 	}
 	
 	// print index for the word
-	position = find(options.begin(), options.end(), "-q") ;
+	position = options.find("q");
 	if (position != options.end()) {
+		cout << "found -q parameter" << endl;
 		arguments.erase(arguments.begin());
 		index->createIndex(out, arguments); // just until the parser is ready
 		
@@ -67,7 +77,7 @@ Controller::Controller(int argc, char *argv[]) {
 	}
 	
 	// print index for words who matches characters
-	position = find(options.begin(), options.end(), "-s") ;
+	position = options.find("s");
 	if (position != options.end()) {
 		arguments.erase(arguments.begin());
 		index->createIndex(out, arguments); // just until the parser is ready
@@ -76,7 +86,7 @@ Controller::Controller(int argc, char *argv[]) {
 	}
 	
 	// print index file
-	position = find(options.begin(), options.end(), "-t") ;
+	position = options.find("t");
 	if (position != options.end()) {
 		IndexParser *parser = new IndexParser(index);
 		parser->readIndexFile("output.txt");

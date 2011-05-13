@@ -12,20 +12,39 @@
 
 #include <vector>
 #include <iterator>
-#include <string.h>
-
+#include <string>
+#include <map>
 #include <iostream>
+#include <sstream>
 
 using namespace std;
 
-typedef vector<string> parameter;
-typedef parameter options;
-typedef parameter arguments;
+typedef map<string, string> options; // option value
+typedef vector<string> arguments; // list of arguments
 
 class CmdLine {
 private:	
 	options *opt; // Alle Parameter die mit einem Bindestrich beginnen wie: "-p"
 	arguments *arg; // alle anderen Parameter ohne Bindestrich, z.B. Dateinamen "Index.txt"
+	
+	/**
+	 * 
+	 */
+	bool isOptionValid(const char c); 
+	
+	/**
+	 * 
+	 */
+	bool optionNeedValue(const char c);
+	
+	/**
+	 *
+	 */
+	bool optionNeedArguments(const char c);
+	
+	string charToString(const char c);
+	
+	bool insertToOptions(string key, string value);
 
 public:
 	/**
@@ -58,7 +77,7 @@ public:
 	 */
 	bool hasArguments();
 	
-	vector<string> getOptions();
+	map<string,string> getOptions();
 	
 	vector<string> getArguments();
 };
