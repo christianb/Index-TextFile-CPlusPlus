@@ -1,6 +1,6 @@
-#include "ltstr.h"
+#include "lexic.h"
 
-bool Ltstr::operator()(string s1, string s2) { 	
+bool Lexic::operator()(string s1, string s2) { 	
 	bool s1_IsSmaller_s2; // flag if s1 is lexicografic smaller than s2
 		
 	// get an iterator of both strings

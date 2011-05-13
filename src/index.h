@@ -20,7 +20,7 @@
 #include <set>
 #include <sstream>
 
-#include "ltstr.h"
+#include "lexic.h"
 
 using namespace std;
 
@@ -34,7 +34,7 @@ typedef int line_number; 					// a line number is an integer
 
 typedef set<line_number> line_numbers; 		// a set of line numbers
 typedef map<file, line_numbers* > files; 	// maps a file to a list of line_numbers
-typedef map<word, files*, Ltstr> words; 			// maps a word to a map of files
+typedef map<word, files*, Lexic> words; 			// maps a word to a map of files
 
 class Index {
 private:	

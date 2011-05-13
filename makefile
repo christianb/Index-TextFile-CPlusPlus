@@ -12,7 +12,7 @@ $(SRC)/cmdline.o \
 $(SRC)/index.o \
 $(SRC)/controller.o \
 $(SRC)/indexparser.o \
-$(SRC)/ltstr.o \
+$(SRC)/lexic.o \
 
 # program name 
 NAME = index
@@ -44,8 +44,8 @@ controller.o: $(SRC)/controller.cpp
 indexparser.o: $(SRC)/indexparser.cpp
 		$(CC) -c $(CFLAGS) $(SRC)/indexparser.cpp
 		
-ltstr.o: $(SRC)/ltstr.cpp
-	$(CC) -c $(CFLAGS) $(SRC)/ltstr.cpp
+lexic.o: $(SRC)/lexic.cpp
+	$(CC) -c $(CFLAGS) $(SRC)/lexic.cpp
 
 clean:	FORCE
 		rm -f $(OBJECTS)
