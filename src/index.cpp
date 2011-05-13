@@ -13,7 +13,7 @@ Index::Index() {
 
 Index::~Index() {
 	for (words::iterator w_it = _word_index->begin(); w_it != _word_index->end(); w_it++) {
-		files *f_map = w_it->second;
+		files *f_map = w_it->second; 
 		
 		for (files::iterator f_it = f_map->begin(); f_it != f_map->end(); f_it++) {
 			line_numbers *l = f_it->second;

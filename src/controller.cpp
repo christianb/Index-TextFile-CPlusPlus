@@ -25,16 +25,13 @@ Controller::Controller(int argc, char *argv[]) {
 
 	// prüfen wie viele options angegeben wurden und entsprechend Meldung ausgeben
 	if (options.size() > 1) {
-		// Fehlermeldung...
 		cout << "Error: please type in just one option i.e. -i or -q=value" << endl;
 		
-		// delete pointers
 		delete index;
 		return;
 	}
 
 	if (options.size() == 0) {
-		// Fehlermeldung
 		cout << "Error: please type in one option" << endl;
 		// -help option
 		
@@ -44,6 +41,8 @@ Controller::Controller(int argc, char *argv[]) {
 	
 	// get the first argument param, this is our output file
 	string out = *arguments.begin();
+	IndexParser *parser = new IndexParser(index);
+	
 	
 	//  create new index
 	map<string,string>::iterator position = options.find("i");
@@ -60,7 +59,7 @@ Controller::Controller(int argc, char *argv[]) {
 	position = options.find("p");
 	if (position != options.end()) {
 		arguments.erase(arguments.begin());
-		index->createIndex(out, arguments);	// just until the parser is ready	
+		index->createIndex(out, arguments);	// just until the parser is ready*/	
 		
 		// TODO: how many arguments
 		index->printIndexFromOutputFile(*arguments.begin());
@@ -69,7 +68,6 @@ Controller::Controller(int argc, char *argv[]) {
 	// print index for the word
 	position = options.find("q");
 	if (position != options.end()) {
-		cout << "found -q parameter" << endl;
 		arguments.erase(arguments.begin());
 		index->createIndex(out, arguments); // just until the parser is ready
 		
@@ -88,7 +86,6 @@ Controller::Controller(int argc, char *argv[]) {
 	// print index file
 	position = options.find("t");
 	if (position != options.end()) {
-		IndexParser *parser = new IndexParser(index);
 		parser->readIndexFile("output.txt");
 		arguments.erase(arguments.begin());
 		index->createIndex(out, arguments); // just until the parser is ready
@@ -96,12 +93,8 @@ Controller::Controller(int argc, char *argv[]) {
 		index->printIndexForFile(*arguments.begin());
 	}
 	
-	// TODO: auswerten eines Strings um ggf. falsche Parameter abzufangen!
-	
-	
-	//delete in_files;
+	delete parser;
 	delete index;
-	
 }
 
 Controller::~Controller() {

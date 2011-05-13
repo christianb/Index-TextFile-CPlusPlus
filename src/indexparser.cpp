@@ -9,7 +9,6 @@ IndexParser::IndexParser(Index *i) {
 }
 
 IndexParser::~IndexParser() {
-	delete index;
 }
 
 void IndexParser::FileToLines(vector<string> *lines, string index_file){

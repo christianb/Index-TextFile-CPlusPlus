@@ -44,7 +44,7 @@ private:
 	
 	string charToString(const char c);
 	
-	bool insertToOptions(string key, string value);
+	void insertToOptions(string key, string value);
 
 public:
 	/**

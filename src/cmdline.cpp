@@ -109,14 +109,14 @@ CmdLine::~CmdLine() {
 	delete arg;
 }
 
-bool CmdLine::insertToOptions(string key, string value) {
-	if (this->opt->size() < 1) {
+void CmdLine::insertToOptions(string key, string value) {
+//	if (this->opt->size() < 1) {
 		this->opt->insert(pair<string,string>(key, value));
-		return true;
+/*		return true;
 	}
 	
 	cout << "Warning: just one parameter is allowed, using first parameter!" << endl;
-	return false;
+	return false;*/
 }
 
 string CmdLine::charToString(const char c) {

@@ -5,11 +5,7 @@
 
 int main (int argc, char *argv[]) {
 	Controller *ctr = new Controller(argc, argv);
-	delete ctr;	
-	
-	// Temporary creating of IndexParser object. Will be deleted after testing.
-	//IndexParser *ip = new IndexParser();
-	//delete ip;
+	delete ctr;
 	
 	return EXIT_SUCCESS;
 }
