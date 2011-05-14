@@ -259,7 +259,7 @@ string Index::linesToString(line_numbers *l_set) {
 	lines.append("(");
 	for (line_numbers::iterator l_it = l_set->begin(); l_it != l_set->end(); l_it++) {
 		lines.append(" ");
-		lines.append(this->lineToString(*l_it));
+		lines.append(this->toString(*l_it));
 	}
 	
 	lines.append(" )");
@@ -267,14 +267,14 @@ string Index::linesToString(line_numbers *l_set) {
 	return lines;
 }
 
-string Index::lineToString(line_number l) {
+/*string Index::lineToString(line_number l) {
 	string number;
 	ostringstream os;
 	os << l;
 	number.append(os.str());
 	
 	return number;
-}
+}*/
 
 string Index::filesToString(files *f_map) {
 	string files;

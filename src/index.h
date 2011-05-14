@@ -141,11 +141,17 @@ private:
 	string linesToString(line_numbers *l_set);
 	
 	/**
-	 * Convert a single line number into a string.
-	 * @param l
+	 * Convert a single value into a string.
+	 * @param value
 	 * @return string
 	 */
-	string lineToString(line_number l);
+	template <typename Type>
+	string toString(Type value) {
+		ostringstream strout;
+		strout << value;
+		
+		return (strout.str());
+	}
 	
 	/**
 	 * Converts a file map, into a string.
