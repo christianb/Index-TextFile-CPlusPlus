@@ -337,6 +337,7 @@ void Index::printWordsMatchesCharactersAnywhere(string chars) {
 		size_t found;
 		found = word.find(chars);
 		
+		//cout << "found word: " << chars << " at position: " << found << endl;
 		if (found!=string::npos) {
 			cout << this->wordToString(w_it->first, w_it->second);
 		}
