@@ -95,7 +95,7 @@ Controller::Controller(int argc, char *argv[]) {
 		if (!arguments.empty()) {
 			parser->readIndexFile(*arguments.begin());
 			
-			cout << "suche nach dem Teilwort: " << position->second;
+			cout << "suche nach dem Teilwort: " << position->second << endl;
 			index->printWordsMatchesCharactersAtBeginning(position->second);
 		} else {
 			cout << "Error: need output file as an argument i.e. -s=word out.txt" << endl;

@@ -55,8 +55,8 @@ CmdLine::CmdLine(int argc, char *argv[]) {
 							// from s_it++; to s->end();
 							string value;
 							for (s_it++; s_it != s.end(); s_it++) {
-								const char *c = new char(*s_it);
-								value.append(c);
+								const char *ch = new char(tolower(*s_it)); // change characters for value to lower string
+								value.append(ch);
 							}
 							
 							// check if there is at least one character given for the value, due emtpy values are not allowed.

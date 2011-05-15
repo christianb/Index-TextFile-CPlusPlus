@@ -4,7 +4,7 @@ using namespace std;
 
 void Index::init() {
 	// create new map
-	_word_index = new words();
+	this->_word_index = new words();
 }
 
 Index::Index() {
@@ -171,7 +171,9 @@ void Index::addToIndex(word w, file f, line_number l) {
 }
 
 words::iterator Index::addWord(word w) {
-		//cout << "try to add '" << w << "' to map" << endl;
+		// change word to lower case
+		this->toLowerCase(w);
+	
 		pair<words::iterator,bool> ret;
 		files *f = new files();
 		
@@ -212,10 +214,6 @@ files::iterator Index::addFile(words::iterator word_it, file f) {
 void Index::addLine(files::iterator file_it, line_number l) {
 	//cout << "add line number : " << l << " to file : " << file_it->first << endl;
 	file_it->second->insert(l);
-}
-
-// alexander
-words* Index::parseIndexFile(file *f) {
 }
 
 vector<string>* Index::readAllLines(file f) {
@@ -367,4 +365,8 @@ void Index::addToIndex(word w, file f, line_numbers lines) {
 	for (line_numbers::iterator l_it = lines.begin(); l_it != lines.end(); l_it++) {
 		this->addToIndex(w, f, *l_it);
 	}
+}
+
+void Index::toLowerCase(string &str) {
+	transform(str.begin(), str.end(), str.begin(), ::tolower);
 }

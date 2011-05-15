@@ -14,7 +14,6 @@
 #include <iostream>
 #include <iterator>
 #include <vector>
-#include <list>
 #include <string>
 #include <map>
 #include <set>
@@ -34,7 +33,7 @@ typedef int line_number; 					// a line number is an integer
 
 typedef set<line_number> line_numbers; 		// a set of line numbers
 typedef map<file, line_numbers* > files; 	// maps a file to a list of line_numbers
-typedef map<word, files*, Lexic> words; 			// maps a word to a map of files
+typedef map<word, files*> words; 			// maps a word to a map of files
 
 class Index {
 private:	
@@ -180,6 +179,12 @@ private:
 	 * @param *f
 	 */
 	string wordToString(word w, files *f);
+	
+	/**
+	 * Transfomrs a given string to lower case letters.
+	 * @param &str The string to be transformed given as an reference.
+	 */
+	void toLowerCase(string &str);
 
 public:
 	/**

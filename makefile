@@ -26,6 +26,8 @@ SRC = ./src
 # target (merge with bin and name)
 TARGET = $(BIN)/$(NAME)
 
+install: clean compile
+
 compile: $(OBJECTS)
 		mkdir -p $(BIN); $(CC) $(CFLAGS) $(OBJECTS) -o $(TARGET) 
 
