@@ -12,7 +12,6 @@ $(SRC)/cmdline.o \
 $(SRC)/index.o \
 $(SRC)/controller.o \
 $(SRC)/indexparser.o \
-$(SRC)/lexic.o \
 $(SRC)/stringutil.o \
 $(SRC)/fileutil.o \
 
@@ -41,15 +40,12 @@ cmdline.o: $(SRC)/cmdline.cpp
 
 index.o: $(SRC)/index.cpp
 		$(CC) -c $(CFLAGS) $(SRC)/index.cpp
-		
+
 controller.o: $(SRC)/controller.cpp
 		$(CC) -c $(CFLAGS) $(SRC)/controller.cpp
 
 indexparser.o: $(SRC)/indexparser.cpp
 		$(CC) -c $(CFLAGS) $(SRC)/indexparser.cpp
-		
-lexic.o: $(SRC)/lexic.cpp
-	$(CC) -c $(CFLAGS) $(SRC)/lexic.cpp
 
 stringutil.o: $(SRC)/stringutil.o
 	$(CC) -c $(CFLAGS) $(SRC)/stringutil.cpp
