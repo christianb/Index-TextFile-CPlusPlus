@@ -31,50 +31,41 @@ Index::~Index() {
 
 void Index::createIndex(file out, vector<file> in) {	
 	//cout << "call createIndex()" << endl;
-	this->readFiles(in);
-	this->writeFile(out);
+	
+	
+	this->readContent(in);
+	this->writeContent(out);
 }
 
-void Index::readFiles(vector<file> files) {
-	//cout << "call readFiles()" << endl;
+void Index::readContent(vector<file> files) {
+	/*//cout << "call readFiles()" << endl;
 	for (vector<file>::iterator f_it = files.begin(); f_it != files.end(); f_it++) {
 		this->readFile(*f_it);
+	}*/
+		map<string, vector<string>* > file_content_map = this->f_util->readFiles(files);
+		
+		// NOW WE HAVE ALL FILES AND THEIR LINES
+	for (map<string, vector<string>*>::iterator f_c_it = file_content_map.begin(); f_c_it != file_content_map.end(); f_c_it++) {
+		string current_file = f_c_it->first;
+		vector<string> *lines = f_c_it->second;
+		
+		int line_number = 0;
+
+		// for each line in vector
+		for (vector<string>::iterator line_it=lines->begin() ; line_it != lines->end() ; line_it++) {
+			string line = *line_it;
+
+			// extract all words from line
+			vector<string> words = this->extractAllWordsFromLine(line);
+
+			// now we can insert all the words, from current line, from current file in map
+			this->addToIndex(words, current_file, ++line_number);
+		}
 	}
 }
 
-void Index::readFile(file f) {
-	//cout << "call readFile(), file: " << f << endl;
-	// this vectore stores each line in the file
-	vector<string> *lines = this->readAllLines(f);
-		
-	/** at this we have each line of this file in a vector 
-	 * now its time to read each character of that line **/
-		
-	int line_number = 0;
-	
-	// for each line in vector
-	for (vector<string>::iterator line_it=lines->begin() ; line_it != lines->end() ; line_it++) {
-		string line = *line_it;
-			
-		// extract all words from line
-		vector<string> words = this->extractAllWordsFromLine(line);
-			
-		// now we can insert all the words, from current line, from current file in map
-		this->addToIndex(words, f, ++line_number);
-	}
-	
-	delete lines;
-}
-
-void Index::writeFile(string out_file) {
-	ofstream out(out_file.c_str()); 
-	if (!out) { 
-		cerr << "Datei " << out_file << " kann nicht geoeffnet werden." << endl; 
-	} else {
-		out << this->allToString();		
-	}
-
-	out.close();
+void Index::writeContent(string out_file) {
+	this->f_util->writeFile(out_file, this->allToString());
 }
 
 // TODO : to be implement (christian)

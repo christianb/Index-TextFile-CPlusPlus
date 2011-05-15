@@ -1,6 +1,6 @@
 /** Class StringUtil
  *
- *  This class creates an index of different input files.
+ *  This class provides some usefull string methods.
  *
  *  author  Christian Bunk
  *  date    15.5.2011

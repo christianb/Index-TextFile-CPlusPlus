@@ -20,8 +20,8 @@
 #include <sstream>
 #include <algorithm>
 
-#include "lexic.h"
 #include "stringutil.h"
+#include "fileutil.h"
 
 using namespace std;
 
@@ -42,29 +42,23 @@ private:
 	// this map stores for each word, another map
 	words *_word_index; // stores a pointer to map_files
 	
-	StringUtil *s_util;
+	StringUtil *s_util; // reference to StringUtil
+	
+	FileUtil *f_util; // reference to FileUtil
 	
 	void init();
 	
 	/**
-	 * Read content from a given File.
-	 * 
+	 * Read content (from given files).
+	 * @param files
 	 */	
-	void readFiles(vector<file> files);
+	void readContent(vector<file> files);
 	
 	/**
-	 * Read each line from file.
-	 * Then seperate words from each line. 
-	 * Insert word (with line number and filename) in index map.
-	 * @param file The file to be read.
+	 * Write content (into file).
+	 * @param out_file
 	 */
-	void readFile(file f);
-	
-	/**
-	 * To be implement!
-	 * Write index to file.
-	 */
-	void writeFile(file out_file);
+	void writeContent(file out_file);
 	
 	/**
 	 * Add a new Word and return the iterator to that position.
