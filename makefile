@@ -13,6 +13,7 @@ $(SRC)/index.o \
 $(SRC)/controller.o \
 $(SRC)/indexparser.o \
 $(SRC)/lexic.o \
+$(SRC)/stringutil.o \
 
 # program name 
 NAME = index
@@ -48,6 +49,9 @@ indexparser.o: $(SRC)/indexparser.cpp
 		
 lexic.o: $(SRC)/lexic.cpp
 	$(CC) -c $(CFLAGS) $(SRC)/lexic.cpp
+
+stringutil.o: $(SRC)/stringutil.o
+	$(CC) -c $(CFLAGS) $(SRC)/stringutil.cpp
 
 clean:	FORCE
 		rm -f $(OBJECTS)

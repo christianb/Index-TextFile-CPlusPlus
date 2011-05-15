@@ -21,6 +21,7 @@
 #include <algorithm>
 
 #include "lexic.h"
+#include "stringutil.h"
 
 using namespace std;
 
@@ -40,6 +41,8 @@ class Index {
 private:	
 	// this map stores for each word, another map
 	words *_word_index; // stores a pointer to map_files
+	
+	StringUtil *s_util;
 	
 	void init();
 	
@@ -121,9 +124,6 @@ private:
 	 */
 	void addToIndex(vector<word> words, file f, line_number l);
 	
-	// To be implement (alexander)
-	words* parseIndexFile(file *f);
-	
 	/**
 	 * Read all lines within a file.
 	 * @return vector<string>* All lines within the file.
@@ -139,19 +139,6 @@ private:
 	 * @return string The string with line numbers.
 	 */
 	string linesToString(line_numbers *l_set);
-	
-	/**
-	 * Convert a single value into a string.
-	 * @param value
-	 * @return string
-	 */
-	template <typename Type>
-	string toString(Type value) {
-		ostringstream strout;
-		strout << value;
-		
-		return (strout.str());
-	}
 	
 	/**
 	 * Converts a file map, into a string.
@@ -180,12 +167,6 @@ private:
 	 * @param *f
 	 */
 	string wordToString(word w, files *f);
-	
-	/**
-	 * Transfomrs a given string to lower case letters.
-	 * @param &str The string to be transformed given as an reference.
-	 */
-	void toLowerCase(string &str);
 
 public:
 	/**
