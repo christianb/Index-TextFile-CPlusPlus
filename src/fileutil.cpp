@@ -25,31 +25,26 @@ vector<string>* FileUtil::readAllLinesFromFile(string f) {
 	vector<string> *lines = new vector<string>();
 	string line;
 	
-	// read from inputfile
-	ifstream in(f.c_str());
-		
-	// test if file exist
-	if (!in) {
-		cout << "Eingabedatei "<< f << " nicht gefunden!" << endl;
-		in.close() ; // Datei schließen
-		return lines;
+	ifstream ifs (f.c_str(), ifstream::in);
+
+	if (ifs.fail()) {
+		cout << "Inputfile: "<< f << " not found!" << endl;
 	}
 	
-	// read each line of file
-	while (getline(in, line, '\n')) {
-		// put line at the end of vector.
-	    lines->push_back(line);
+	while (ifs.good()) {
+		getline(ifs, line, '\n');
+		 lines->push_back(line);
 	}
-	
-	in.close() ; // Datei schließen
+
+	ifs.close();
 	
 	return lines;
 }
 
 void FileUtil::writeFile(string out_file, string content) {
 	ofstream out(out_file.c_str()); 
-	if (!out) { 
-		cerr << "Datei " << out_file << " kann nicht geoeffnet werden." << endl; 
+	if (out.fail()) { 
+		cerr << "Outputfile: " << out_file << " could not be opened!" << endl; 
 	} else {
 		out << content;		
 	}

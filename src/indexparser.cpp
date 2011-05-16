@@ -17,7 +17,7 @@ void IndexParser::FileToLines(vector<string> *lines, string index_file){
 
 	// Test if file exist. If exists --> store lines in verctor<string>
 	if (!in){
-		cout << "Eingabedatei "<< index_file << " nicht gefunden!" << endl;
+		cout << "Index file:  "<< index_file << " not found!" << endl;
 		in.close() ; // Datei schließen
 	}
 	else{

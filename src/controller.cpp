@@ -47,6 +47,9 @@ Controller::Controller(int argc, char *argv[]) {
 	if (position != options.end()) {
 		// need at least two arguments (one the output file and at least one input file)
 		if (arguments.size() >= 2) {
+			// read index file, so it will not be over-written
+			parser->readIndexFile(*arguments.begin());
+			
 			string out = *arguments.begin();
 			
 			// delete the first argument, the others are the input files
