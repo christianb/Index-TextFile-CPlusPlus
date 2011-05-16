@@ -45,13 +45,13 @@ void IndexParser::ParseLine(string linie, bool flag_wort, bool flag_file, bool f
 		if (flag_wort == true && flag_file == true && flag_index == false && character != " ") {
 			ind += character;
 		}
-		//
-		if (flag_wort == true && flag_file == true && flag_index == false && character == " " && ind != "") {
+		// Insert parsed index into index set
+		if ((flag_wort == true && flag_file == true && flag_index == false && character == " " && ind != "") || (s_it == linie.end()-1)) {
 			out.str(ind);
 			string ind_string = out.str();
 			index = atoi(ind_string.c_str());
 			index_set->insert(index);
-			out.str((ind = ""));		
+			out.str((ind = ""));
 		}
 		//if (flag_wort == true && flag_file == true && flag_index == false  && character == ")") {
 		//	flag_file = true;
