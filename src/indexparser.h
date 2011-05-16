@@ -14,8 +14,6 @@
 #include <iostream>
 #include "index.h"
 #include <set>
-#include <stdio.h>
-#include <stdlib.h>
 
 using namespace std;
 
@@ -44,7 +42,7 @@ private:
 	 * @param flag_file Variable give information about parsing progress --> true = File determined 
 	 * @param flag_index Variable give information about parsing progress --> true = Index determined 
 	 */
-	void ParseLine(string linie, bool flag_wort, bool flag_file, bool flag_index);
+	string ParseLine(string linie, bool flag_wort, bool flag_file, bool flag_index, string last_word);
 
 public:
 	/**

@@ -1,8 +1,7 @@
 using namespace std;
 
 #include "indexparser.h"
-
-
+#include "stringutil.h"
 
 IndexParser::IndexParser(Index *i) {
 	this->index = i;
@@ -11,6 +10,7 @@ IndexParser::IndexParser(Index *i) {
 IndexParser::~IndexParser() {
 }
 
+// Store each line from selected index_file into given vector<string>
 void IndexParser::FileToLines(vector<string> *lines, string index_file){
 	ifstream in(index_file.data()) ; // Open given IndexFile	
 	string line;
@@ -21,7 +21,7 @@ void IndexParser::FileToLines(vector<string> *lines, string index_file){
 		in.close() ; // Datei schließen
 	}
 	else{
-		// Read each line of file
+		// Read each line of given index file
 		while (getline(in, line, '\n')) {
 		lines->push_back(line); // Put line at the end of vector.
 		}
@@ -29,7 +29,7 @@ void IndexParser::FileToLines(vector<string> *lines, string index_file){
 	in.close() ; // Close IndexFile
 }
 
-void IndexParser::ParseLine(string linie, bool flag_wort, bool flag_file, bool flag_index){
+string IndexParser::ParseLine(string linie, bool flag_wort, bool flag_file, bool flag_index, string last_word){
 	string wort, file, ind;
 	stringstream out;
 	int index = 0;	
@@ -40,37 +40,49 @@ void IndexParser::ParseLine(string linie, bool flag_wort, bool flag_file, bool f
 		out.str("");
 		out << *s_it;
 		string character = out.str();
+		StringUtil s_util; 
 
 		// Read rest --> INDEX
-		if (flag_wort == true && flag_file == true && flag_index == false && character != " " && character != "(" && character != ")")
+		if (flag_wort == true && flag_file == true && flag_index == false && character != " ") {
 			ind += character;
-		else if (flag_wort == true && flag_file == true && flag_index == false && character == " " && ind != "") {
-			out.str(ind);
-			string ind_string = out.str();
-			index = atoi(ind_string.c_str());
-			index_set->insert(index);
-			out.str((ind = ""));		
 		}
-		else if (flag_wort == true && flag_file == true && flag_index == false  && character == ")")
-			flag_file = true;
+		// Insert parsed index into index set
+		if ((flag_wort == true && flag_file == true && flag_index == false && character == " " && ind != "") || (s_it == linie.end()-1)) {
+			out.str(ind);
+			s_util.stringTo(out.str(), index);
+			index_set->insert(index);
+			out.str((ind = ""));
+		}
 
 		// Read second string --> FILE
-		if (flag_wort == true && flag_file == false && flag_index == false && character != " ")
-			file += character;		
-		else if (flag_wort == true && flag_file == false && flag_index == false && character == " ")
+		if (flag_wort == true && flag_file == false && flag_index == false && character != " ") {
+			file += character;	
+		}
+		// Set respective flag if file name extracted	
+		if (flag_wort == true && flag_file == false && flag_index == false && character == " ") {
 			flag_file = true;
+		}
 
 		// Read first string --> WORD
-		if (flag_wort == false && flag_file == false && flag_index == false && character != " ")
+		if (flag_wort == false && flag_file == false && flag_index == false && character != " ") {
 			wort += character;		
-		else if (flag_wort == false && flag_file == false && flag_index == false && character == " ")
-			flag_wort = true;	
+		}
+		// Set flag if the first word is completely extracted.
+		// Set flag also when the first charakter is BLANK. IT means --> word == previous word and first string is a file name
+		if (flag_wort == false && flag_file == false && flag_index == false && character == " " && (s_it != linie.begin()) ) {
+			flag_wort = true;		
+		}
+		// If first charakter is BLANK then use previous word and the next string will be a file name
+		if (flag_wort == false && flag_file == false && flag_index == false && character == " " && (s_it == linie.begin()) ) {
+			wort = last_word;
+			flag_wort = true;		
+		}
 	}
 	
 	//HIER GIBT ES EIN PROBLEM
 	this->index->addToIndex(wort, file, *index_set);
-
-/*	// TEST FUNKTION ZUR AUSGABE AM TERMINAL
+	/*
+	// TEST FUNKTION ZUR AUSGABE AM TERMINAL
 	cout << wort << " " << file << " ";
 	for (set<int>::iterator line_it = index_set->begin(); line_it != index_set->end(); line_it++) {
 		// write out line number followed by a BLANK 
@@ -82,28 +94,30 @@ void IndexParser::ParseLine(string linie, bool flag_wort, bool flag_file, bool f
 	cout << "\n";
 	// ENDE DER TESTFUNKTION*/
 	delete index_set;
+	return wort;
 }
 
 void IndexParser::ParseAllLines(vector<string> *lines){
 	string linie;
+	string last_word = "";
 
-	// Linie für Linie duchgehen
+	// Read each line of file and parse it
 	for (vector<string>::iterator lines_it = lines->begin(); lines_it != lines->end(); lines_it++) {
-		bool flag_wort = false;
-		bool flag_file = false;
-		bool flag_index = false;
+		bool flag_wort = false;	// Flag flag_word==true when the word of current line is parsed
+		bool flag_file = false;	// Flag flag_file==true when file name of current line is parsed
+		bool flag_index = false; // Flag flag_index==true when every index of current line is parsed
 		stringstream out;
 		out << *lines_it;
 		linie = out.str();
-		// Parse given line anf write values into the index
-		this->ParseLine(linie, flag_wort, flag_file, flag_index);
+		// Parse current line and write values into the index; Use flags to mark parsing progress
+		last_word = this->ParseLine(linie, flag_wort, flag_file, flag_index, last_word);
 	}
 }
 
 void IndexParser::readIndexFile(string index_file) {
-	vector<string> *lines = new vector<string>();
-	this->FileToLines(lines, index_file);
-	this->ParseAllLines(lines);
+	vector<string> *lines = new vector<string>();  // vector<string> for text lines 
+	this->FileToLines(lines, index_file);	// store each line as a string in vector<string
+	this->ParseAllLines(lines);	// parse every line and put the extracted data into index
 	delete lines;
 }
 
