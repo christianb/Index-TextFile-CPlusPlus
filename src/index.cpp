@@ -108,13 +108,10 @@ bool Index::isCharValid(char c) {
 
 // check the first character
 bool Index::isFirstCharValid(char c) {
-	//cout << "call isFirstCharacterValid(" << c << ")" << endl;
 	if ( (c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z') || c == '_') {
-		//cout << "return true" << endl;
 		return true;
 	}
 	
-	//cout << "return false" << endl;
 	return false;
 }
 
@@ -157,6 +154,11 @@ vector<word> Index::extractAllWordsFromLine(string line) {
 		// if the word is not valid, correct it
 		if (!this->isWordValid(word)) {
 			this->correctWord(word);
+			
+			// if the word is empty (no valid first character up to the end of the word)
+			if (word.empty()) {
+				continue; // go on with next word
+			}
 		}
 
 		// now we have an absolut correct word, at to vector.
@@ -167,22 +169,20 @@ vector<word> Index::extractAllWordsFromLine(string line) {
 }
 
 void Index::correctWord(string &word) {
-	// TODO: now we have to decide what to do if the first char is not valid?
-	// 1. drop the entire word
-	// 2. delete all beginning characters those are not valid
-	
 	// remove all invalid chars at beginning
-	// try second:
 	for (string::iterator s_it = word.begin(); s_it != word.end(); s_it++) {
 		char c = *s_it;
 
-		// if the character is not valid
+		// if the character is valid
 		if (this->isFirstCharValid(c)) { 
-			cout << "first valid char: " << c << endl;
 			word.assign(s_it, word.end());
-			break;
+			return;
 		}
 	}
+	
+	// if none character is valid for first sign, so the word can not be correct, 
+	// beacause there is no other character left 
+	word.clear();
 }
 
 
