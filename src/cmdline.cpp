@@ -134,7 +134,7 @@ string CmdLine::charToString(const char c) {
 }
 
 bool CmdLine::isOptionValid(const char c) {
-	if (c == 'p' || c == 'i' || c == 'q' || c == 's' || c == 't') {
+	if (c == 'p' || c == 'i' || c == 'q' || c == 's' || c == 't' || c == 'h') {
 		return true;
 	}
 	
