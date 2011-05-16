@@ -2,14 +2,13 @@ using namespace std;
 
 #include "indexparser.h"
 
-
-
 IndexParser::IndexParser(Index *i) {
 	this->index = i;
 }
 
 IndexParser::~IndexParser() {
 }
+
 // Store each line from selected index_file into given vector<string>
 void IndexParser::FileToLines(vector<string> *lines, string index_file){
 	ifstream in(index_file.data()) ; // Open given IndexFile	
@@ -53,14 +52,12 @@ string IndexParser::ParseLine(string linie, bool flag_wort, bool flag_file, bool
 			index_set->insert(index);
 			out.str((ind = ""));
 		}
-		//if (flag_wort == true && flag_file == true && flag_index == false  && character == ")") {
-		//	flag_file = true;
-		//}
 
 		// Read second string --> FILE
 		if (flag_wort == true && flag_file == false && flag_index == false && character != " ") {
 			file += character;	
-		}	
+		}
+		// Set respective flag if file name extracted	
 		if (flag_wort == true && flag_file == false && flag_index == false && character == " ") {
 			flag_file = true;
 		}
@@ -83,7 +80,7 @@ string IndexParser::ParseLine(string linie, bool flag_wort, bool flag_file, bool
 	
 	//HIER GIBT ES EIN PROBLEM
 	this->index->addToIndex(wort, file, *index_set);
-
+	/*
 	// TEST FUNKTION ZUR AUSGABE AM TERMINAL
 	cout << wort << " " << file << " ";
 	for (set<int>::iterator line_it = index_set->begin(); line_it != index_set->end(); line_it++) {
@@ -94,7 +91,7 @@ string IndexParser::ParseLine(string linie, bool flag_wort, bool flag_file, bool
 		cout << *line_it << " ";
 	}
 	cout << "\n";
-	// ENDE DER TESTFUNKTION
+	// ENDE DER TESTFUNKTION*/
 	delete index_set;
 	return wort;
 }
