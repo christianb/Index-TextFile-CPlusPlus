@@ -298,13 +298,10 @@ void Index::printIndexFromOutputFile(file f) {
 
 string Index::linesToString(line_numbers *l_set) {
 	string lines;
-	lines.append("(");
 	for (line_numbers::iterator l_it = l_set->begin(); l_it != l_set->end(); l_it++) {
 		lines.append(" ");
 		lines.append(this->s_util->toString(*l_it));
 	}
-	
-	lines.append(" )");
 	
 	return lines;
 }
@@ -331,7 +328,6 @@ string Index::fileToString(file f, line_numbers *l) {
 	string file;
 	file.append(" ");
 	file.append(f);
-	file.append(" ");
 	file.append(this->linesToString(l));
 	file.append("\n");
 	return file;
