@@ -11,10 +11,10 @@ Controller::Controller(int argc, char *argv[]) {
 
 	map<string, string> options = params->getOptions();
 	vector<string> arguments = params->getArguments();
-	
-/*	cout << "Options: " << endl;
+/*
+	cout << "Options: " << endl;
 	params->printOptions();
-	
+
 	cout << endl << "Arguments: " << endl;
 	params->printArguments();
 */
@@ -32,14 +32,13 @@ Controller::Controller(int argc, char *argv[]) {
 		return;
 	}
 
-	if (options.size() == 0) {
+	if (options.empty()) {
 		cout << "Error: please type in one option" << endl;
 		// -help option
 		
 		delete index;
 		return;
 	}
-	
 
 	IndexParser *parser = new IndexParser(index);	
 
