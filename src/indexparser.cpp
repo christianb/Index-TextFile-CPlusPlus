@@ -33,7 +33,7 @@ string IndexParser::ParseLine(string linie, bool flag_wort, bool flag_file, bool
 	string wort, file, ind;
 	stringstream out;
 	int index = 0;	
-	set<int> *index_set = new set<int>();
+	line_numbers *index_set = new line_numbers();
 
   	// Parse given line and differ strings between WORD, FILE and INDEX
 	for (string::iterator s_it = linie.begin(); s_it != linie.end(); s_it++) {

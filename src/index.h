@@ -33,9 +33,9 @@ typedef string word;
 typedef string file;						// a file is a string
 typedef int line_number; 					// a line number is an integer
 
-typedef set<line_number> line_numbers; 		// a set of line numbers
+typedef set<line_number, less<int> > line_numbers; 		// a set of line numbers
 typedef map<file, line_numbers* > files; 	// maps a file to a list of line_numbers
-typedef map<word, files*> words; 			// maps a word to a map of files
+typedef map<word, files*, less<string> > words; 			// maps a word to a map of files
 
 class Index {
 private:	
