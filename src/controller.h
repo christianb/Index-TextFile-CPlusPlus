@@ -28,6 +28,9 @@ public:
 	Controller(int argc, char *argv[]);
 	~Controller();
 	
+private:
+	void printHelp();
+	
 };
 
 #endif	/* _CONTROLLER_H */

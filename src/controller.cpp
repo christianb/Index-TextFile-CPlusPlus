@@ -23,14 +23,13 @@ Controller::Controller(int argc, char *argv[]) {
 	// prüfen wie viele options angegeben wurden und entsprechend Meldung ausgeben
 	if (options.size() > 1) {
 		cout << "Error: please type in just one option i.e. -i or -q=value" << endl;
-		
 		delete index;
 		return;
 	}
 
 	if (options.empty()) {
 		cout << "Error: please type in one option" << endl;
-		// -help option
+		this->printHelp();
 		
 		delete index;
 		return;
@@ -119,23 +118,9 @@ Controller::Controller(int argc, char *argv[]) {
 	}
 
 	// print index file
-	position = options.find("h");
+	position = options.find("-help");
 	if (position != options.end()) {
-		cout << "\n\n********************************************************************" << endl;
-		cout << "Creation and use of an associative index for program texts" << endl;		
-		cout << "**********************************************************************" << endl;
-		cout << "This program can be started with following command line parameters:" << endl;
-		cout << "<program> <options> <outputfile> <inputfile>*" << endl;
-		cout << "<program> :        Program name" << endl;
-		cout << "<options> :        " << endl;
-		cout << "  -p               Print index list on data terminal" << endl;
-		cout << "  -i               Create an index" << endl;
-		cout << "  -q=<word>        Print all indexes for word <word> on data termnal" << endl;
-		cout << "  -s=<prefixterm>  Print indexes for all words with prefix term <prefixterm>" << endl;
-		cout << "  -t=<filename>    Print indexes for words  founded in file <filename>" << endl;
-		cout << "  -h               Description of command line parameters" << endl;
-		cout << "<outputfile> :     Filename of output file with created index list" << endl;
-		cout << "<inputfile>* :     List of input files for indexing\n\n\n\n\n\n\n\n\n" << endl;
+		this->printHelp();
 	}
 	
 	delete parser;
@@ -144,4 +129,22 @@ Controller::Controller(int argc, char *argv[]) {
 
 Controller::~Controller() {
 	
+}
+
+void Controller::printHelp() {
+	cout << "********************************************************************" << endl;
+	cout << "Creation and use of an associative index for program texts" << endl;		
+	cout << "**********************************************************************" << endl;
+	cout << "This program can be started with following command line parameters:" << endl;
+	cout << "<program> <options> <outputfile> <inputfile>*" << endl;
+	cout << "<program> :        Program name" << endl;
+	cout << "<options> :        " << endl;
+	cout << "  -p               Print index list on data terminal" << endl;
+	cout << "  -i               Create an index" << endl;
+	cout << "  -q=<word>        Print all indexes for word <word> on data termnal" << endl;
+	cout << "  -s=<prefixterm>  Print indexes for all words with prefix term <prefixterm>" << endl;
+	cout << "  -t=<filename>    Print indexes for words  founded in file <filename>" << endl;
+	cout << "  --help               Description of command line parameters" << endl;
+	cout << "<outputfile> :     Filename of output file with created index list" << endl;
+	cout << "<inputfile>* :     List of input files for indexing" << endl;
 }
