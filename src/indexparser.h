@@ -14,8 +14,6 @@
 #include <iostream>
 #include "index.h"
 #include <set>
-#include <stdio.h>
-#include <stdlib.h>
 
 using namespace std;
 

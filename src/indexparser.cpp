@@ -1,6 +1,7 @@
 using namespace std;
 
 #include "indexparser.h"
+#include "stringutil.h"
 
 IndexParser::IndexParser(Index *i) {
 	this->index = i;
@@ -39,6 +40,7 @@ string IndexParser::ParseLine(string linie, bool flag_wort, bool flag_file, bool
 		out.str("");
 		out << *s_it;
 		string character = out.str();
+		StringUtil s_util; 
 
 		// Read rest --> INDEX
 		if (flag_wort == true && flag_file == true && flag_index == false && character != " ") {
@@ -47,8 +49,7 @@ string IndexParser::ParseLine(string linie, bool flag_wort, bool flag_file, bool
 		// Insert parsed index into index set
 		if ((flag_wort == true && flag_file == true && flag_index == false && character == " " && ind != "") || (s_it == linie.end()-1)) {
 			out.str(ind);
-			string ind_string = out.str();
-			index = atoi(ind_string.c_str());
+			s_util.stringTo(out.str(), index);
 			index_set->insert(index);
 			out.str((ind = ""));
 		}
