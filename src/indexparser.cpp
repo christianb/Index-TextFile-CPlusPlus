@@ -29,7 +29,7 @@ void IndexParser::FileToLines(vector<string> *lines, string index_file){
 	in.close() ; // Close IndexFile
 }
 
-void IndexParser::ParseLine(string linie, bool flag_wort, bool flag_file, bool flag_index){
+string IndexParser::ParseLine(string linie, bool flag_wort, bool flag_file, bool flag_index, string last_word){
 	string wort, file, ind;
 	stringstream out;
 	int index = 0;	
@@ -71,9 +71,13 @@ void IndexParser::ParseLine(string linie, bool flag_wort, bool flag_file, bool f
 		}
 		// Set flag if the first word is completely extracted.
 		// Set flag also when the first charakter is BLANK. IT means --> word == previous word and first string is a file name
-		if (flag_wort == false && flag_file == false && flag_index == false && character == " ") {
-			flag_wort = true;
-				
+		if (flag_wort == false && flag_file == false && flag_index == false && character == " " && (s_it != linie.begin()) ) {
+			flag_wort = true;		
+		}
+		// If first charakter is BLANK then use previous word and the next string will be a file name
+		if (flag_wort == false && flag_file == false && flag_index == false && character == " " && (s_it == linie.begin()) ) {
+			wort = last_word;
+			flag_wort = true;		
 		}
 	}
 	
@@ -92,10 +96,12 @@ void IndexParser::ParseLine(string linie, bool flag_wort, bool flag_file, bool f
 	cout << "\n";
 	// ENDE DER TESTFUNKTION
 	delete index_set;
+	return wort;
 }
 
 void IndexParser::ParseAllLines(vector<string> *lines){
 	string linie;
+	string last_word = "";
 
 	// Read each line of file and parse it
 	for (vector<string>::iterator lines_it = lines->begin(); lines_it != lines->end(); lines_it++) {
@@ -106,7 +112,7 @@ void IndexParser::ParseAllLines(vector<string> *lines){
 		out << *lines_it;
 		linie = out.str();
 		// Parse current line and write values into the index; Use flags to mark parsing progress
-		this->ParseLine(linie, flag_wort, flag_file, flag_index);
+		last_word = this->ParseLine(linie, flag_wort, flag_file, flag_index, last_word);
 	}
 }
 
