@@ -69,25 +69,35 @@ void Index::writeContent(string out_file) {
 }
 
 // TODO : to be implement (christian)
-bool Index::isWordValid(word w) {	
+bool Index::isWordValid(word w) {
+	//cout << "call isWordValid(" << w << ")" << endl;
+		
 	int i = 0;
 	for (string::iterator word_it=w.begin(); word_it != w.end(); word_it++) {
+		// check first char if it is valid
 		if (i == 0) {
 			if (!this->isFirstCharValid(*word_it)) {
+				//cout << "first char is not valid!" << endl;
+				//cout << "return false" << endl;
 				return false;
 			} 
 		} else {
+			// all other characters, not at first, check if they're valid
 			if (!this->isCharValid(*word_it)) {
-					return false;
+				//cout << "some char in word is not valid" << endl;
+				//cout << "return false" << endl;
+				return false;
 			}
 		}
 		i++;
 	}
 	
+	//cout << "return true" << endl;
 	return true;
 }
 
 bool Index::isCharValid(char c) {
+	//cout << "call isCharValid(" << c << ")" << endl;
 	// alternative implementation
 	if ( this->isFirstCharValid(c) || (c >= '0' && c <= '9')  || c == '-') {
 		return true;
@@ -98,10 +108,13 @@ bool Index::isCharValid(char c) {
 
 // check the first character
 bool Index::isFirstCharValid(char c) {
+	//cout << "call isFirstCharacterValid(" << c << ")" << endl;
 	if ( (c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z') || c == '_') {
+		//cout << "return true" << endl;
 		return true;
 	}
 	
+	//cout << "return false" << endl;
 	return false;
 }
 
@@ -118,6 +131,7 @@ vector<word> Index::extractAllWordsFromLine(string line) {
 		if (this->isCharValid(*char_it)) {
 			word->push_back(*char_it);
 		} else {
+			
 			// copy word in vector
 			if (word->size()>0) {
 				words.push_back(*word);
@@ -132,7 +146,43 @@ vector<word> Index::extractAllWordsFromLine(string line) {
 	}
 	
 	delete word;
-	return words;
+
+	vector<string> validWords;
+	// now we have all words from line, but now we have to check if all words starts with a valid char
+	for (vector<string>::iterator w_it = words.begin(); w_it != words.end(); w_it++) {
+		string word = *w_it; // get the word
+		
+		// here we can decide if we want to remove wrong words, or to correct them
+		
+		// if the word is not valid, correct it
+		if (!this->isWordValid(word)) {
+			this->correctWord(word);
+		}
+
+		// now we have an absolut correct word, at to vector.
+		validWords.push_back(word);
+	}
+	
+	return validWords;
+}
+
+void Index::correctWord(string &word) {
+	// TODO: now we have to decide what to do if the first char is not valid?
+	// 1. drop the entire word
+	// 2. delete all beginning characters those are not valid
+	
+	// remove all invalid chars at beginning
+	// try second:
+	for (string::iterator s_it = word.begin(); s_it != word.end(); s_it++) {
+		char c = *s_it;
+
+		// if the character is not valid
+		if (this->isFirstCharValid(c)) { 
+			cout << "first valid char: " << c << endl;
+			word.assign(s_it, word.end());
+			break;
+		}
+	}
 }
 
 

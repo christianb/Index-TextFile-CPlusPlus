@@ -161,6 +161,8 @@ private:
 	 * @param *f
 	 */
 	string wordToString(word w, files *f);
+	
+	void correctWord(string &word);
 
 public:
 	/**
