@@ -12,8 +12,11 @@
 
 #include <string>
 #include <iostream>
-#include "index.h"
 #include <set>
+
+#include "index.h"
+#include "stringutil.h"
+
 
 using namespace std;
 

@@ -10,6 +10,12 @@
 #ifndef _CONTROLLER_H
 #define _CONTROLLER_H
 
+#include <algorithm>
+
+#include "cmdline.h"
+#include "index.h"
+#include "indexparser.h"
+
 using namespace std;
 
 class Controller {

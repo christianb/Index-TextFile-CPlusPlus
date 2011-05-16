@@ -1,8 +1,4 @@
 #include "controller.h"
-#include "cmdline.h"
-#include "index.h"
-#include "indexparser.h"
-#include <algorithm>
 
 Controller::Controller(int argc, char *argv[]) {
 	
