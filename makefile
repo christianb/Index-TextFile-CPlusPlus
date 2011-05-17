@@ -4,7 +4,7 @@
 # Define C Compiler
 CC = c++
 # Define standard flags
-CFLAGS = -Wall -g
+CFLAGS = -Wall -Wextra -g
 
 # Files to be compiled
 OBJECTS = $(SRC)/main.o \
@@ -29,29 +29,29 @@ TARGET = $(BIN)/$(NAME)
 
 install: clean compile
 
-compile: $(OBJECTS)
+compile: main.o cmdline.o index.o controller.o indexparser.o stringutil.o fileutil.o
 		mkdir -p $(BIN); $(CC) $(CFLAGS) $(OBJECTS) -o $(TARGET) 
 
 main.o: $(SRC)/main.cpp
-		$(CC) -c $(CFLAGS) $(SRC)/main.cpp -o $(SRC)/main.o 
+		$(CC) $(CFLAGS) -c $(SRC)/main.cpp -o $(SRC)/main.o
 
 cmdline.o: $(SRC)/cmdline.cpp 
-		$(CC) -c $(CFLAGS) $(SRC)/cmdline.cpp -o $(SRC)/cmdline.o 
+		$(CC) $(CFLAGS) -c $(SRC)/cmdline.cpp -o $(SRC)/cmdline.o
 
 index.o: $(SRC)/index.cpp
-		$(CC) -c $(CFLAGS) $(SRC)/index.cpp -o $(SRC)/index.o 
+		$(CC) $(CFLAGS) -c $(SRC)/index.cpp -o $(SRC)/index.o
 
 controller.o: $(SRC)/controller.cpp
-		$(CC) -c $(CFLAGS) $(SRC)/controller.cpp -o $(SRC)/controller.o 
+		$(CC) $(CFLAGS) -c $(SRC)/controller.cpp -o $(SRC)/controller.o
 
 indexparser.o: $(SRC)/indexparser.cpp
-		$(CC) -c $(CFLAGS) $(SRC)/indexparser.cpp -o $(SRC)/indexparser.o 
+		$(CC) $(CFLAGS) -c $(SRC)/indexparser.cpp -o $(SRC)/indexparser.o
 
 stringutil.o: $(SRC)/stringutil.o
-	$(CC) -c $(CFLAGS) $(SRC)/stringutil.cpp -o $(SRC)/stringutil.o 
+		$(CC) $(CFLAGS) -c $(SRC)/stringutil.cpp -o $(SRC)/stringutil.o
 
 fileutil.o: $(SRC)/fileutil.o
-	$(CC) -c $(CFLAGS) $(SRC)/fileutil.cpp -o $(SRC)/fileutil.o 
+		$(CC) $(CFLAGS) -c $(SRC)/fileutil.cpp -o $(SRC)/fileutil.o
 
 clean:	FORCE
 		rm -f $(OBJECTS)
