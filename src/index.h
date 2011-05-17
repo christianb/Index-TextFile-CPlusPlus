@@ -1,12 +1,3 @@
-/** Class Index
- *
- *  This class creates an index of different input files.
- *
- *  author  Christian Bunk
- *  date    3.5.2011
- *  version 0.1
- */
-
 #ifndef _INDEX_H
 #define _INDEX_H
 
@@ -25,18 +16,44 @@
 
 using namespace std;
 
-// TODO comment type defs
-typedef string word; 
 /**
- * a file is a string.
- */						// a word is a string
-typedef string file;						// a file is a string
-typedef int line_number; 					// a line number is an integer
+ * word is a string
+ */
+typedef string word; 
 
-typedef set<line_number, less<int> > line_numbers; 		// a set of line numbers
-typedef map<file, line_numbers* > files; 	// maps a file to a list of line_numbers
-typedef map<word, files*, less<string> > words; 			// maps a word to a map of files
+/**
+ * file is a string
+ */					
+typedef string file;					
 
+/**
+ * line_number is an int
+ */
+typedef int line_number;
+
+/**
+ * line_numbers is a set containing int's
+ */
+typedef set<line_number, less<int> > line_numbers; 
+
+/**
+ * files is a map containing the file(name) and a set of line number's
+ */
+typedef map<file, line_numbers* > files;
+
+/**
+ * words is a map containing the word an another map (with files and line number's)
+ */
+typedef map<word, files*, less<string> > words;
+
+/** Class Index
+ *
+ *  This class creates an index of several input files.
+ *
+ *  author  Christian Bunk
+ *  date    3.5.2011
+ *  version 0.1
+ */
 class Index {
 private:	
 	// this map stores for each word, another map
@@ -46,7 +63,12 @@ private:
 	
 	FileUtil *f_util; // reference to FileUtil
 	
+	/**
+	 * Doing some initial stuff.
+	 */
 	void init();
+	
+	// Read and write files:
 	
 	/**
 	 * Read content (from given files).
@@ -59,6 +81,40 @@ private:
 	 * @param out_file
 	 */
 	void writeContent(file out_file);
+	
+	
+	// Build the index:
+
+	/**
+	 * Read all lines within a file.
+	 * @return vector<string>* All lines within the file.
+	 */
+	vector<string>* readAllLines(file f);
+	
+	/**
+	 * Exctract all words from a line.
+	 * Rules: each empty character will be ignored
+	 */
+	vector<word> extractAllWordsFromLine(string line);
+	
+	/**
+	 * Add a word into the index, corresponding to a file and a line number.
+	 * This mehtod is used by addToIndex(vector<word>, file, line_number)
+	 * @param w
+	 * @param f
+	 * @param l
+	 */
+	void addToIndex(word w, file f, line_number l);
+	
+	/**
+	 * Add a vector of words into the index, corresponding to a file and a line number.
+	 * Use the method addToIndex(word, file, line_number)
+	 * This method is used when the index is created.
+	 * @param words
+	 * @param f
+	 * @param l
+	 */
+	void addToIndex(vector<word> words, file f, line_number l);
 	
 	/**
 	 * Add a new Word and return the iterator to that position.
@@ -84,70 +140,38 @@ private:
 	 */
 	void addLine(files::iterator file_it, line_number l);
 	
-	/**
-	 * Exctract all words from a line.
-	 * Rules: each empty character will be ignored
-	 */
-	vector<word> extractAllWordsFromLine(string line);
+	
+	// Check if word is correct:
 	
 	/**
-	 * check if the word is valid (christian)
+	 * Check if the word is valid.
+	 * @param w
+	 * @return bool
 	 */
 	bool isWordValid(word w);
 	
+	/**
+	 * Check if character is a valid character.
+	 * @param c
+	 * @return bool
+	 */
 	bool isCharValid(char c);
 	
+	/**
+	 * Check if the character is valid to be the first character of the word.
+	 * @param c
+	 * @return bool
+	 */
 	bool isFirstCharValid(char c);
 	
 	/**
-	 * Add a word into the index, corresponding to a file and a line number.
-	 * This mehtod is used by addToIndex(vector<word>, file, line_number)
-	 * @param w
-	 * @param f
-	 * @param l
+	 * Removes invalid characters at the beginning of the word.
+	 * @param word The word to be corrected.
 	 */
-	void addToIndex(word w, file f, line_number l);
-	
-	/**
-	 * Add a vector of words into the index, corresponding to a file and a line number.
-	 * Use the method addToIndex(word, file, line_number)
-	 * This method is used when the index is created.
-	 * @param words
-	 * @param f
-	 * @param l
-	 */
-	void addToIndex(vector<word> words, file f, line_number l);
-	
-	/**
-	 * Read all lines within a file.
-	 * @return vector<string>* All lines within the file.
-	 */
-	vector<string>* readAllLines(file f);
+	void correctWord(string &word);
 	
 	
-	// At the following are the helper methods which convert defined content aof the index into a string.
-	
-	/**
-	 * Converts a set of line numbers into a string.
-	 * @param *l_set The set with line numbers.
-	 * @return string The string with line numbers.
-	 */
-	string linesToString(line_numbers *l_set);
-	
-	/**
-	 * Converts a file map, into a string.
-	 * @param *f_map
-	 * @return string
-	 */
-	string filesToString(files *f_map);
-	
-	/**
-	 * Converts a file and its line numbers into a string.
-	 * @param f
-	 * @param *l
-	 * return string
-	 */
-	string fileToString(file f, line_numbers *l);
+	// Get information about the index:
 	
 	/**
 	 * Get a string with the index of all words.
@@ -156,13 +180,27 @@ private:
 	string allToString();
 	
 	/**
-	 * Convert  the content for the given word into a string.
-	 * @param w
-	 * @param *f
+	 * Convert a word at current iterator position to string. This includes all files and line numbers.
+	 * Use fileToString()
+	 * @parma w_it The current iterator,
+	 * @return string String representation of the word and all files and lines where it occurs.
 	 */
-	string wordToString(word w, files *f);
+	string wordToString(words::iterator w_it);
 	
-	void correctWord(string &word);
+	/**
+	 * Converts a file at current iterator position to string. This includes all lines.
+	 * Use line_numberToString()
+	 * @param f_it The current iterator.
+	 * @return string String representation of file and all lines.
+	 */
+	string fileToString(files::iterator f_it);
+	
+	/**
+	 * Converts a line number at current iterator position to string.
+	 * @param l_set The current iterator.
+	 * @return string String representation of this line number.
+	 */
+	string line_numberToString(line_numbers::iterator l_set);
 
 public:
 	/**
@@ -176,7 +214,10 @@ public:
 	~Index();	
 	
 	/**
-	 * This method insert a w
+	 * This method insert a word occuring in a file at a line to the index.
+	 * @param w The word to insert to the index.
+	 * @param f The file the word occurs in.
+	 * @param lines The line in the file where the word occurs.
 	 */
 	void addToIndex(word w, file f, line_numbers lines);
 	
@@ -203,8 +244,8 @@ public:
 	
 	/**
 	 * Print all words which matches the given string anywhere.
-	 * This is not a required method!
-	 * @param characters
+	 * This is not a required method! Called with parameter -s
+	 * @param characters The characters to find in the index.
 	 */
 	void printWordsMatchesCharactersAnywhere(string characters);
 	
@@ -218,9 +259,9 @@ public:
 	/**
 	 * print the index for a given outputfile.
 	 * Called with parameter -p
-	 * TODO: update when parser is ready!
+	 * @param out_file The output file to be printed.
 	 */
-	void printIndexFromOutputFile(file outputfile);
+	void printIndexFromOutputFile(file out_file);
 };
 
 #endif	/* _INDEX_H */

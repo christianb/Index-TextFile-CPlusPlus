@@ -68,7 +68,6 @@ void Index::writeContent(string out_file) {
 	this->f_util->writeFile(out_file, this->allToString());
 }
 
-// TODO : to be implement (christian)
 bool Index::isWordValid(word w) {
 	//cout << "call isWordValid(" << w << ")" << endl;
 		
@@ -185,11 +184,6 @@ void Index::correctWord(string &word) {
 	word.clear();
 }
 
-
-void addToIndex(word w, map<file, set<line_number> >) {
-	// to be implemented.
-}
-
 void Index::addToIndex(vector<string> words, file f, line_number l) {
 	
 	for (vector<string>::iterator words_it=words.begin() ; words_it != words.end() ; words_it++) {
@@ -289,65 +283,53 @@ vector<string>* Index::readAllLines(file f) {
 
 void Index::printIndexFromOutputFile(file f) {
 	cout << "printIndexFromOutputFile : " << f << endl;
-	
-	// TODO: read from parser!
-	// indexParser->parseOutputfile(f);
 
 	cout << this->allToString();
 }
 
-string Index::linesToString(line_numbers *l_set) {
-	string lines;
-	for (line_numbers::iterator l_it = l_set->begin(); l_it != l_set->end(); l_it++) {
-		lines.append(" ");
-		lines.append(this->s_util->toString(*l_it));
+string Index::allToString() {
+	string all;
+	for (words::iterator w_it = _word_index->begin(); w_it != _word_index->end(); w_it++) {
+		all.append(this->wordToString(w_it));
 	}
 	
-	return lines;
+	return all;
 }
 
-/*string Index::lineToString(line_number l) {
-	string number;
-	ostringstream os;
-	os << l;
-	number.append(os.str());
-	
-	return number;
-}*/
+string Index::wordToString(words::iterator w_it) {
+	//words::iterator w_it = _word_index->find(w);
+	string word;
+	word.append(w_it->first);
 
-string Index::filesToString(files *f_map) {
-	string files;
+	files *f_map = w_it->second;
 	for (files::iterator f_it = f_map->begin(); f_it != f_map->end(); f_it++) {
-		files.append(this->fileToString(f_it->first, f_it->second));
+		word.append(this->fileToString(f_it));
 	}
+
+	return word;
+}
+
+string Index::fileToString(files::iterator f_it) {
+	string files;
+		files.append(" ");
+		files.append(f_it->first);
+		
+		line_numbers *l_set = f_it->second;
+		for (line_numbers::iterator l_it = l_set->begin(); l_it != l_set->end(); l_it++) {
+			files.append(this->line_numberToString(l_it));
+		}
+		
+		files.append("\n");
 	
 	return files;
 }
 
-string Index::fileToString(file f, line_numbers *l) {
-	string file;
-	file.append(" ");
-	file.append(f);
-	file.append(this->linesToString(l));
-	file.append("\n");
-	return file;
-}
-
-string Index::allToString() {
-	string words;
-	for (words::iterator w_it = _word_index->begin(); w_it != _word_index->end(); w_it++) {
-		words.append(this->wordToString(w_it->first, w_it->second));
-	}
+string Index::line_numberToString(line_numbers::iterator l_it) {
+	string lines;
+		lines.append(" ");
+		lines.append(this->s_util->toString(*l_it));
 	
-	return words;
-}
-
-string Index::wordToString(word w, files *f_map) {
-	string word;
-	word.append(w);
-	word.append(this->filesToString(f_map));
-	
-	return word;
+	return lines;
 }
 
 // print the Index for one word.
@@ -358,7 +340,7 @@ void Index::printIndexForWord(string pWord) {
 	
 	// if word is in map
 	if (w_it != _word_index->end()) {
-		cout << this->wordToString(w_it->first, w_it->second);
+		cout << this->wordToString(w_it);
 	} else {
 		cout << "The word: " << pWord << " is not an element of the index!" << endl;
 	}
@@ -371,7 +353,7 @@ void Index::printWordsMatchesCharactersAtBeginning(string chars) {
 		found = word.find(chars);
 		
 		if (found == 0) {
-			cout << this->wordToString(w_it->first, w_it->second);
+			cout << this->wordToString(w_it);
 		}
 	}
 }
@@ -385,7 +367,7 @@ void Index::printWordsMatchesCharactersAnywhere(string chars) {
 		
 		//cout << "found word: " << chars << " at position: " << found << endl;
 		if (found!=string::npos) {
-			cout << this->wordToString(w_it->first, w_it->second);
+			cout << this->wordToString(w_it);
 		}
 	}
 }
@@ -397,7 +379,7 @@ void Index::printIndexForFile(file f) {
 		
 		files::iterator f_it = f_map->find(f);
 		if (f_it != f_map->end()) {
-				cout << w << " " << f << this->linesToString(f_it->second) << endl;
+				cout << w << this->fileToString(f_it);
 			}
 	}
 }
