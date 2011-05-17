@@ -17,7 +17,6 @@ Controller::Controller(int argc, char *argv[]) {
 	// params is no longer needed
 	delete params;
 
-	
 	Index *index = new Index();
 
 	// prüfen wie viele options angegeben wurden und entsprechend Meldung ausgeben
@@ -35,6 +34,7 @@ Controller::Controller(int argc, char *argv[]) {
 		return;
 	}
 
+	// creates new IndexParser
 	IndexParser *parser = new IndexParser(index);	
 
 	//  create new index
@@ -127,9 +127,7 @@ Controller::Controller(int argc, char *argv[]) {
 	delete index;
 }
 
-Controller::~Controller() {
-	
-}
+Controller::~Controller() {}
 
 void Controller::printHelp() {
 	cout << "********************************************************************" << endl;

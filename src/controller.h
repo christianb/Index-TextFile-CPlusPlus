@@ -1,3 +1,14 @@
+#ifndef _CONTROLLER_H
+#define _CONTROLLER_H
+
+//#include <algorithm>
+
+#include "cmdline.h"
+#include "index.h"
+#include "indexparser.h"
+
+using namespace std;
+
 /** Class Controller
  *
  *  This class controlls the flow of this programm.
@@ -6,29 +17,27 @@
  *  date    3.5.2011
  *  version 0.1
  */
-
-#ifndef _CONTROLLER_H
-#define _CONTROLLER_H
-
-#include <algorithm>
-
-#include "cmdline.h"
-#include "index.h"
-#include "indexparser.h"
-
-using namespace std;
-
 class Controller {
 private:
 
 public:
 	/**
-	 * Takes the arguments from main function call.s
+	 * Takes the paramters from main function call.
+	 * @param argc Nummber of parameters.
+	 * @param argv[] Array with c-strings with all given paramters.
 	 */
 	Controller(int argc, char *argv[]);
+	
+	/**
+	 * Destructor.
+	 */
 	~Controller();
 	
 private:
+	
+	/**
+	 * Print help information about how to use this program.
+	 */
 	void printHelp();
 	
 };
