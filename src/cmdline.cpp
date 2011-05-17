@@ -56,8 +56,8 @@ CmdLine::~CmdLine() {
 	delete arg;
 }
 
-void CmdLine::insertToOptions(string key, string value) {
-	this->opt->insert(pair<string,string>(key, value));
+void CmdLine::insertToOptions(string option, string value) {
+	this->opt->insert(pair<string,string>(option, value));
 }
 
 void CmdLine::printOptions() {
