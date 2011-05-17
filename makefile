@@ -33,25 +33,25 @@ compile: $(OBJECTS)
 		mkdir -p $(BIN); $(CC) $(CFLAGS) $(OBJECTS) -o $(TARGET) 
 
 main.o: $(SRC)/main.cpp
-		$(CC) -c $(CFLAGS) $(SRC)/main.cpp
+		$(CC) -c $(CFLAGS) $(SRC)/main.cpp -o $(SRC)/main.o 
 
 cmdline.o: $(SRC)/cmdline.cpp 
-		$(CC) -c $(CFLAGS) $(SRC)/cmdline.cpp
+		$(CC) -c $(CFLAGS) $(SRC)/cmdline.cpp -o $(SRC)/cmdline.o 
 
 index.o: $(SRC)/index.cpp
-		$(CC) -c $(CFLAGS) $(SRC)/index.cpp
+		$(CC) -c $(CFLAGS) $(SRC)/index.cpp -o $(SRC)/index.o 
 
 controller.o: $(SRC)/controller.cpp
-		$(CC) -c $(CFLAGS) $(SRC)/controller.cpp
+		$(CC) -c $(CFLAGS) $(SRC)/controller.cpp -o $(SRC)/controller.o 
 
 indexparser.o: $(SRC)/indexparser.cpp
-		$(CC) -c $(CFLAGS) $(SRC)/indexparser.cpp
+		$(CC) -c $(CFLAGS) $(SRC)/indexparser.cpp -o $(SRC)/indexparser.o 
 
 stringutil.o: $(SRC)/stringutil.o
-	$(CC) -c $(CFLAGS) $(SRC)/stringutil.cpp
+	$(CC) -c $(CFLAGS) $(SRC)/stringutil.cpp -o $(SRC)/stringutil.o 
 
 fileutil.o: $(SRC)/fileutil.o
-	$(CC) -c $(CFLAGS) $(SRC)/fileutil.cpp
+	$(CC) -c $(CFLAGS) $(SRC)/fileutil.cpp -o $(SRC)/fileutil.o 
 
 clean:	FORCE
 		rm -f $(OBJECTS)
