@@ -1,12 +1,3 @@
-/** Class FileUtil
- *
- *  This class provides methods to read content from file and vice versa.
- *
- *  author  Christian Bunk
- *  date    15.5.2011
- *  version 0.1
- */
-
 #ifndef _FILETUIL_H
 #define _FILEUTIL_H
 
@@ -19,11 +10,21 @@
 
 using namespace std;
 
+/** Class FileUtil
+ *
+ *  This class provides methods to read and write content to a file.
+ *
+ *  author  Christian Bunk
+ *  date    15.5.2011
+ *  version 0.1
+ */
 class FileUtil {
 public:	
 	/**
 	 * Read content from a given File.
-	 * returns a map with the file nameas the key and the content of the file as the value
+	 * Returns a map with the filename as the key and the content of the file as the value.
+	 * @param files Contains all files to read in.
+	 * @return map<string, vector<string>*> A map, containing all lines as the value for the file as the key.
 	 */	
 	map<string, vector<string>* > readFiles(vector<string> files);
 	
@@ -37,9 +38,10 @@ public:
 private:
 	/**
 	 * Read all lines within a file.
+	 * @param file The file to read from.
 	 * @return vector<string>* All lines within the file.
 	 */
-	vector<string>* readAllLinesFromFile(string f);
+	vector<string>* readAllLinesFromFile(string file);
 };
 
 #endif	/* _FILEUTIL_H */
