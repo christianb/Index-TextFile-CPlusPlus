@@ -210,7 +210,7 @@ void Index::addToIndex(word w, file f, line_number l) {
 
 words::iterator Index::addWord(word w) {
 		// change word to lower case
-		this->s_util->toLowerCase(w);
+		//this->s_util->toLowerCase(w);
 	
 		pair<words::iterator,bool> ret;
 		files *f = new files();

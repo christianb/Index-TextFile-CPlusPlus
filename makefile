@@ -10,6 +10,7 @@ CFLAGS = -Wall -Wextra -g
 OBJECTS = $(SRC)/main.o \
 $(SRC)/cmdline.o \
 $(SRC)/index.o \
+$(SRC)/lexic.o \
 $(SRC)/controller.o \
 $(SRC)/indexparser.o \
 $(SRC)/stringutil.o \
@@ -29,7 +30,7 @@ TARGET = $(BIN)/$(NAME)
 
 install: clean compile
 
-compile: main.o cmdline.o index.o controller.o indexparser.o stringutil.o fileutil.o
+compile: main.o cmdline.o index.o lexic.o controller.o indexparser.o stringutil.o fileutil.o
 		mkdir -p $(BIN); $(CC) $(CFLAGS) $(OBJECTS) -o $(TARGET) 
 
 main.o: $(SRC)/main.cpp
@@ -47,11 +48,14 @@ controller.o: $(SRC)/controller.cpp
 indexparser.o: $(SRC)/indexparser.cpp
 		$(CC) $(CFLAGS) -c $(SRC)/indexparser.cpp -o $(SRC)/indexparser.o
 
-stringutil.o: $(SRC)/stringutil.o
+stringutil.o: $(SRC)/stringutil.cpp
 		$(CC) $(CFLAGS) -c $(SRC)/stringutil.cpp -o $(SRC)/stringutil.o
 
-fileutil.o: $(SRC)/fileutil.o
+fileutil.o: $(SRC)/fileutil.cpp
 		$(CC) $(CFLAGS) -c $(SRC)/fileutil.cpp -o $(SRC)/fileutil.o
+
+lexic.o: $(SRC)/lexic.cpp
+		$(CC) $(CFLAGS) -c $(SRC)/lexic.cpp -o $(SRC)/lexic.o
 
 clean:	FORCE
 		rm -f $(OBJECTS)

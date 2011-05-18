@@ -13,6 +13,7 @@
 
 #include "stringutil.h"
 #include "fileutil.h"
+#include "Lexic.h"
 
 using namespace std;
 
@@ -44,7 +45,7 @@ typedef map<file, line_numbers* > files;
 /**
  * words is a map containing the word an another map (with files and line number's)
  */
-typedef map<word, files*, less<string> > words;
+typedef map<word, files*, Lexic > words;
 
 /** Class Index
  *
