@@ -13,7 +13,7 @@
 
 #include "stringutil.h"
 #include "fileutil.h"
-#include "Lexic.h"
+#include "lexic.h"
 
 using namespace std;
 

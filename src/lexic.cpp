@@ -1,4 +1,4 @@
-#include "Lexic.h"
+#include "lexic.h"
 
 using namespace std;
 
