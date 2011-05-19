@@ -3,20 +3,20 @@
 using namespace std;
 
 bool Lexic::operator()(string s1, string s2) const {
-	//if (!lexicographical_compare(s1.begin(), s1.end(), s2.begin(), s2.end(), mycomp)) {
+	if (!lexicographical_compare(s1.begin(), s1.end(), s2.begin(), s2.end(), mycomp)) {
 		string::iterator s1_it = s1.begin();
 		string::iterator s2_it = s2.begin();
 		
 		// unix
-		if  (strcasecmp(s1.c_str(), s2.c_str()) < 0) {
+/*		if  (strcasecmp(s1.c_str(), s2.c_str()) < 0) {
 			return true;
-		}
+		}*/
 		
-		if  (strcasecmp(s1.c_str(), s2.c_str()) > 0) {
+/*		if  (strcasecmp(s1.c_str(), s2.c_str()) > 0) {
 			return false;
 		}
-		
-		if (strcasecmp(s1.c_str(), s2.c_str()) == 0) {
+*/		
+		if ( tolower(*s1.c_str()) == tolower(*s2.c_str()) ) {
 			// if equal lexic test of asci difference
 			do {
 				if (*s1_it < *s2_it) {
@@ -34,7 +34,9 @@ bool Lexic::operator()(string s1, string s2) const {
 		
 		
 		return false;
-	//}
+	} else {
+		return true;
+	}
 	
 	//return lexicographical_compare(s1.begin(), s1.end(), s2.begin(), s2.end(), mycomp);
 	//return true;
