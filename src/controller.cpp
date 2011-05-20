@@ -43,21 +43,29 @@ Controller::Controller(int argc, char *argv[]) {
 		// need at least two arguments (one the output file and at least one input file)
 		if (arguments.size() >= 2) {
 			// read index file, so it will not be over-written
-			parser->readIndexFile(*arguments.begin());
+			//parser->readIndexFile(*arguments.begin());   // Previous version for parsing of existing index file
+			string file = *arguments.begin();
+			ifstream in(file.data()) ; // Try to open given IndexFile	
+			// Test if file exist. true --> Warning and Exit the program; false --> create index and write it into the file
+			if (!in){
+				string out = *arguments.begin();
 			
-			string out = *arguments.begin();
-			
-			// delete the first argument, the others are the input files
-			arguments.erase(arguments.begin());
+				// delete the first argument, the others are the input files
+				arguments.erase(arguments.begin());
 
-			// create the index, read the input files and write the index in the output file
-			index->createIndex(out, arguments);
-		} else {
-			cout << "Error: not enough arguments. Need at least one output file and one input file i.e. -i out.txt in.txt" << endl;
+				// create the index, read the input files and write the index in the output file
+				index->createIndex(out, arguments);
+				in.close() ; // Datei schließen
+				cout << "Created index successful written in file " << file << " \n";
+			}
+			else{
+				cout << "Output file already existing!\n";
+				in.close() ; // Datei schließen
+			}
 		}
-		
-		
-		
+		else {
+			cout << "Error: not enough arguments. Need at least one output file and one input file i.e. -i out.txt in.txt" << endl;
+		}	
 	}
 	
 	// print the entire index
