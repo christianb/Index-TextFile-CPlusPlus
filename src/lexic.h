@@ -20,7 +20,7 @@ public:
 	 * @param s1 The first string compare to the second.
 	 * @param s2 The second string compare to the first.
 	 */
-	bool operator()(string s1, string s2) const;
+	bool operator()(string s1, string s2);
 	
 private:
 	/** 
@@ -30,4 +30,6 @@ private:
 	 * @return bool
 	 */
 	static bool mycomp (char c1, char c2);
+	
+	bool isWordEqualCaseInsensitiv(string s1, string s2);
 } ;
