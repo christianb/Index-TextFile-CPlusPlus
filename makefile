@@ -30,31 +30,31 @@ TARGET = $(BIN)/$(NAME)
 
 install: clean compile
 
-compile: main.o cmdline.o index.o lexic.o controller.o indexparser.o stringutil.o fileutil.o
+compile: main cmdline index lexic controller indexparser stringutil fileutil
 		mkdir -p $(BIN); $(CC) $(CFLAGS) $(OBJECTS) -o $(TARGET) 
 
-main.o: $(SRC)/main.cpp
+main: FORCE
 		$(CC) $(CFLAGS) -c $(SRC)/main.cpp -o $(SRC)/main.o
 
-cmdline.o: $(SRC)/cmdline.cpp 
+cmdline: FORCE
 		$(CC) $(CFLAGS) -c $(SRC)/cmdline.cpp -o $(SRC)/cmdline.o
 
-index.o: $(SRC)/index.cpp
+index: FORCE
 		$(CC) $(CFLAGS) -c $(SRC)/index.cpp -o $(SRC)/index.o
 
-controller.o: $(SRC)/controller.cpp
+controller: FORCE
 		$(CC) $(CFLAGS) -c $(SRC)/controller.cpp -o $(SRC)/controller.o
 
-indexparser.o: $(SRC)/indexparser.cpp
+indexparser: FORCE
 		$(CC) $(CFLAGS) -c $(SRC)/indexparser.cpp -o $(SRC)/indexparser.o
 
-stringutil.o: $(SRC)/stringutil.cpp
+stringutil: FORCE
 		$(CC) $(CFLAGS) -c $(SRC)/stringutil.cpp -o $(SRC)/stringutil.o
 
-fileutil.o: $(SRC)/fileutil.cpp
+fileutil: FORCE
 		$(CC) $(CFLAGS) -c $(SRC)/fileutil.cpp -o $(SRC)/fileutil.o
 
-lexic.o: $(SRC)/lexic.cpp
+lexic: FORCE
 		$(CC) $(CFLAGS) -c $(SRC)/lexic.cpp -o $(SRC)/lexic.o
 
 clean:	FORCE
