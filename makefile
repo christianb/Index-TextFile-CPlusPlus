@@ -1,20 +1,5 @@
-# This is a makefile created by Christian Bunk
-# Last update 02.05.2011
-
-# Define C Compiler
-CC = c++
-# Define standard flags
-CFLAGS = -Wall -Wextra -g
-
-# Files to be compiled
-OBJECTS = $(SRC)/main.o \
-$(SRC)/cmdline.o \
-$(SRC)/index.o \
-$(SRC)/lexic.o \
-$(SRC)/controller.o \
-$(SRC)/indexparser.o \
-$(SRC)/stringutil.o \
-$(SRC)/fileutil.o \
+# Makefile in einem Unterverzeichnis
+include Makefile.rules
 
 # program name 
 NAME = index
@@ -28,44 +13,21 @@ SRC = ./src
 # target (merge with bin and name)
 TARGET = $(BIN)/$(NAME)
 
-install: clean compile
+DIRS = src/
 
-compile: main cmdline index lexic controller indexparser stringutil fileutil
-		mkdir -p $(BIN); $(CC) $(CFLAGS) $(OBJECTS) -o $(TARGET) 
+all: compile link
 
-main: FORCE
-		$(CC) $(CFLAGS) -c $(SRC)/main.cpp -o $(SRC)/main.o
+link: 
+	mkdir -p $(BIN); $(CC) $(CFLAGS) $(OBJ) -o $(TARGET)
 
-cmdline: FORCE
-		$(CC) $(CFLAGS) -c $(SRC)/cmdline.cpp -o $(SRC)/cmdline.o
+compile:
+	for i in $(DIRS); do make -C $$i; done
 
-index: FORCE
-		$(CC) $(CFLAGS) -c $(SRC)/index.cpp -o $(SRC)/index.o
+clean:
+	for i in $(DIRS); do make -C $$i clean; done
 
-controller: FORCE
-		$(CC) $(CFLAGS) -c $(SRC)/controller.cpp -o $(SRC)/controller.o
-
-indexparser: FORCE
-		$(CC) $(CFLAGS) -c $(SRC)/indexparser.cpp -o $(SRC)/indexparser.o
-
-stringutil: FORCE
-		$(CC) $(CFLAGS) -c $(SRC)/stringutil.cpp -o $(SRC)/stringutil.o
-
-fileutil: FORCE
-		$(CC) $(CFLAGS) -c $(SRC)/fileutil.cpp -o $(SRC)/fileutil.o
-
-lexic: FORCE
-		$(CC) $(CFLAGS) -c $(SRC)/lexic.cpp -o $(SRC)/lexic.o
-
-clean:	FORCE
-		rm -f $(OBJECTS)
-
-valgrind: clean compile
+valgrind: compile
 		valgrind --leak-check=full $(TARGET)
-
-exec: clean compile
-	$(TARGET) -t out.txt input.txt input3.txt
-	
 
 doc: FORCE
 		doxygen

@@ -1,0 +1,10 @@
+# Makefile.rules im Top-Level-Verzeichnis
+
+CC     = c++
+CFLAGS = -Wall -Wextra -g
+
+OBJ = $(SRC)/*.o
+
+%.o: %.cpp
+	$(CC) $(CFLAGS) -c $<
+
