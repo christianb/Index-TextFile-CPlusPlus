@@ -1,9 +1,21 @@
-# Makefile.rules im Top-Level-Verzeichnis
-
 CC     = c++
 CFLAGS = -Wall -Wextra -g
 
 OBJ = $(SRC)/*.o
+
+# program name 
+NAME = index
+
+# bin directory
+BIN = ./bin
+
+# source directory
+SRC = ./src
+
+# target (merge with bin and name)
+TARGET = $(BIN)/$(NAME)
+
+DIRS = src/
 
 %.o: %.cpp
 	$(CC) $(CFLAGS) -c $<

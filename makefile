@@ -1,23 +1,9 @@
 # Makefile in einem Unterverzeichnis
 include Makefile.rules
 
-# program name 
-NAME = index
-
-# bin directory
-BIN = ./bin
-
-# source directory
-SRC = ./src
-
-# target (merge with bin and name)
-TARGET = $(BIN)/$(NAME)
-
-DIRS = src/
-
 all: compile link
 
-link: 
+link: compile
 	mkdir -p $(BIN); $(CC) $(CFLAGS) $(OBJ) -o $(TARGET)
 
 compile:
