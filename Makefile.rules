@@ -1,5 +1,5 @@
 CC     = c++
-CFLAGS = -Wall -Wextra -g
+CFLAGS = -Wall -Wextra -g -DLexic_Compare
 
 OBJ = $(SRC)/*.o
 

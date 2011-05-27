@@ -45,7 +45,11 @@ typedef map<file, line_numbers* > files;
 /**
  * words is a map containing the word an another map (with files and line number's)
  */
-typedef map<word, files*, Lexic > words;
+#ifdef Lexic_Compare
+	typedef map<word, files*, Lexic > words;
+#else
+	typedef map<word, files*> words;
+#endif
 
 /** Class Index
  *

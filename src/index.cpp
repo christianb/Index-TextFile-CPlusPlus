@@ -125,7 +125,11 @@ vector<word> Index::extractAllWordsFromLine(string line) {
 		
 		// if it is a valid character
 		if (this->isCharValid(*char_it)) {
-			word->push_back(*char_it);
+			#ifdef Lexic_Compare
+				word->push_back(*char_it);
+			#else
+				word->push_back(tolower(*char_it));
+			#endif
 		} else {
 			
 			// copy word in vector
