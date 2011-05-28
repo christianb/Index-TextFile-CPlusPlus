@@ -1,0 +1,9 @@
+\section{Index}
+Die Klasse Index soll einen Index aus eingelesenen Daten erzeugen. Die Klasse Index wird vom Controller erzeugt. Sie stellt verschiedene Methoden bereit um den Index nach bestimmten Kriterien zu durchsuchen.
+\subsection{Datenstruktur}
+Der Index wird nach dem Schema <Wort> <Datei> <Zeilen> erstellt. Dazu wurde folgende Datenstruktur entworfen.
+Eine Map speichert als Key das Wort. Somit kann die Map leicht nach bestimmten Wörtern durchsucht werden. Auch das Finden, Einfügen und Löschen ist bei einer Map relativ leicht. Als Value wird wieder eine Map angegeben. Ein Wort zeigt damit wieder auf eine weitere Map. In dieser inneren Map  wird als Key der Dateiname geschrieben und als Value ein Set mit Zeilennummern. Damit wird eine Assoziation hergestellt, das ein Wort in einer Datei in verschiedenen Zeilennummern vorkommen kann. Ein Wort kann auch in mehreren Datein vorkommen.
+\subsection{Funktion}
+Ein Wort wird zwischen Groß und kleinschreibung unterschieden. Das Wort "Hallo" und "hallo" sind zwei verschiedene Wörter und tauchen auch seperat im Index auf.
+Ein Wort besteht aus den Zeichen [A-Za-z_]([A-Za-z0-9]|-|_)*.
+Der Index untersucht die Wörter nicht auf semantische Korrektheit! Alle Wörter die aus gültigen Zeichen bestehen werden akzeptiert. Die Klasse FileUtil wird genutzt um Dateien Zeilenweise auszulesen. Anschließend werden die Wörter aus jeder Zeile entnommen. Jedes Wort wird in die Map eingefügt, zusammen mit dem Dateinamen und der aktuellen Zeilennummer. Ist das Wort in der Map schon vorhanden wird nur der Dateiname und die Zeilennummer eingefügt. Ist auch schon der Dateiname vorhanden, wird die Zeilennummer hinzugefügt, wenn auch noch nicht vorhanden.
