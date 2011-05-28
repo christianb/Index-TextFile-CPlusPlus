@@ -19,12 +19,28 @@ Controller::Controller(int argc, char *argv[]) {
 
 	Index *index = new Index();
 
-	// prüfen wie viele options angegeben wurden und entsprechend Meldung ausgeben
-	if (options.size() > 1) {
-		cout << "Error: please type in just one option i.e. -i or -q=value" << endl;
-		delete index;
-		return;
-	}
+	#ifdef Two_Options
+		if (options.size() > 1) {
+			if (options.size() == 2) {
+				if (options.find("p") == options.end() || options.find("i") == options.end() ) {
+					cout << "Two options are only allowed with -i and -p !" << endl;
+					delete index;
+					return;
+				}
+			} else {
+				cout << "Error: please type in just one option i.e. -i or -q=value" << endl;
+				delete index;
+				return;
+			}	
+		}
+	#else
+		// prüfen wie viele options angegeben wurden und entsprechend Meldung ausgeben
+		if (options.size() > 1) {
+			cout << "Error: please type in just one option i.e. -i or -q=value" << endl;
+			delete index;
+			return;
+		}
+	#endif
 
 	if (options.empty()) {
 		cout << "Error: please type in one option" << endl;
