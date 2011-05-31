@@ -2,6 +2,19 @@
 
 using namespace std;
 
+#ifdef Lexic_Compare_Standard
+// Vergleichsfunktion ohne Beruecksichtigung von Gross- und Kleinschreibung :
+bool compare (char c1, char c2)
+{ 
+	return tolower(c1) < tolower(c2) ;
+}
+
+bool Lexic::operator()(string s1, string s2)
+{
+	return lexicographical_compare(s1.begin(), s1.end(), s2.begin(), s2.end(), compare) ;
+}
+#else
+
 bool Lexic::operator()(string s1, string s2) {
 	string::iterator s1_it = s1.begin();
 	string::iterator s2_it = s2.begin();
@@ -50,4 +63,4 @@ bool Lexic::operator()(string s1, string s2) {
 		return (s1.size() < s2.size()); // true if s1 is lower than s2, false otherwise
 	}
 }
-
+#endif
