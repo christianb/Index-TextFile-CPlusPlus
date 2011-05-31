@@ -77,6 +77,7 @@ Controller::Controller(int argc, char *argv[]) {
 			else{
 				cout << "Output file already existing!\n";
 				in.close() ; // Datei schließen
+				return;
 			}
 		}
 		else {
