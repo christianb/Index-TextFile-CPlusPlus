@@ -3,10 +3,10 @@
 Controller::Controller(int argc, char *argv[]) {
 	
 	// read command line parameters
-	CmdLine *params = new CmdLine(argc, argv);
+	CmdLine params(argc, argv);
 
-	map<string, string> options = params->getOptions();
-	vector<string> arguments = params->getArguments();
+	map<string, string> options = params.getOptions();
+	vector<string> arguments = params.getArguments();
 /*
 	cout << "Options: " << endl;
 	params->printOptions();
@@ -15,7 +15,7 @@ Controller::Controller(int argc, char *argv[]) {
 	params->printArguments();
 */
 	// params is no longer needed
-	delete params;
+	//delete params;
 
 	Index *index = new Index();
 
@@ -51,7 +51,7 @@ Controller::Controller(int argc, char *argv[]) {
 	}
 
 	// creates new IndexParser
-	IndexParser *parser = new IndexParser(index);	
+	IndexParser parser(index);	
 
 	//  create new index
 	map<string,string>::iterator position = options.find("i");
@@ -89,7 +89,7 @@ Controller::Controller(int argc, char *argv[]) {
 	if (position != options.end()) {
 		// need at least one argument (the output file to be read in for the parser)
 		if (!arguments.empty()) {
-			parser->readIndexFile(*arguments.begin());
+			parser.readIndexFile(*arguments.begin());
 		
 			// TODO: how many arguments
 			index->printIndexFromOutputFile(*arguments.begin());
@@ -101,7 +101,7 @@ Controller::Controller(int argc, char *argv[]) {
 	if (position != options.end()) {
 		// need at least one argument (the output file to be read in for the parser)
 		if (!arguments.empty()) {
-			parser->readIndexFile(*arguments.begin());
+			parser.readIndexFile(*arguments.begin());
 			
 			cout << "suche nach dem Wort: " << position->second << endl;
 			index->printIndexForWord(position->second);
@@ -114,7 +114,7 @@ Controller::Controller(int argc, char *argv[]) {
 	position = options.find("s");
 	if (position != options.end()) {
 		if (!arguments.empty()) {
-			parser->readIndexFile(*arguments.begin());
+			parser.readIndexFile(*arguments.begin());
 			
 			if (*position->second.begin() == '*') {
 				position->second.erase(position->second.begin());
@@ -133,7 +133,7 @@ Controller::Controller(int argc, char *argv[]) {
 	position = options.find("t");
 	if (position != options.end()) {
 		if (!arguments.empty()) {
-			parser->readIndexFile(*arguments.begin());
+			parser.readIndexFile(*arguments.begin());
 			
 			index->printIndexForFile(position->second);
 		} else {
@@ -147,7 +147,7 @@ Controller::Controller(int argc, char *argv[]) {
 		this->printHelp();
 	}
 	
-	delete parser;
+	//delete parser;
 	delete index;
 }
 
