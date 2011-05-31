@@ -1,4 +1,4 @@
-CC     = c++
+CC     = g++
 CFLAGS = -Wall -Wextra -g -DLexic_Compare -DTwo_Options
 
 OBJ = $(SRC)/*.o
