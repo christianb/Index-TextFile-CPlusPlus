@@ -20,7 +20,7 @@ bool Lexic::operator()(string s1, string s2) {
 	string::iterator s2_it = s2.begin();
 	
 	// check strings of case insensitive equality
-	do {
+	while (s1_it != s1.end() || s2_it != s2.end()){
 		// s1 is lower than s2
 		if (tolower(*s1_it) < tolower(*s2_it)) {
 			return true;
@@ -33,7 +33,7 @@ bool Lexic::operator()(string s1, string s2) {
 		
 		s1_it++;
 		s2_it++;
-	} while (s1_it != s1.end() || s2_it != s2.end()); 
+	}; 
 	
 	// here either both strings are euqal or one is longer and contains the other string
 	
@@ -42,7 +42,7 @@ bool Lexic::operator()(string s1, string s2) {
 		s1_it = s1.begin();
 		s2_it = s2.begin();
 		
-		do {
+		while(s1_it != s1.end() && s2_it != s2.end()) {
 			// s1 is lower than s2 (CASE SENSITIVE)
 			if (*s1_it < *s2_it) {
 				return true;
@@ -55,7 +55,7 @@ bool Lexic::operator()(string s1, string s2) {
 
 			s1_it++;
 			s2_it++;
-		} while(s1_it != s1.end() && s2_it != s2.end());
+		};
 		
 		// if it comes here both strings are even CASE SENSITIVE exactly the same
 		return false;
