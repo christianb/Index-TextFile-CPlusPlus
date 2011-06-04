@@ -1,6 +1,6 @@
 using namespace std;
 
-#include "index.h"
+#include "index.hpp"
 
 void Index::init() {
 	// create new map

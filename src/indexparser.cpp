@@ -1,6 +1,6 @@
 using namespace std;
 
-#include "indexparser.h"
+#include "indexparser.hpp"
 
 IndexParser::IndexParser(Index *i) {
 	this->index = i;
