@@ -4,7 +4,7 @@
 # Define C Compiler
 CC = g++
 # Define standard flags
-CFLAGS = -Wall -Wextra -g -DLexic_Compare -DTwo_Options
+CFLAGS = -Wall -Wextra -g -DLexic_Compare
 
 # Files to be compiled
 OBJECTS = $(SRC)/main.o \
@@ -17,7 +17,7 @@ $(SRC)/stringutil.o \
 $(SRC)/fileutil.o \
 
 # program name 
-NAME = index
+NAME = indiziere
 
 # bin directory
 BIN = ./bin
