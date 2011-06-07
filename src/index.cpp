@@ -353,18 +353,28 @@ void Index::printIndexForWord(string pWord) {
 }
 
 void Index::printWordsMatchesCharactersAtBeginning(string chars) {
+	
+	bool found_bool = false;
 	for (words::iterator w_it = _word_index->begin(); w_it != _word_index->end(); w_it++) {
 		string word = w_it->first;
 		size_t found;
 		found = word.find(chars);
 		
 		if (found == 0) {
+			found_bool = true;
 			cout << this->wordToString(w_it);
+			
 		}
+	}
+
+	if (!found_bool) {
+		cout << "The word: " << chars << " is not an element of the index!" << endl;	
 	}
 }
 
 void Index::printWordsMatchesCharactersAnywhere(string chars) {	
+	
+	bool found_bool = false;
 	for (words::iterator w_it = _word_index->begin(); w_it != _word_index->end(); w_it++) {
 		string word = w_it->first;
 		
@@ -373,8 +383,15 @@ void Index::printWordsMatchesCharactersAnywhere(string chars) {
 		
 		//cout << "found word: " << chars << " at position: " << found << endl;
 		if (found!=string::npos) {
+			found_bool = true;
 			cout << this->wordToString(w_it);
+			
 		}
+
+	}
+
+	if (!found_bool) {
+		cout << "The word: " << chars << " is not an element of the index!" << endl;	
 	}
 }
 

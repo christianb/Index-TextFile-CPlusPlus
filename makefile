@@ -20,7 +20,7 @@ $(SRC)/fileutil.o \
 NAME = indiziere
 
 # bin directory
-BIN = ./bin
+BIN = ./
 
 # source directory
 SRC = ./src

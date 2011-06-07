@@ -91,10 +91,13 @@ Controller::Controller(int argc, char *argv[]) {
 	if (position != options.end()) {
 		// need at least one argument (the output file to be read in for the parser)
 		if (!arguments.empty()) {
-			parser.readIndexFile(*arguments.begin());
-		
-			// TODO: how many arguments
-			index->printIndexFromOutputFile(*arguments.begin());
+			if (arguments.size() == 1) {
+					parser.readIndexFile(*arguments.begin());
+					// TODO: how many arguments
+					index->printIndexFromOutputFile(*arguments.begin());
+			} else {
+				cout << "Error: only one argument is allowed with option -p" << endl;
+			}	
 		}
 
 				delete index;
@@ -106,10 +109,17 @@ Controller::Controller(int argc, char *argv[]) {
 	if (position != options.end()) {
 		// need at least one argument (the output file to be read in for the parser)
 		if (!arguments.empty()) {
-			parser.readIndexFile(*arguments.begin());
+			if (arguments.size() == 1) {
+					parser.readIndexFile(*arguments.begin());
 			
-			cout << "suche nach dem Wort: " << position->second << endl;
-			index->printIndexForWord(position->second);
+					cout << "Search for word: " << position->second << endl;
+					index->printIndexForWord(position->second);
+			} else {
+				cout << "Error: only one argument is allowed with option -q" << endl;
+			}	
+
+
+			
 		} else {
 			cout << "Error: need output file as an argument i.e. -q=word out.txt" << endl;
 		}
@@ -122,16 +132,19 @@ Controller::Controller(int argc, char *argv[]) {
 	position = options.find("s");
 	if (position != options.end()) {
 		if (!arguments.empty()) {
-			parser.readIndexFile(*arguments.begin());
+			if (arguments.size() == 1) {
+				parser.readIndexFile(*arguments.begin());
 			
-			if (*position->second.begin() == '*') {
-				position->second.erase(position->second.begin());
-				index->printWordsMatchesCharactersAnywhere(position->second);
+				if (*position->second.begin() == '*') {
+					position->second.erase(position->second.begin());
+					index->printWordsMatchesCharactersAnywhere(position->second);
+				} else {
+					index->printWordsMatchesCharactersAtBeginning(position->second);
+				}
 			} else {
-				index->printWordsMatchesCharactersAtBeginning(position->second);
-			}
-			
-			
+				cout << "Error: only one argument is allowed with option -s" << endl;
+			}	
+
 		} else {
 			cout << "Error: need output file as an argument i.e. -s=word out.txt" << endl;
 		}
@@ -144,9 +157,13 @@ Controller::Controller(int argc, char *argv[]) {
 	position = options.find("t");
 	if (position != options.end()) {
 		if (!arguments.empty()) {
-			parser.readIndexFile(*arguments.begin());
+			if (arguments.size() == 1) {
+				parser.readIndexFile(*arguments.begin());
 			
-			index->printIndexForFile(position->second);
+				index->printIndexForFile(position->second);
+			} else {
+				cout << "Error: only one argument is allowed with option -t" << endl;
+			}	
 		} else {
 			cout << "Error: need output file as an argument i.e. -t=word out.txt" << endl;
 		}
