@@ -1,7 +1,7 @@
 
 using namespace std;
 
-#include "cmdline.h"
+#include "cmdline.hpp"
 
 CmdLine::CmdLine(int argc, char *argv[]) {	
 	opt = new options;

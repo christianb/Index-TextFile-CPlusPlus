@@ -3,9 +3,9 @@
 
 //#include <algorithm>
 
-#include "cmdline.h"
-#include "index.h"
-#include "indexparser.h"
+#include "cmdline.hpp"
+#include "index.hpp"
+#include "indexparser.hpp"
 
 using namespace std;
 

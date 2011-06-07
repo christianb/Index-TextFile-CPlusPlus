@@ -1,6 +1,6 @@
 using namespace std;
 
-#include "indexparser.h"
+#include "indexparser.hpp"
 
 IndexParser::IndexParser(Index *i) {
 	this->index = i;
@@ -10,7 +10,7 @@ IndexParser::~IndexParser() {
 }
 
 // Store each line from selected index_file into given vector<string>
-void IndexParser::FileToLines(vector<string> *lines, string index_file){
+void IndexParser::fileToLines(vector<string> *lines, string index_file){
 	ifstream in(index_file.data()) ; // Open given IndexFile	
 	string line;
 
@@ -28,7 +28,7 @@ void IndexParser::FileToLines(vector<string> *lines, string index_file){
 	in.close() ; // Close IndexFile
 }
 
-string IndexParser::ParseLine(string linie, bool flag_wort, bool flag_file, bool flag_index, string last_word){
+string IndexParser::parseLine(string linie, bool flag_wort, bool flag_file, bool flag_index, string last_word){
 	string wort, file, ind;
 	stringstream out;
 	int index = 0;	
@@ -78,7 +78,7 @@ string IndexParser::ParseLine(string linie, bool flag_wort, bool flag_file, bool
 		}
 	}
 	
-	//HIER GIBT ES EIN PROBLEM
+	
 	this->index->addToIndex(wort, file, *index_set);
 	/*
 	// TEST FUNKTION ZUR AUSGABE AM TERMINAL
@@ -96,7 +96,7 @@ string IndexParser::ParseLine(string linie, bool flag_wort, bool flag_file, bool
 	return wort;
 }
 
-void IndexParser::ParseAllLines(vector<string> *lines){
+void IndexParser::parseAllLines(vector<string> *lines){
 	string linie;
 	string last_word = "";
 
@@ -109,14 +109,14 @@ void IndexParser::ParseAllLines(vector<string> *lines){
 		out << *lines_it;
 		linie = out.str();
 		// Parse current line and write values into the index; Use flags to mark parsing progress
-		last_word = this->ParseLine(linie, flag_wort, flag_file, flag_index, last_word);
+		last_word = this->parseLine(linie, flag_wort, flag_file, flag_index, last_word);
 	}
 }
 
 void IndexParser::readIndexFile(string index_file) {
 	vector<string> *lines = new vector<string>();  // vector<string> for text lines 
-	this->FileToLines(lines, index_file);	// store each line as a string in vector<string
-	this->ParseAllLines(lines);	// parse every line and put the extracted data into index
+	this->fileToLines(lines, index_file);	// store each line as a string in vector<string
+	this->parseAllLines(lines);	// parse every line and put the extracted data into index
 	delete lines;
 }
 

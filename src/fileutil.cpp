@@ -1,4 +1,4 @@
-#include "fileutil.h"
+#include "fileutil.hpp"
 
 map<string, vector<string>* > FileUtil::readFiles(vector<string> files) {
 	map<string, vector<string>* > *file_map = new map<string, vector<string>* >();

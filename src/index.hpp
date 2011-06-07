@@ -11,9 +11,9 @@
 #include <sstream>
 #include <algorithm>
 
-#include "stringutil.h"
-#include "fileutil.h"
-#include "lexic.h"
+#include "stringutil.hpp"
+#include "fileutil.hpp"
+#include "lexic.hpp"
 
 using namespace std;
 
