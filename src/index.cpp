@@ -61,6 +61,8 @@ void Index::readContent(vector<file> files) {
 			// now we can insert all the words, from current line, from current file in map
 			this->addToIndex(words, current_file, ++line_number);
 		}
+
+		delete lines;
 	}
 }
 

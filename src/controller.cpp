@@ -77,6 +77,7 @@ Controller::Controller(int argc, char *argv[]) {
 			else{
 				cout << "Output file already existing!\n";
 				in.close() ; // Datei schließen
+				delete index;
 				return;
 			}
 		}
@@ -95,6 +96,9 @@ Controller::Controller(int argc, char *argv[]) {
 			// TODO: how many arguments
 			index->printIndexFromOutputFile(*arguments.begin());
 		}
+
+				delete index;
+				return;
 	}
 	
 	// print index for the word
@@ -109,6 +113,9 @@ Controller::Controller(int argc, char *argv[]) {
 		} else {
 			cout << "Error: need output file as an argument i.e. -q=word out.txt" << endl;
 		}
+
+		delete index;
+		return;
 	}
 	
 	// print index for words who matches characters
@@ -128,6 +135,9 @@ Controller::Controller(int argc, char *argv[]) {
 		} else {
 			cout << "Error: need output file as an argument i.e. -s=word out.txt" << endl;
 		}
+
+				delete index;
+				return;
 	}
 	
 	// print index file
@@ -140,13 +150,22 @@ Controller::Controller(int argc, char *argv[]) {
 		} else {
 			cout << "Error: need output file as an argument i.e. -t=word out.txt" << endl;
 		}
-	}
 
+		delete index;
+				return;
+	}
 	// print index file
 	position = options.find("-help");
 	if (position != options.end()) {
 		this->printHelp();
+
+		delete index;
+				return;
 	}
+	
+	if (options.find("i") == options.end() && options.find("p") == options.end() && options.find("q") == options.end() && options.find("t") == options.end() && options.find("s") == options.end() && options.find("-help") == options.end()) {
+	cout << "Error: unknown parameter!" << endl;
+}
 	
 	//delete parser;
 	delete index;

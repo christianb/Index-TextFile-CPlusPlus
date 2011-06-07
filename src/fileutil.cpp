@@ -15,7 +15,9 @@ map<string, vector<string>* > FileUtil::readFiles(vector<string> files) {
 		}
 	}
 
-	return *file_map;
+	map<string, vector<string>*> f_map = *file_map;
+	delete file_map;
+	return f_map;
 }
 
 // read all lines of a file and returns a vector of string with .

@@ -61,7 +61,7 @@ clean:	FORCE
 		rm -f $(OBJECTS)
 
 valgrind: clean compile
-		valgrind --leak-check=full $(TARGET)
+		valgrind --leak-check=full $(TARGET) -i out.txt Testdaten/Euler.txt
 
 exec: clean compile
 	$(TARGET) -t out.txt input.txt input3.txt
